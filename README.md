@@ -53,8 +53,13 @@ Facultative modifications :
 
 Source:  
 
-- Developped in [Haxe language](http://haxe.org/). --[Haxe-Foundation](http://haxe-foundation.org/) / [Haxe silexlabs community](http://www.silexlabs.org/)--
-- Dependency : [FLnet api](https://github.com/flashline/FLnet-haxe)  
+- Developped in [Haxe language](http://haxe.org/). --[Haxe-Foundation](http://haxe-foundation.org/) / [Haxe silexlabs community](http://www.silexlabs.org/)
+
+##Dependency :   
+ [FLnet api](https://github.com/flashline/FLnet-haxe)  to be installed :  
+- in src/  
+- or as haxe lib  
+- or everywhere, adding  -cp everywhere/ in build.xml.
 
 ##let me know
 ...if you find bugs. I will correct them as soon as possible (tell me where error occures: Mobile, PC or Mac and the browser's name)  
