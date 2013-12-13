@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" 	 http-equiv="content-type">
+		<title>Documentation FL-Calendar html5</title>
+		<meta name="revisit-after" content="30 days"/>
+		<meta name="description" content="Documentation : calendrier gratuit en ligne (post-it planning agenda)" />
+		<meta name="keywords" content="documentation, Calendrier,calendar,agenda,planning,post-it,web-app,application web,pc,mac,mobile,smartphone,grand écran,large screen,html5,haxe,js,php" />
+		<meta name="author" content="Jean-michel Delettre - Flash-line.net" />
+		<meta name = "viewport" content = "width=device-width, initial-scale=1.0" />
+		<link href='help.css' media='all' rel='Stylesheet' type='text/css' />
+	</head>
+	<body>
+		<h1>FL-Calendar documentation</h1>		
+			<p class="langLink"> <a  href="./help.fr.html" >français</a></p>		
+		<h2>Foreword</h2>
+		<div class="hline"></div>
+		<div class="bloc" id="section_1" onclick="javascript:wm_toggle_section(1);">
+			<div class="left"><span>Application</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_1">
+			<p>
+				...Fl-Calendar is a free online Web-App :
+				<a href="http://www.flash-line.org/app/web/html5/calendar/en.html"target="_blank"> </a>
+				<br/>
+				<br/>
+				It is open- source. Can be downloaded / forked :
+				<a href="https://github.com/flashline/FL-Calendar" target="_self"> on github </a>
+				<br/>
+				<br/>
+				This is the HTML5 version of a Flash web-app :
+				<a href="http://www.flash-line.org/app/web/calendar/" www.flash-line.org/app/web/calendar/ target="_blank"> </a>
+				<br/>
+				Flash version only works on desktop computers.
+				<br/>
+				<strong> You can use currently both versions because they target the same database. </strong>
+				<br/>
+				<br/>
+				<i> Warranty: </i>
+				<br/>
+				<strong> This application is provided "as is" without warranty of any kind. </strong > <br/>
+				If -by fatal case- online use would stop, Flash-line.org couldn't be held responsible
+				or compensate users.
+				<br/>
+				License:
+				<br/>
+				<a href="http://www.gnu.org/licenses/gpl.html" target="_blank"> GNU-GPL </a> 
+				<br/>
+			</p>
+		</div>	
+		
+		<div class="hline"></div>
+		<div class="bloc" id="section_3" onclick="javascript:wm_toggle_section(3);">
+			<div class="left"><span>Presentation</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_3">
+			<p>
+				The first idea is to display full year (from december year-1 to January year+1) on one screen,
+				to provide quick access to months and days .
+				<br/>
+				So many months and days as desired can be opened at the same time and texts can be dragAndDroped.
+				<br/>
+				Simple calendar if you aren't logged in, app. becomes an agenda/schedule by logging.
+				<br/>
+				A note can be associated with a day of the month and/or the entire month.
+				<br/>
+				The same URL works as well on mobiles than PC/Mac.
+				<br/>
+				Layout adapts it-self to any kind of screens or browser's ratios.
+				<br/>
+				<br/>
+				This app is designed to run on a valid HTML5 browser.
+				<br/>
+				Tested by me on :
+				<div>
+				<div>
+				recent versions of Chrome , Firefox and Safari browsers, <br/>
+				IE mobile v10 , <br/>
+				Android: native &amp; Firefox browsers, Htc smartphone and Acer tablet.
+				</div>
+				<br/>
+				(!) Gradients aren't okay on Safari and native Android browser.
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_2" onclick="javascript:wm_toggle_section(2);">
+			<div class="left"><span>Notes</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_2">			
+			<p>
+				I use this calendar myself and backup regularly datas. But if you want to do it yourself, it is better to download and install the application
+				on your web server.
+				<br/>
+				Sql database isn't necessary, but PHP is required.
+				<br/>
+				<a href="https://github.com/flashline/FL-Calendar">download...</a>
+				<br/><br/>
+				Do not hesitate to leave me encouragement and let me know bugs. I will correct them as soon as possible
+				(tell me where error occures: Mobile, PC or Mac and the browser's name) :
+				<br/>
+				<a href="mailto:info@flash-line.org?subject=FL-Calendar-Html5"> email </a>
+				<br/>
+				<a href="https://twitter.com/intent/tweet?screen_name=flashline_net"> Twitter </a>
+				<br/><br/>
+				<strong> If this application please to you , talk about it around you :) </strong>
+				<br/>
+				<br/>
+				English is not my mother language as you can see... As Droopy says, I'd be an happy taxpayer, 
+				if a real english speaking corrects this documentation for me :)
+				<br/>
+				<br/>
+				Recommendations:
+				<div><div>
+					Orientation "portrait" is better on smartphones and tablets.
+				<br/>
+				On a large width tablet in landscape-mode, the layout is the same as PC/Mac. But the portrait-mode 
+				seems still preferable to me.
+				<br/>
+				FL -Calendar is very simple and intuitive to use, but
+				<br/>
+				<strong> it is advisable to read at least  bold texts of user-guide below. </strong>
+				</div> </div>
+			</p>
+			
+			
+		</div>
+		<div class="hline"></div>
+		 <h2>User guide</h2>
+		 <div class="hline"></div>
+		<div class="bloc" id="section_5" onclick="javascript:wm_toggle_section(5);">
+			<div class="left"><span>Start</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_5">
+			<p>
+				On 1st launch (when no session is open)
+				a dialog-box offers you to sign in or sign up. (see § <i>SignUp</i>).
+				<div>
+					<strong> If you don't want to create your personalized calendar </strong> 
+					<br/>
+					<strong> Click on "Cancel" : </strong>
+					<div>
+						The window will disappear and you can just:
+						<br/>
+						View all months and days with full dates, as on a traditional calendar,
+						<br/>
+
+						<br/>
+						...or finally decide to create your agenda by clicking the "SignIn/SignUp" button.
+						<br/>
+
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_6" onclick="javascript:wm_toggle_section(6);">
+			<div class="left"><span>Sign Up</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_6">
+			<p>
+				Registration allows you to create your own schedule or agenda, to enter notes for a day or a month.
+				<br/>
+				To register:
+				<br/>
+				Click on "SignIn/signUp".
+				<div> a dialog-box appears, go to lower part.
+					<div> Enter a name :
+					<div>
+					This name must be unique. If it is already taken by another user , an error message appears and you must select another one.
+					<br/>
+					<br/>
+					<strong> Its length must be from 3 to 10 characters. <br/>
+					It must contain only letters A to Z and numbers from 0 to 9.
+					</strong>
+					<br/>
+					<br/>
+					This may be a pseudonym, your name or the name of the calendar if you like to create many of them.
+					</div>
+					</div>
+					<br/>
+					<div>
+					Enter a password:
+					<div>
+					<strong> Its length must be from 6 to 10 characters . </strong>
+					</div>
+					</div>
+					<br/>
+					<div>
+					Confirm password:
+					<div>
+					If  passwords are different an error message appears.
+					</div>
+					</div>
+					<br/>
+					<div>
+					Click on bottom button "OK" .
+					<div>
+					Your personal calendar is created !
+					<br/>
+					A last dialog box offers you to send your email to receive updates and news from my other applications.
+					<br/>
+					You can leave this field blank and confirm.
+					<br/>
+					Otherwise : <br/>
+					This email will never be disclosed and it is not stored on the Internet.
+					<br/>
+					</div>
+					</div>
+					<br/>
+					<div>
+						<strong> Notes: </strong>
+						<div>
+							Confidentiality is highly respected :
+							<div>
+									<br/>
+									Emails are stored on a private server that I physically control. 
+									They aren't related to texts (or nothing else !).
+									<br/>
+									Names and passwords are not stored in plaintext but coded ; <br/>
+									There is no way (including for me) to link a text to a name because
+									impossible to find a name from its code. <br/>
+									(as explained below, the contrary  is fortunately possible). <br/>
+									<br/>
+									The counterpart is that you must remember  <strong> at least the name that you created. </Strong > <br/>
+									If you lose password, I can with your name, retrieve the data and give you access to it. 
+									<br/><br/>							
+							</div>
+						</div>
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_7" onclick="javascript:wm_toggle_section(7);">
+			<div class="left"><span>Sign In</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<!-- here : «» -->
+		<div class="content_block" id="content_7">
+			<p>
+				 <div>
+					Of course, you have to create one or more account(s) before to connect you.
+					<br/> <br/>
+					At startup or by clicking on "SignIn/signUp" a dialog-box appears:
+					<br/>
+					<div>
+						In upper part : Enter name and password then click on  "Enter" button.
+						<br/>
+						
+						<div>
+							Dialog-box closes:
+							The name appears in the subtitle after the current year. <br/>
+							The "LogOut" button replaces "SignIn/signUp" <br/>
+							The "Settings" button appears. <br/>
+							You can enter text or change settings: connection's security, new year (see chapters below).
+							<br/> <br/>
+						</div>
+					</div>
+				</div>
+					 
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_8" onclick="javascript:wm_toggle_section(8);">
+			<div class="left"><span>Settings</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_8">
+			<p>
+				<strong>You must to be logged</strong> to access to settings .
+				<br/>
+				Click the " Settings" button <br/>
+				The dialog-box which appears contains two parameters.
+				<br/>
+				<div>
+					1_ Security password:
+					<div>
+						Name and password are not stored locally :
+						the connection is secure
+						<br/>
+						(see § "Security" below) .
+						<br/>
+						To switch operation mode from "secure" to "unsecure" and reciprocally , click on button of the window top. 
+					</div>
+				</div>
+				<br/>
+				<div>
+					2_ Changing the current year:
+					<div>
+						Starting, the current year is the system's year . After, this is the one you choose.
+						<br/>
+						Enter a new 4-digits year and confirm :
+						<div>
+							The months and days of the new year will be displayed. <br>
+							Data for other years are not lost. <br>
+							The data for January and December respectively preceding and following the current year are included . <br>
+							You can always go on the year of your choice without data loss. <br>
+							<br/>
+							<strong> Year is saved and  will be current year of next connection. </strong> <br/>
+							<br/>
+							<br/>
+							Notes: 
+							<br/>
+							If you close a calendar (log out) then create a new one (sign up) : it will have the system year as default year. <br>								
+						</div>
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- 10 -->
+		<div class="bloc" id="section_10" onclick="javascript:wm_toggle_section(10);">
+			<div class="left"><span>Text content<br/></span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_10">
+			<p>
+				<strong>You must be logged</strong> to create notes .
+				<br/><br/>
+				Inputting notes (post-it) is free, there is no time slot.
+				<br/>
+				Several notes can be opened at the same time, be dragged/dropped.
+				<br/><br/>
+				At start, every month is visible but closed (days are hidden) except the current month -if the current year is same as system's year.
+				<br/>
+				<div>
+					To open a month
+					<div>
+						Click on month's bar.
+						<div>
+							It will be positioned at the top of the screen,
+							<br/>
+							days appear.
+							<br/><br/>
+							To open a day.
+							<div>
+								click on the day's bar.
+								<div>
+									It will be positioned at the top of the screen,
+									<br/>
+									the full date will be visible in the day's bar.
+									<br/>
+									the note will appear :
+									<div>
+										"Clear" button = > Text content disappears, the note remains "open"
+										<br/>
+										"Cancel" button = > Any modification or clear is canceled, the note is closed.
+										<br/>
+										"Enter" button = > Change is saved , the note is closed.
+										<br/>
+									</div>
+								</div>
+								<br/>
+								To close a day .
+								<div>
+									click again on the day's bar.
+									<br/>
+									<div>
+										Text content will be registered if it has been modified,
+										<br/>
+										note disappear,
+										<br/>
+										<strong> the beginning of the text will be displayed in the day's bar </strong>
+										<br/>
+										day's bar stays in place on mobiles or return to its original place on PC/Mac browsers.
+									</div>
+								</div>
+							</div>
+						</div>
+						<br/>
+						To close a month
+						<div>
+							Click on the month's bar.
+							<div>
+								Days disappear,
+								<br/>
+								days which were open remain open at next month's opening.
+								<br/>
+								month's bar stays in place on mobiles or return to its original place on PC/Mac browsers.
+							</div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div>
+					To open whole month's note :
+					<div>
+						Click on the pictogram representing a "Post-it" -on the right of the month's bar.
+						<br/>
+						<strong>Pictogram is "normal" when note is empty and "scrawled" when note contains text.</strong>
+						<br/>
+						<div>
+							Month will be positioned at the top of the screen,
+							<br/>
+							note will appear :
+							<div>
+								"Clear" button = > text content disappears but the note remains "open"
+								<br/>
+								"Cancel" button = > Any modification or clear is canceled, the note is closed.
+								<br/>
+								"Enter" button = > Change is saved , the note is closed.
+								<br/>
+							</div>
+						</div>
+						<br/>
+						To close whole month's note :
+						<div>
+							click again on the "Post-it" pictogram.
+							<div>
+								Text content will be registered if it has been modified,
+								<br/>
+								note disappear,
+								<br/>
+								month's bar stays in place on mobiles or return to its original place on PC/Mac browsers.
+								<br/>
+								"Post-it" pictogram is updated .
+							</div>
+							<br/><br/>
+							<strong>Note: Clicking a month's bar, displays/hides the days but not month's note and reciprocally.</strong>
+						</div>
+						
+						
+					</div>
+				</div>
+				<br/>
+			</p>
+			
+		<!-- end of P -->	
+		</div>
+		<div class="hline"></div>
+		<!-- end of 10 -->
+			
+			
+		<!-- 9 -->
+		<div class="bloc" id="section_9" onclick="javascript:wm_toggle_section(9);">
+			<div class="left"><span>Security</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_9">
+			<p>
+				Connection:
+				<div>
+					If you stay a while without doing anything or without submit changes (text, year, etc. )
+					<div>
+						<strong>the server automatically logouts you</strong> (time-out). At next submission
+						you will be prompted to loggin again. <br>
+						<div>
+							In secure mode, you must enter name and password each time.
+							<br>
+							In unsecured (see § "Settings" above) name and password are provided by default in the login dialog-box.
+							<br/>
+							<strong> They need to be saved on your computer. Cookies must be allowed by your browser settings.
+							</strong>
+							<br/>
+							Note:
+							<div>
+								Application's security system does not change the behavior of your browser which also may or may not have default prompts.
+							</div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div> Autosave of text contents : </div>
+				<br/>
+				<div>
+					<div>
+						Regularly <strong> modified text contents are automatically
+						recorded. </strong>
+						<br/>
+						The trigger delay after your last validation is 3 minutes. <br/>
+						In other words if you submit -or close- notes just after modification, automatic backup will never trigger.
+						<br/>
+					</div>
+					<br/>
+					<div>
+						In case of "time-out" (see above) after click "enter": the last entry is retrieved.
+						<br/><br/>
+						Generally, application tends to automatically save changes rather than lose them !
+						<br/>
+						<strong> 
+						So it's better to :
+						<div>							
+								Click on "Cancel" as soon as you want to cancel a change.
+								<br/>
+								Avoid to leave application with lots of unstable open notes.							
+						</div>
+						</strong>
+					</div>
+				<br/>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- end of 9 -->
+		<!-- 11 -->
+		<div class="bloc" id="section_11" onclick="javascript:wm_toggle_section(11);">
+			<div class="left"><span>Log out</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_11">
+			<p>
+				<strong>You must be logged in to log out. </strong>&nbsp; (Sorry, I could not prevent myself to do it !) 
+				<br/><br/>
+				Click on top/left logOut button.
+				<div>
+					If one or more modified notes, haven't been saved:
+					<div>
+						A warning dialog-box appears.
+						<br/>
+						By clicking "Save posts":
+						<div>
+							Texts will be saved and log-out will be canceled (you must press "logOut" button again).
+						</div>
+						By clicking "Confirm"
+						<div>
+							You will be disconnected without texts saving.
+						</div>
+					</div>
+					<br/>
+					After log-out, the application switches to "simple calendar" :
+					<div>
+						Every month is open by default -only on PC/Mac's large screens.
+						<br/>
+						full dates are visible,	days aren't  anymore interactive,
+						<br/>
+						the "settings" button disappear.
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!--  -->
+		<!--  -->
+		<!--  -->
+		<h2>Links</h2>
+		<p class="link">
+			<a href="../en.html" >Return to software...</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="help.fr.html" >Doc (fr) </a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://www.flash-line.net/org/" >Other open-source projects (fr).</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://www.flash-line.net" >Author's web site: www.flash-line.net (fr).</a>
+			<br/><br/>
+		</p>
+		<script type="text/javascript" language="javascript" src="help.js"></script>	 
+	</body>
+</html>
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+
+
+
+
+
+
+
+
+

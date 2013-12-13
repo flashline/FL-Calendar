@@ -1,0 +1,424 @@
+html {font-size: 100%;}
+* {
+  font-family : Arial, Helvetica, sans-serif;
+  font-size : 1.05em;
+  color: #000;
+  border:solid 0px #fff;
+}	
+body {
+	width:100%;
+	margin:auto;
+	overflow-x :hidden;
+}
+body[orient="portrait"] {
+}
+#calendar {
+	width:100%;
+	/*background-color:#ddd;*/
+}
+#calendar #release {
+	padding-left:1em;
+	font-size:.7em;	
+}
+#calendar #release .releaseText {
+	padding-right:2em;
+}
+/*#calendar #release span {
+	display: inline;
+}*/
+
+#calendar button {
+	margin-left:.5em ;/*.2em;*/
+	margin-top:.1em;
+	margin-bottom:.3em;
+	padding-top:.3em;
+	padding-bottom:.3em;
+	border:1px solid #bbb;
+	border-radius: 5px;
+	box-shadow: 2px 2px 4px #aaa ;
+	background-color:#ffefef;
+	font-size : 1em;
+	font-weight:bold;
+}
+#calendar div.month button {
+	position:relative;
+	top:-.3em; /*-10px;*/
+	margin-left:0px;
+	padding-left:.3em;
+	padding-right:.3em;
+	font-size : .60em;
+}
+#calendar div.day button {
+	position:relative;
+	top:-.3em; /*-10px;*/
+	margin-left:0px;
+	padding-left:.3em;
+	padding-right:.3em;
+	font-size : .80em;
+}
+#calendar div.popUp button {
+	margin-top:.3em ;/*.2em;*/
+	margin-bottom:0px;
+	margin-left:.1em ;/*.2em;*/
+	font-size : 1em;
+} 
+#calendar #loginView .basicUsing  {
+	font-size:.7em;
+	font-weight:bold;
+	padding-left:2em;
+}
+#calendar #changeYearView div.safeModeCtnr button  {
+	font-size:1.1em;
+	/*font-weight:normal;*/
+}
+button:active {
+	box-shadow: 2px 2px 4px #aaa inset;
+	background-color:#efffef;
+}
+/*input.button [type=submit]:focus, input[type=reset]:focus {
+	background-color:#FFF3F3;
+}
+*/
+div.monthContainerProto {
+	display:none;
+}
+
+#calendar div.month {
+	display:block;
+	padding-top:.1em;
+	padding-bottom:.1em;
+	font-size : 1.4em;	
+	background-color:#eeeeee;
+	font-weight:normal;
+}
+#calendar div.month textarea {
+	margin-top:1em;
+	margin-bottom:0px;
+	font-size:.65em;
+}
+#calendar div.monthContainer div.month span.name {
+	display:inline-block;
+	width:85%;
+	color: #09d;
+	/*overflow : hidden;*/	
+	/*height:20px;*/
+}
+
+#calendar div.monthContainer div.month img {
+	/*background-image:url(../asset/postIt.out.png);
+	background-repeat:no-repeat;*/
+	opacity:.5;
+}
+#calendar div.monthContainer div.month img:hover {
+	/*background-image:url(../asset/postIt.over.png);
+	background-repeat:no-repeat;*/
+	opacity:.9;
+}
+#calendar div.monthContainer div.month span.name:hover {
+	color: #d90;
+}
+#calendar #m0 span.name {
+	font-size : .9em;	
+}
+#calendar #m13 span.name {
+	font-size : .9em;	
+}
+
+
+div.monthContainer {
+	/***************************/
+	/* remplace float:left; en mieux */
+	display:inline-block;
+	/* et */
+	vertical-align:top;
+	/***************************/
+	
+	padding-left:5px;
+	padding-right:5px;
+	margin:5px;
+	background-color:#eeeeee;
+	width:95%;
+	/*max-width:780px;*/
+	border-radius: 10px;
+	box-shadow: 4px 4px 8px #aaa ;
+}
+.maxWidthLargeScreen {
+	max-width:280px;
+}
+.maxWidthMiddleScreen {
+	max-width:780px;
+}
+.maxWidthNarrowScreen {
+	max-width:480px;
+}
+div.textContainer  {				
+	display:none;
+	background-color:#eeeeee;
+	
+}
+span.abbrev{
+	display:inline-block;
+	width:27%;
+}
+span.textBegin {
+	display:inline-block;
+	width:71%;
+	height:25px;
+	border:0px;
+	background-color:#f5f5f5;/**/
+	/*background-color: rgba(245,245,245, 0.6);*/
+	 opacity: 0.6;
+	font-size:.9em;
+	overflow : hidden;
+}
+div.day {
+	display:block;
+	border-top:groove 2px  #eef;
+}
+
+#calendar textarea {
+	margin-top:2px;
+	margin-bottom:4px;
+	width:95%;
+	font-size:.80em;
+	height:15em;
+		padding:0.2em;
+		border:1px solid #ddd;
+		 box-shadow: 4px 4px 8px #aaa ;
+}
+textarea:focus {
+	background-color:#f8fbff;
+ }
+
+
+#calendar div.header {				
+	background: linear-gradient( to right, rgba(255,150,0,.5), white);					
+	background: -webkit-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));
+	background:    -moz-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));
+	background:     -ms-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));
+	background:      -o-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));
+	padding:5px;
+	width:100%;
+}
+#calendar div.header span {
+	display:inline-block;		
+	width:32%;
+}
+
+#calendar div.header span.title { 
+	font-size:1.35em;
+	font-weight:bold;
+	color:#09b;
+}
+#calendar div.header span.version { 
+	text-align:center;
+}
+#calendar div.header span.by { 
+	text-align:right;
+}
+
+#calendar div.header span.advertising { 
+	font-size:.6em;
+	font-weight:bold;
+	display:inline-block;
+	width:100%;
+	color:#09d;
+}
+img.valid {
+	vertical-align:-40%;					
+}
+
+img.logo {
+	vertical-align:-50%;
+	
+}
+#calendar span.valided {
+	font-size:.9em;
+}
+span.labelCtnr { 
+	margin-top:8px;
+	margin-bottom:4px;
+	display:inline-block;	
+	width:50%;
+	text-align:center;
+}
+span.label  { 
+	background-color:#f8f8f8;
+	padding:3px;
+	padding-left:5px;
+	padding-right:5px;
+	border: groove 2px #eee;
+	color:#e70; /*color:#ff9900;*/
+	font-size:1.2em;
+}
+span.blue  { color: #09d; }
+/* popup layer */
+div.popUp {
+	position: fixed; 	
+	top:0px; 
+	left: 0px; 
+	width: 100%; 
+	height: 100%; 
+	visibility: hidden; 
+	background-color: rgba(255,255,255,0.8);
+	z-index:1;
+ }
+div.popUp div.title  { 
+	margin-bottom:.5em;
+	text-align:center;
+	background-color:#f8f8f8;
+	padding-left:5px;
+	padding-right:5px;
+	border: solid 1px #eee;
+	box-shadow: 4px 4px 8px #aaa ;	
+	color:#e70; /*color:#ff9900;*/
+	font-size:1.2em;
+}
+div.formCtnr {	
+	padding-top:5px;
+	padding-left:5px;
+	padding-right:5px;
+	margin:5px;
+	background-color:#eeeeee;
+	width:100%;
+	max-width:260px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 8px #aaa ;	
+	font-size:.85em;
+}
+div.formCtnr span.signUpChoose {
+	font-size:.8em;
+}
+#login input[type=text] , #login input[type=password] {
+	width:70%;
+
+}
+#calendar #changeYearView input[type=text] , #login input[type=password] {
+	width:30%;
+}
+#calendar #changeYearView div.safeModeCtnr {
+	width:100%;
+	/*background-color:#f00;*/
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	font-size:.9em;
+}
+#calendar #promptView input {
+	width:95%;
+	font-size:.8em;
+}
+/*#calendar #alertView textarea[name=message] {
+	font-size:1.15em;
+}
+*/
+#calendar div.popUp textarea[name=message] {
+	font-size:1.15em;
+}
+
+
+
+#calendar #waitView {	
+	visibility:visible;
+	/*background-color:#0f0;*/
+}
+#calendar #waitView div.anim  {
+	visibility:hidden;
+	position:relative;
+	margin-top:8em;
+	width:250px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	/*background:#f00;*/
+}
+#calendar #waitView div.text  {
+	text-align:center;
+	width:250px;
+	margin-top:5px;
+	margin-left:auto;
+	margin-right:auto;
+	color:#555;
+	font-size:1.2em;
+	/*background-color:#09d;*/
+	
+}
+#calendar #waitView #waitMovie  {
+	width:77px;
+	height:77px;
+	margin-left:auto;
+	margin-right:auto;
+	/**/
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+}
+#calendar #waitView #waitLogOut  {
+	/*background-image:url(../asset/wait2.png);*/
+	/*display:none;*/
+	visibility:hidden;
+}
+
+div.currYear {
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+	color:#09d;
+}
+@media only screen and (max-width:680px) , only screen and (max-device-width:1024px)  {
+	body {
+		width:95%;
+	}
+	#calendar div.header span.title { 
+		display:block;		
+		text-align:center;
+		width:100%;
+		
+	}
+	#calendar div.header span.version { 
+		text-align:center;
+		width:49%;
+	}
+	#calendar div.header span.by { 
+		text-align:center;
+		width:49%;
+	}
+	span.labelCtnr { 
+		display:block;	
+		text-align:center;
+		width:100%;
+	}
+	#calendar div.header span.advertising { 
+		text-align:center;
+		
+	}	
+	#calendar #release span {
+		display: block;
+	}
+}
+@media only screen and (max-device-width:800px)  {
+	#calendar textarea {
+		margin-bottom:10px;
+	}
+	#calendar div.month textarea {
+		margin-bottom:12px;
+	}	
+	body {
+		width:100%;
+	}
+	#calendar #release span {
+		font-size:1.5em;
+		padding-bottom:.8em;
+		
+	}
+}
+
+.hline	{
+	  height:.6em;
+	  border-bottom:groove 2px  #eef;
+	}
+hr.clear {
+	clear: both;
+	visibility: hidden;
+}

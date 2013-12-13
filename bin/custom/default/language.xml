@@ -1,0 +1,171 @@
+﻿<?xml version = "1.0" encoding="UTF-8" ?> 
+<root>	
+		<title label="Calendrier/Post-it" />
+		<valided label="Validé" />
+		<advertisingForComputer label="Fonctionne à la même adresse sur MOBILES !" />
+		<advertisingForMobile label="Fonctionne à la même adresse sur PC/MAC !" />		
+		<noCurrent label="Simple calendrier " />
+		<currentUserInfo1 label="Agenda " />
+		<currentUserInfo2 label=" de " />
+		<month>
+			<abbrev>
+				<item label="Déc." />
+				<item label="Jan." />
+				<item label="Fév." />
+				<item label="Mars" />
+				<item label="Avr." />
+				<item label="Mai" />
+				<item label="Juin" />
+				<item label="Juil." />
+				<item label="Aout" />
+				<item label="Sept." />
+				<item label="Oct." />
+				<item label="Nov." />
+				<item label="Déc." />
+				<item label="Janv." />
+			</abbrev>
+			<list>
+				<item label="Décembre" />
+				<item label="Janvier" />
+				<item label="Février" />
+				<item label="Mars" />
+				<item label="Avril" />
+				<item label="Mai" />
+				<item label="Juin" />
+				<item label="Juillet" />
+				<item label="Aout" />
+				<item label="Septembre" />
+				<item label="Octobre" />
+				<item label="Novembre" />
+				<item label="Décembre" />
+				<item label="Janvier" />
+			</list>
+		</month>
+		<day abbrev="DLMMJVS" >
+			<list>
+				<item label="Dimanche" />
+				<item label="Lundi" />
+				<item label="Mardi" />
+				<item label="Mercredi" />
+				<item label="Jeudi" />
+				<item label="Vendredi" />
+				<item label="Samedi" />
+			</list>
+		</day>
+		<current label="- nom : " />		
+		<button>
+			<deconnect label="déconnexion" />
+			<connect label="connexion/inscription" />
+			<changeYear label="paramètres" />
+			<valid label="Valider" />	
+			<record label="Enregistrer" />	
+			<confirmLogOut label="Confirmer" />	
+			<goOn label="Continuer" />	
+			<cancel label="Abandonner" />
+			<clear label="Effacer" />	
+			<safeModeOff label="activer sa sauvegarde et fermer la fenêtre" />	
+			<safeModeOn label="dé-activer sa sauvegarde et fermer la fenêtre"  />				
+		</button>
+		<blocnote>			
+			<title label="Notes du " />
+			<monthTitle label="Notes du mois de " />
+			<default label="hh:mm :"/>
+		</blocnote>
+		<loginSkin>	
+			<title label="Agenda/Planning: Connexion" />
+			<letSignIn label="Identifiez-vous : " />
+			<signInName label="Nom" />
+			<signInPwd label="Mot de passe" />
+			<letSignUp label="ou créez un compte :" />
+			<signUpName label="Nom de 3 à 10 car." />
+			<signUpPwd label="Mot de passe de 6 à 10 car." />	
+			<signUpConfirm label="Confirmer le mot de passe" />
+			<signUpChoose label="Choisir des car. de a->Z et 0->9." />
+			<basicUsing label="Si vous ne souhaitez utiliser que le calendrier cliquez sur abandonner." />
+		</loginSkin>
+		<changeYearSkin>	
+			<title label="Agenda/Post-it: Paramètres" />
+			<subTitle label="Changer l'année en cours" />
+			<year label="Nouvelle année" />
+			<safeSubtitleOff label="Le mot de passe est sécurisé. Pour changer:"  />
+			<safeSubtitleOn label="Le mot de passe n'est pas sécurisé. Pour changer:" />
+		</changeYearSkin>
+		<alertSkin>	
+			<title label="Agenda/Planning: Alerte" />
+			<subTitle label="Erreur !" />
+		</alertSkin>
+		<promptSkin>
+			<title label="Agenda / Planning" />
+			<input label="Email" />
+			<subTitle label="CALENDRIER CRÉÉ !" />
+		</promptSkin>
+		<confirmSkin>
+			<title label="Agenda Post-it Planning" />
+			<subTitle label="Attention !" />
+		</confirmSkin>
+		<!-- -->
+		<server>
+			<connectInfo label="...information de connexion." />
+			<loginCreation label="...création d'un utilisateur." />
+			<openConnection label="...ouverture session." />
+			<readMonthAndDayText label="...lecture des données mois et jours." />
+			<logOut label="...fermeture session." />
+			<changeYear label="...sauvegarde de l'année." />
+			<writeOneDayText label="...sauvegarde post-It d'un jour." />
+			<writeOneMonthText label="...sauvegarde post-It d'un mois" />
+			<sendUserMail label="...envoi de votre email" />
+		</server>
+		<message>
+			<logOutConfirm label="Des textes modifiés n'ont pas été enregistrés  !
+			
+Pour les sauvegarder cliquer sur le bouton 'Enregistrer'.
+
+Pour confirmer la déconnexion cliquer sur 'Confirmer'" />
+			<userMailPrompt label="Pour recevoir des news sur les mises à jour ou sur de nouvelles créations,
+et uniquement dans ce but,
+remplir le champ ci-dessous, sinon laisser le vide. " />
+			<userMailSentOk label="Votre email a bien été reçu.
+
+Bonne continuation avec FL Calendar ;-)" />
+			<userMailSubTitle label="MERCI ! " />
+		</message>
+		<error>
+			<pwdNotIdem label="Le mot de passe est différent de sa confirmation !" />
+			<pwdLengthNotValid label="Le mot de passe doit avoir entre 6 et 10 caractères ! !" />
+			<idLengthNotValid label="Le nom doit avoir entre 3 et 10 caractères !" />
+			<yearNotValid label="Saisir une année sur 4 chiffres !" />
+			<server>
+				<userMail label="Désolé nous n'avons pu récupérer votre email. Contactez-nous sur info@flash-line.net !" />
+				<action label="Le programme serveur principal est absent !" />
+				<changeYear label="Erreur serveur : Impossible de changer de date !" />
+				<sendLogin label="Erreur durant la création du compte sur le serveur !" />
+				<openConnection label="Impossible d'ouvrir une connexion. Identification momentanément impossible, réessayez plus tard !" />
+				<connectionIsClose label="La connexion a expiré !
+				
+Vous allez devoir vous identifier.
+Puis cliquer à nouveau sur le bouton ''paramètres'' " />
+				<noValidConnection label="La connexion existante est invalide ! Si l'erreur persiste après re-connexion, fermer/relancer navigateur..." />
+				<write label="Impossible de sauvegarder sur le serveur !" />
+				<fatalRead label="Lecture impossible de l'agenda ou de l'année en cours !   
+ressayer de rafraîchir la page. 
+Si l'erreur persiste, envoyer un message sur l'email en bas de page." />
+				<fatalWrite label="Une erreur d'écriture est survenue...Re-cliquer sur la même date. Modifier le texte, puis valider. " />
+				<idAlreadyExist label="Cette identifiant existe déjà. Vous devez en choisir un autre !" />
+				<idDontExist label="Cette identifiant n'existe pas dans notre base de donnée !" />
+				<noValidPwd label="Ce mot de passe ne correspond pas à cet identifiant !" />
+				<fileSystemError label="Création des fichiers de données impossible sur le serveur !"/>
+				<unknownError label ="Une erreur inconnue est survenue ! 
+Essayez de rafraîchir la page. Sinon de fermer/relancer le navigateur avant de rappeler l'application.
+
+Si l'erreur persiste, envoyer un message sur l'email en bas de page." />
+				<deconnectError label ="La deconnexion s'est mal passée. Il serait préférable de fermer le navigateur et de détruire les cookies avant de pouvoir ré-ouvrir une session ! " />
+			</server>
+			<fatal>
+				<badYear label="Year must be 0 to 9999 !" />
+				<monthMissing label="Month parent of this day doesn't exists !" />				
+			</fatal>
+		</error>
+	<!-- -->
+	<!-- -->
+	<!-- -->		
+</root>

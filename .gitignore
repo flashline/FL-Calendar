@@ -1,0 +1,11 @@
+src/asset/
+bin/data/*
+bin/test.*
+attached/
+save/
+bin/php/index.php
+bin/php/login.php
+bin/php/login.htm.inc.php
+*.save.php
+*.save.hx
+*.bat

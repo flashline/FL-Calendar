@@ -1,0 +1,167 @@
+﻿<?xml version = "1.0" encoding="UTF-8" ?> 
+<root>	
+		<title label="Calendar/Post-it" />
+		<valided label="Checked" />
+		<advertisingForComputer label="Same URL on mobile !" />
+		<advertisingForMobile label="Same URL on PC/Mac !" />		
+		<noCurrent label="Simple calendar " />
+		<currentUserInfo1 label="Agenda " />
+		<currentUserInfo2 label=" : " />
+		<month>
+			<abbrev>
+				<item label="Dec." />
+				<item label="Jan." />
+				<item label="Feb." />
+				<item label="Mar." />
+				<item label="Apr." />
+				<item label="May" />
+				<item label="June" />
+				<item label="July" />
+				<item label="Aug." />
+				<item label="Sept." />
+				<item label="Oct." />
+				<item label="Nov." />
+				<item label="Dec." />
+				<item label="Jan." />
+			</abbrev>
+			<list>
+				<item label="December" />
+				<item label="January" />
+				<item label="February" />
+				<item label="March" />
+				<item label="April" />
+				<item label="May" />
+				<item label="June" />
+				<item label="July" />
+				<item label="August" />
+				<item label="September" />
+				<item label="October" />
+				<item label="November" />
+				<item label="December" />
+				<item label="January" />
+			</list>
+		</month>
+		<day abbrev="SMTWTFS" >
+			<list>
+				<item label="Sunday" />
+				<item label="Monday" />
+				<item label="Thuesday" />
+				<item label="Wenesday" />
+				<item label="Thursday" />
+				<item label="Friday" />
+				<item label="Saturday" />
+			</list>
+		</day>
+		<current label="- name : " />		
+		<button>
+			<deconnect label="LogOut" />
+			<connect label="SignIn/signUp" />
+			<changeYear label="Settings" />
+			<valid label="Enter" />	
+			<record label="Save posts" />	
+			<confirmLogOut label="Confirm" />	
+			<goOn label="Close window" />
+			<cancel label="Cancel" />
+			<clear label="Clear" />	
+			<safeModeOff label="enable its backup and close window" />	
+			<safeModeOn label="disable its backup and close window"  />		
+			
+		</button>
+		<blocnote>			
+			<title label="Post: " />
+			<monthTitle label="Post of the month: " />
+			<default label="hh:mm "/>
+		</blocnote>
+		<loginSkin>	
+			<title label="Agenda : Connection" />
+			<letSignIn label="Sign in : " />
+			<signInName label="Name" />
+			<signInPwd label="Password" />
+			<letSignUp label="Sign up :" />
+			<signUpName label="Name (3 to 10 char)" />
+			<signUpPwd label="Password (6 to 10 char)" />	
+			<signUpConfirm label="Confirm password" />
+			<signUpChoose label="Choose char a->Z and 0->9." />
+			<basicUsing label="To use only calendar...Click on cancel." />
+		</loginSkin>
+		<changeYearSkin>	
+			<title label="Agenda/Planning: Settings" />
+			<subTitle label="Change current year" />
+			<year label="New year" />
+			<safeSubtitleOff label="Password safe-mode is on. To change:"  />
+			<safeSubtitleOn label="Password safe-mode is off. To change:" />
+		</changeYearSkin>
+		<alertSkin>	
+			<title label="Agenda/Planning: Alert" />
+			<subTitle label="Error !" />
+		</alertSkin>
+		<promptSkin>
+			<title label="Planning/Agenda/Schedule" />
+			<input label="Email" />
+			<subTitle label="CALENDAR IS CREATED !" />
+		</promptSkin>
+		<confirmSkin>
+			<title label="Agenda/Post-it" />
+			<subTitle label="Warning !" />
+		</confirmSkin>
+		<!-- -->
+		<server>
+			<connectInfo label="...login's infos." />
+			<loginCreation label="...user's creation." />
+			<openConnection label="...opening session." />
+			<readMonthAndDayText label="...reading months/days data." />
+			<logOut label="...closing session." />
+			<changeYear label="...current year recording." />
+			<writeOneDayText label="...day's text recording." />
+			<writeOneMonthText label="...month's text recording." />
+			<sendUserMail label="...sending email." />
+		</server>
+		<message>
+			<logOutConfirm label="Some modified posts are open and not saved !
+			
+To save them click on 'Save post'.
+
+To confirm log out click on 'Confirm'." />			
+			<userMailPrompt label="To receive news about updates or new creations,
+and only for this purpose,
+fill the field below, otherwise leave blank." />
+			<userMailSentOk label="I received your mail. Enjoy FL-Calendar ;)" />
+			<userMailSubTitle label="THANK YOU ! " />
+		</message>
+		<error>
+			<pwdNotIdem label="Password and confirmation aren't same !" />
+			<pwdLengthNotValid label="Password's length must be 6 to 10 characters !" />
+			<idLengthNotValid label="Name's length must be 3 to 10 characters !" />
+			<yearNotValid label="Year must have 4 digits !" />
+			<server>
+				<userMail label="Sorry we couldn't receive your email. You can contact us on info@flash-line.net !" />
+				<action label="Main server program is missing !" />
+				<changeYear label="server error : Impossible to change date !" />
+				<sendLogin label="SignUp error on server !" />
+				<openConnection label="Login error. Try later !" />
+				<connectionIsClose label="session is closed !" />
+				<noValidConnection label="Current session became not valid ! If the error persists after sign in again: Close/restart your browser." />
+				<write label="Write error on server !" />
+				<fatalRead label="Fatal read error !  
+Try to refresh page. 
+If the error persists, send message to email of page bottom." />
+				<fatalWrite label="Fatal write error ! Click on same date. Modify text and click Enter !" />
+				<idAlreadyExist label="Name already exists. Choose an other one !" />
+				<idDontExist label="This name doesn't exist on database !" />
+				<noValidPwd label="This password doesn't belong to this name !" />
+				<fileSystemError label="File system error !"/>
+				<unknownError label ="Unknown error has occured ! 
+Try to refresh. Otherwise close/restart the browser before recall application.
+
+If the error persists, send message to email of page bottom." />
+				<deconnectError label ="logout error !" />
+			</server>
+			<fatal>
+				<badYear label="Year must be 0 to 9999 !" />
+				<monthMissing label="Month parent of this day doesn't exists !" />				
+			</fatal>
+		</error>
+	<!-- -->
+	<!-- -->
+	<!-- -->		
+</root>

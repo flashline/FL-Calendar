@@ -1,0 +1,639 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" 	 http-equiv="content-type">
+		<title>Documentation FL-Calendar html5</title>
+		<meta name="revisit-after" content="30 days"/>
+		<meta name="description" content="Documentation : calendrier gratuit en ligne (post-it planning agenda)" />
+		<meta name="keywords" content="documentation, Calendrier,calendar,agenda,planning,post-it,web-app,application web,pc,mac,mobile,smartphone,grand écran,large screen,html5,haxe,js,php" />
+		<meta name="author" content="Jean-michel Delettre - Flash-line.net" />
+		<meta name = "viewport" content = "width=device-width, initial-scale=1.0" />
+		<link href='help.css' media='all' rel='Stylesheet' type='text/css' />
+	</head>
+	<body>
+		<h1>Documentation FL-Calendar</h1>		
+			<p class="langLink"> <a  href="./help.en.html" >english </a></p>		
+		<h2>Préambules</h2>
+		<div class="hline"></div>
+		<div class="bloc" id="section_1" onclick="javascript:wm_toggle_section(1);">
+			<div class="left"><span>L'application</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_1">
+			<p>
+				...Fl-Calendar est gratuitement mise à disposition en ligne :
+				<a href="http://www.flash-line.org/app/web/html5/calendar/" target="_blank">www.flash-line.org/app/web/html5/calendar/</a>
+				<br/>					
+				<br/>				
+				Elle est open-source et téléchargeable 
+				<a href="https://github.com/flashline/FL-Calendar" target="_blank">sur gitHub</a>
+				<br/>					
+				<br/>
+				C'est la version Html5 de la web-app Flash : 				
+				<a href="http://www.flash-line.org/app/web/calendar/" target="_blank">www.flash-line.org/app/web/calendar/</a>
+				<br/>
+				Cette dernière ne fonctionne que sur ordinateurs de bureau. 
+				<br/>
+				<strong>Vous pouvez utiliser les 2 en même temps car elles ciblent la même base de données.</strong>
+				<br/>
+				<br/>
+				<i>Garantie  : </i>
+				<br/>
+				<strong>Cette application est fournie telle-quelle, sans garantie d'aucune sorte. </strong><br/>
+				Si en cas de force majeure, sa mise à disposition devait cesser, Flash-line.Org ne pourrait en être rendu responsable 
+				ni devoir dédommager ses utilisateurs.
+				<br/><br/>				
+				Licence  : 
+				<br/>				
+				<a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GPL</a>&nbsp;&nbsp;&nbsp;&nbsp;(
+				<a href="http://www.linux-france.org/article/these/gpl.html" target="_blank">traduction française</a>)
+				<br/>
+			</p>
+		</div>	
+		
+		<div class="hline"></div>
+		<div class="bloc" id="section_3" onclick="javascript:wm_toggle_section(3);">
+			<div class="left"><span>Présentation.</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_3">
+			<p>
+				L'idée première est d'afficher une année entière (ainsi que décembre a-1 et janvier a+1) 
+				afin d'accéder rapidement aux mois et jours . 
+				<br/><br/>
+				On peut ouvrir en même temps, autant de mois et jours que souhaités ; dragAndDroper leur contenu.
+				<br/>	<br/>				
+				Simple calendrier si on ne se connecte pas, l'app. devient un agenda à «post-it», un planning ...en se connectant. 	
+				<br/><br/>
+				Une note peut être associée à un jour du mois et/ou au mois entier .
+				<br/><br/>	
+				Le même lien fonctionne aussi bien sur mobiles que PC/Mac.
+				<br/>
+				L'affichage s'adapte à toute taille/proportion d'écran ou de navigateur.
+				<br/>				
+				<br/>
+				L'application est conçue pour fonctionner sur un navigateur HTML5.
+				<br/><br/>
+				Testée par mes soins sur :
+				<div>
+					<div>
+					versions récentes des navigateurs Chrome, Firefox et Safari,<br/>
+					IE mobile v10,<br/>
+					Android : navigateur natif et Firefox ; smartphone Htc et tablette Acer.
+					</div>
+					<br/>
+					Sur Safari et navigateur natif Android les dégradés ne s'affichent pas.
+				
+				</div>
+				
+				
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_2" onclick="javascript:wm_toggle_section(2);">
+			<div class="left"><span>Notes</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_2">			
+			<p>
+				Ce calendrier/post-it enregistre vos notes. Je l'utilise moi-même et sauvegarde régulièrement
+				toutes les données. Mais si vous souhaitez le faire vous-même, il vaut mieux télécharger et installer l'application
+				sur un serveur Web. 
+				<br/>
+				Pas besoin de base de données, mais Php est requis.
+				<br/>
+				<a href="https://github.com/flashline/FL-Calendar">télécharger...</a>  					
+				<br/><br/>
+				N'hésitez-pas à me laisser un mot d'encouragement, me faire part d'éventuelles erreurs que je corrigerai le plus tôt possible 
+				(me préciser Mobile, Pc ou Mac ainsi que le navigateur) :
+				<br/>
+				<a href="mailto:info@flash-line.org?subject=FL-Calendar-Html5">email</a>
+				<br/>
+				<a href="https://twitter.com/intent/tweet?screen_name=flashline_net">Twitter</a>
+				<br/><br/>
+				<strong>Si cette application vous plaît, parlez-en autour de vous :)</strong>
+				<br/>
+				<br/>
+				Recommandations:
+				<div><div>					
+					Sur mobiles (y compris tablettes) l'orientation "portrait" est préférable.
+					<br/>
+					Sur tablettes de grande largeur en mode "paysage", la disposition est la même que sur PC/Mac mais l'orientation "portrait" 
+					me semble encore préférable.
+					<br/><br/>
+					FL-Calendar est très simple et intuitif d'utilisation mais 
+					<br/>
+					<strong>Il est recommandé de lire au moins les notes et texte gras du mode d'emploi.</strong>					
+				</div></div>
+			</p>
+			
+			
+		</div>
+		<div class="hline"></div>
+		 <h2>Mode d'emploi</h2>
+		 <div class="hline"></div>
+		<div class="bloc" id="section_5" onclick="javascript:wm_toggle_section(5);">
+			<div class="left"><span>Lancement</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_5">
+			<p>
+				Au 1er lancement (quand aucune session n'est ouverte), 
+				une fenêtre vous propose de vous connecter ou de vous inscrire.	(voir le § <i>S'inscrire</i>).	
+				<div>
+					<strong>Si vous ne souhaitez pas créer de calendrier personnalisé</strong> c'est à dire accéder aux fonctions agenda :
+					<br/>
+					<strong>Cliquez sur abandon</strong>
+					<div>
+						La fenêtre disparaîtra et vous pourrez juste :
+						<br/>
+						Visualiser tous les mois et jours avec la dates complète, comme sur un calendrier classique,
+						<br/>
+						
+						<br/>
+						ou décider finalement de créer un agenda/post-it en cliquant sur le bouton "connexion/inscription". 
+						<br/>
+						
+					</div>
+				</div>
+						
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_6" onclick="javascript:wm_toggle_section(6);">
+			<div class="left"><span>S'inscrire</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_6">
+			<p>
+				L'inscription permet la création d'un agenda personnalisé afin d'y mettre des  «post-it» (des textes)
+				<br/><br/>
+				Pour s'inscrire:
+				<br/>
+				Cliquer sur le bouton "connexion/inscription"	
+				<div>Saisir en partie basse de la fenêtre qui s'est affichée.
+						<div>Entrer un nom : 
+							<div>
+								Ce nom est unique. S'il est déjà pris par un autre utilisateur, un message d'erreur apparaît et vous devrez en choisir un autre.
+								<br/>
+								<br/>
+								<strong>Sa longueur doit être comprise entre 3 et 10 caractères maximum. <br/>
+								Il ne doit contenir que des lettres de a à Z et des chiffres de 0 à 9.
+								</strong>
+								<br/>								
+								<br/>
+								Cet identifiant peut être un pseudonyme, votre nom ou celui du calendrier si vous comptez en créer plusieurs. 
+							</div>
+						</div>
+						<br/>
+						<div>
+							Entrer un mot de passe : 
+							<div>
+								<strong>Sa longueur doit être comprise entre 6 et 10 caractères maximum.</strong>
+							</div>
+						</div>
+						<br/>
+						<div>
+							Confirmer le mot de passe :
+							<div>
+								Si les 2 mots de passe sont différents un message d'erreur apparaît.
+							</div>
+						</div>
+						<br/>
+						<div>
+							Cliquer sur le bouton "valider" de la partie basse.	
+							<div>
+								Votre calendrier personnalisé est créé !
+								<br/>
+								Une derniere boite de dialogue vous propose d'envoyer votre email afin de recevoir des nouvelles et mises à jour de mes applications.
+								<br/>
+								Vous pouvez laisser ce champs vide et valider.
+								<br/>
+								Dans le cas contraire : <br/>
+								Cet email ne sera jamais divulgué et n'est pas stocké sur Internet.
+								<br/>
+								
+							</div>
+						</div>
+						<br/><br/>
+						<div>
+							<strong>Notes :</strong>
+							<div>
+								La confidentialité est particulièrement respectée :
+								<div>
+									<br/>
+									Les emails sont stockés chez moi.
+									Ils ne sont pas associés aux textes (ni à rien d'autre d'ailleurs). 
+									<br/><br/>
+									Les noms et mots de passe ne sont pas stockés en clair mais codés ;<br/>
+									il n'y a aucun moyen (y compris pour moi) d'associer un texte à un nom car 
+									impossible de retrouver un nom à partir de son code.<br/>							
+									(comme expliqué ci-dessous l'inverse heureusement, n'est pas vrai !) <br/>
+									<br/><br/>
+									La contrepartie est que <strong>vous devez vous souvenir au moins du nom que vous avez créé.</strong><br/>
+									Avec ce dernier je peux retrouver votre dossier et vous redonner l'accès à ses données en cas de perte de mot de passe...<br/>
+									...mais il faudra être très gentil(le) avec moi ;-)
+									<br/><br/><br/><br/>
+								</div>
+							</div>
+						</div>
+					</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_7" onclick="javascript:wm_toggle_section(7);">
+			<div class="left"><span>Connexion</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<!-- here : «» -->
+		<div class="content_block" id="content_7">
+			<p>
+				 <div>
+					Vous devez avoir déjà créé 1 ou plusieurs compte(s).
+					<br/><br/>
+					Au démarrage ou en cliquant sur le bouton "connexion/inscription" une fenêtre apparaît 	:
+					<br/>
+					<div>
+						Saisir en partie haute de la fenêtre nom et mot de passe puis cliquer sur le bouton "Valider" .
+						<div>
+							Le nom s'affiche alors dans le sous-titre après l'année en cours.<br/>
+							Le bouton "déconnexion" remplace "connexion/inscription"<br/>
+							Le bouton "paramètres" apparaît.<br/>
+							Vous pouvez saisir des textes ou modifier les paramètres (de connexion ou changement d'année).
+							<br/>
+							(voir § ci-dessous)
+							<br/><br/>
+						</div>
+					</div>
+				</div>		 
+			</p>
+		</div>
+		<div class="hline"></div>
+		<div class="bloc" id="section_8" onclick="javascript:wm_toggle_section(8);">
+			<div class="left"><span>Paramètres</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_8">
+			<p>
+				<strong>Vous devez être connecté.</strong> pour accéder au paramètrage.
+				<br/><br/>
+				Cliquer sur le bouton "paramètres" <br/>
+				La boite de dialogue qui s'affiche contient 2 paramètres.
+				<br/><br/>
+				<div>
+					Sécurité du mot de passe :
+					<div>
+						Par défaut le nom et mot de passe ne sont pas enregistrés localement : 
+						la connexion est sécurisée 
+						<br/>
+						(voir § «Sécurité» ci-dessous ).
+						<br/>
+						Pour passer du mode sécurisé à non sécurisé et inversement, cliquer sur le bouton du haut de la fenêtre paramètres.
+					</div>
+				</div>
+				<br/><br/>
+				<div>
+					Changement de l'année en cours :
+					<div>	
+						Au départ l'année en cours du calendrier est celle du système. Ensuite c'est celle que vous choisissez.<br/><br/>
+					
+						Saisir la nouvelle année sur 4 chiffres et valider.
+						<div>
+							Les mois et jours de cette nouvelle année s'affichent.<br/>
+							Les données des autres années ne sont pas perdues.<br/>
+							Les données des mois de janvier et décembre respectivement précédent et suivant l'année en cours, sont bien reprises.<br/>
+							Vous pouvez toujours revenir sur l'année de votre choix sans perte de données.<br/>
+							<br/>
+							<strong>L'année en cours est sauvegardée et vous la retrouverez comme année en cours à votre prochaine connexion/ouverture de calendrier.</strong><br/>
+							<br/>
+							<br/>
+							Notes:<br/>
+							Si vous fermez un calendrier (une connexion) pour en créer un nouveau, ce dernier aura comme année en cours, l'année système.<br/>
+						</div>
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- 10 -->
+		<div class="bloc" id="section_10" onclick="javascript:wm_toggle_section(10);">
+			<div class="left"><span>Les textes<br/></span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_10">
+			<p>
+				<strong>Vous devez être connecté.</strong> pour saisir des notes.
+				<br/><br/>
+				
+				La saisie des notes (post-it) est libre ; il n'y a pas de case horaire.
+				<br/>
+				Plusieurs notes peuvent être ouvertes en même temps, être copiées/collées.
+				<br/><br/>
+				Au lancement 
+				<div>
+					tous les mois sont visibles mais fermés (les jours sont cachés)
+					sauf le mois en cours du système.
+				</div> 
+				<br/>
+				<div>
+					Pour ouvrir un mois 
+					<div>
+						Cliquer sur le mois.
+						<div>	
+							Il se positionnera en haut de l'écran,
+							<br/>
+							les jours apparaîtront.
+							<br/>
+							Pour ouvrir la note  d'une journée. 
+							<div>
+								cliquer sur la barre du jour.
+								<div>
+									Elle se positionnera en haut de l'écran,								
+									<br/>
+									la date complète s'affichera dans la barre du jour.
+									<br/>
+									le texte apparaîtra :
+									<div>
+										Bouton effacer => le texte disparaît mais la note reste «ouverte»
+										<br/>
+										Bouton annuler => Toute modification ou effacement est annulé ; la note se ferme.
+										<br/>
+										Bouton valider => La modification est sauvegardées ; la note se ferme.
+										<br/>
+									</div>
+								</div>
+								Pour fermer la note  d'une journée.
+								<div>
+									cliquer à nouveau sur la barre du jour.	
+									<br/>	
+									<div>
+										La note sera enregistrée si elle a été modifiée.
+										<br/>
+										Le texte complet disparaîtra,
+										<br/>
+										<strong>le début du texte s'affichera dans la barre du jour,</strong>
+										<br/>
+										le jour restera en place ou reviendra à sa place d'origine sur certains navigateurs PC/Mac.								
+									</div>
+								</div>
+							</div>						
+						</div>
+						Pour fermer le mois 
+						<div>
+							Cliquer sur la barre du mois.
+							<div>
+								<br/>
+								Les jours disparaîtront,
+								<br/>
+								mais ceux qui étaient «ouverts» le resteront à la prochaine ouverture du mois.
+								<br/>
+								Le mois restera en place ou reviendra à sa place d'origine sur certains navigateurs PC/Mac.
+							</div>
+								
+								
+						</div>
+					</div>
+				</div>	
+				
+				<br/><br/>
+				<div>
+					Pour ouvrir la note concernant tout un mois.
+					<div>
+						Cliquer sur le picto représentant un Post-it, à droite du mois.
+						<br/>
+						<strong>Il est «normal» quand la note est vide et «griboullé» si elle contient du texte.
+						<br/>
+						(A noter qu'un clic sur le mois affiche les jours mais pas la note du mois, 
+						et réciproquement.)</strong>
+						<br/><br/>	
+						<div>
+							Le mois se positionnera en haut de l'écran,
+							<br/>
+							le texte apparaîtra:
+							<div>
+								Bouton effacer => le texte disparaît mais la note reste "ouverte"
+								<br/>
+								Bouton annuler => Toute modification ou effacement est annulé ; la note se ferme.
+								<br/>
+								Bouton valider => La modification est sauvegardées ; la note se ferme.
+								<br/>
+							</div>
+						</div>
+						Pour fermer la note du mois. 
+						<div>
+							cliquer à nouveau sur le picto "Post-it".	
+							<div>
+								La note sera enregistrée si elle a été modifiée.
+								<br/>
+								La note disparaîtra,							
+								<br/>	
+								Le mois restera en place ou reviendra à sa place d'origine sur certains navigateurs PC/Mac.
+								<br/>
+								Le picto représentant un Post-it est mis à jour.
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<br/>				
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- end of 10 -->
+		<!-- 9 -->
+		<div class="bloc" id="section_9" onclick="javascript:wm_toggle_section(9);">
+			<div class="left"><span>Sécurité</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_9">
+			<p>
+				Sécurité à la connexion:
+				<div>
+					Si vous restez un certain temps sans rien faire ou sans valider de modifications (textes, année en cours, etc)
+					<div>
+						le serveur <strong>vous déconnecte automatiquement</strong> (timeout) et à la prochaine validation,					
+						le programme vous invitera à vous identifier à nouveau.<br/>
+						<div>
+							En mode sécurisé vous devez ressaisir nom et mot de passe à chaque fois.
+							<br/><br/>
+							En mode non sécurisé (voir § "paramètres" ci-dessus) les nom et mot de passe sont proposés par défaut dans la fenêtre de connexion.
+							<br/>
+							<strong>Il faut qu'ils puissent être sauvegardés (localement) ; 					
+							les cookies doivent donc être autorisés dans le paramétrage de votre navigateur.
+							</strong>
+							<br/><br/>
+							Note:
+							<div>
+								Les modes de sécurité de l'application ne modifient pas le comportement de votre navigateur qui lui aussi peut ou non, afficher 
+								des saisies par défaut.
+							</div>
+						</div>
+					</div>
+				</div>
+				<br/><br/><br/>
+				
+				<div>Sauvegarde automatique des textes:</div>
+				<br/>
+				<div>
+					<div>
+						Régulièrement, <strong>les textes modifiés et "ouverts" sont automatiquement 
+						enregistrés.</strong>
+						<br/>
+						La délai de déclenchement après la dernière action de votre part, est de 3 minutes.<br/>
+						En d'autres termes si vous validez (ou «fermez») vos textes juste après leur modification, la sauvegarde automatique ne se déclenchera jamais :-) 
+						<br/><br/>						
+					</div>
+					En cas de «time-out» après validation (voir ci-dessus), la dernière saisie est récupérée.
+					<br/><br/>
+					<strong>D'une manière générale, l'application a tendance à sauvegarder automatiquement, les modifications plutôt qu'à les perdre !
+					<br/>
+					Il est donc préférable,
+					<div>
+						- de cliquer sur "Abandonner" dès qu'on souhaite annuler une modification,
+						<br/>
+						- d'éviter de «laisser en plan» l'application avec plein de notes ouvertes ;)</strong>
+					</div>
+					<br/><br/>					
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- end of 9 -->
+		<!-- 11 -->
+		<div class="bloc" id="section_11" onclick="javascript:wm_toggle_section(11);">
+			<div class="left"><span>Déconnexion</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_11">
+			<p>
+				<strong>Vous devez être connecté avant de pouvoir vous déconnecter. </strong>&nbsp; (Désolé, je n'ai pas pu m'empécher de la faire !) 
+				<br/><br/>
+				Cliquer sur déconnexion en haut à gauche.
+				<div>
+					Si des notes ont été modifiées sans être sauvegardées :
+					<div>
+						Une boite de dialogue propose l'enregistrement des textes.
+						<br/>
+						En cliquant sur "Enregistrer" :
+						<div>
+							Les textes seront sauvegardés et la déconnexion sera annulée (vous devrez rappuyer sur le bouton).
+						</div>
+						En cliquant sur "Confirmer" :
+						<div>
+							Vous serez déconnecté sans que les textes soient sauvegardés.
+						</div>
+					</div>
+					<br/><br/>
+					Après déconnexion, l'application passe en mode "simple calendrier" : 
+					<div>
+						Tous les mois sont ouverts par défaut sur les écrans larges des Pc/Mac,
+						<br/>	
+						 les dates complètes des jours sont visibles,
+						<br/>
+						les jours ne sont plus ouvrables, le bouton paramètre a disparu.
+					</div>
+				</div>
+			</p>
+		</div>
+		<div class="hline"></div>
+		<!-- end of 11 -->
+		<!-- <12> 
+		<div class="bloc" id="section_12" onclick="javascript:wm_toggle_section(12);">
+			<div class="left"><span>11</span></div>
+			<div class="right">
+				<button class="bloc show"  ><img src="open.png"></button>
+				<button class="bloc hide" ><img src="close.png"></button>		
+			</div>
+		</div>
+		<div class="content_block" id="content_12">
+			<p>
+				
+				
+			</p>
+		</div>
+		<div class="hline"></div>	
+		 </12> -->
+		
+		<!--  -->
+		<!--  -->
+		<!--  -->
+		<h2>Liens</h2>
+		<p class="link">
+			<a href="../" >Retour à l'application</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="help.en.html" >Doc (en) </a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="help.fr.html" >Doc (fr) </a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://www.flash-line.net/org/" >Autres projets open-source.</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://www.flash-line.net" >Site pro de l'auteur - www.flash-line.net.</a>
+			<br/><br/>
+		</p>
+		
+		<script type="text/javascript" language="javascript" src="help.js"></script>
+	 
+	</body>
+</html>
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+
+
+
+
+
+
+
+
+

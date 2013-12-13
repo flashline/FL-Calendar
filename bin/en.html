@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html> 
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <meta charset="utf-8" />  
+		<title>FL Calendar Html5</title>
+		<meta name="author" content="Delettre jean-michel" />	
+		<meta name="description" content="Free online calendar web-application (post-it planning agenda)" />
+		<meta name="keywords" content="calendar,agenda,planning,post-it,web-app,pc,mac,mobile,smartphone,large screen,html5,haxe,js,php" />
+		<link rel="shortcut icon" type="image/x-icon" sizes="16x16" href="asset/favicon.ico" />
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		<!-- vars to haxe  -->
+		<script type="text/javascript" src="js/baseUrl.en.js"></script>		
+	</head>
+	<body >
+		<div id="calendar">
+			<!-- view 1 level 0  -->
+			<div  class="header">		
+				<span  class="title">Calendar Post-it Agenda Planning</span> 
+				<span class="version" ><span class="valided">Checked</span>
+					<a  target="_blank" href="http://validator.w3.org/check?uri=referer">
+						<img class="valid"  src="img/html5Valid.png"  alt="html5 validité"></a>
+				</span>
+				<span class="by" style="">
+					by 
+					<a href="http://www.flash-line.net" target="_blank">
+						<img class="logo" src="img/logo.png" alt="logo de flash-line.net"></a>
+				</span>
+				<span class="advertising">Same URL on PC/MAC and Mobiles !</span> <!-- -->
+			</div>
+			<div>
+				<button id="connection" >SignIn/SignUp</button><button id="changeYear" >Parameters</button>
+				<span class="labelCtnr"><span class="label" id="current">Calendar/Agenda</span></span>
+			</div>
+			<!---->
+			<div class="monthContainerProto"  >
+				<div class="month" >
+					<span class="name" >month's name</span>
+					<span class="openCtnr"><img class="open" data-flnet-display="inline" src="asset/postIt.empty.png" alt="postIt" /></span>
+					<div class="textContainer">
+						<textarea></textarea>
+						<button class="clear" >clear</button><button class="cancel" >cancel</button><button id="monthValid" class="valid">enter</button>
+					</div>
+				</div>
+				<div class="day" >
+					<div class="dayTop"><span class="abbrev" >day</span><span  class="textBegin"></span> </div>
+					<div class="textContainer">
+						<textarea></textarea>
+						<button class="clear" >clear</button><button class="cancel" >cancel</button><button class="valid">enter</button>
+					</div>
+				</div>
+			</div>
+			<div id="monthOuter" >
+			</div>
+			<div class="hline"></div>
+			<div id="release">
+				<span class="releaseText"></span>	
+				&nbsp;&nbsp;
+				<span><a href="./" >Version française.</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span><a href="doc/help.en.html" >Documentation</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span class="embed"><a href="embed.simu.html" >Embed </a>&lt;&gt;
+				&nbsp;&nbsp;&nbsp;&nbsp;</span><!--  -->
+				<span class="github"><a href="https://github.com/flashline/FL-Calendar" target="_blank">Download &amp; Source</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span><a href="http://www.flash-line.net" target="_blank">flash-line Pro</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span><a href="http://www.flash-line.org" target="_blank">flash-line Open-Source</a>
+				</span>				
+				<br/><br/><br/>
+			</div>
+			<!--  -->
+			<!-- view 2 level 1 class="signUpForm" class="signInForm" -->	
+			<div class="popUp"  id="loginView" >
+				<div class="formCtnr" >
+					<div class="title">Planning Agenda Post-it</div>					
+					<span class="letSignIn">SignIn</span>
+					<div class="signInDiv" >
+						<span class="signInName">Name</span> : <br/><input type="text" name="name"><br/>
+						 <span class="signInPwd">Password</span> : <br/><input type="password" name="pwd"><br/>
+						 <button id="signInCancel"  >cancel</button>
+						 <button id="signInValid"  >enter</button>								  
+					</div>				
+					<div class="hline"></div>
+					<span class="letSignUp">SignUp !</span>
+					<div class="signUpDiv" >
+						 <span class="signUpName">Name</span> : <br/><input type="text" name="name"><br/>
+						 <span class="signUpPwd">Password</span> : <br/><input type="password" name="pwd"><br/>
+						 <span class="signUpConfirm">Confirm</span> : <br/><input type="password" name="confirm"><br/>
+							<button id="signUpCancel"    >cancel</button>
+							<button id="signUpValid"    >enter</button>
+					</div>
+					<div class="hline"></div>
+					<span class="signUpChoose" >Choose char a->Z and 0->9.</span>
+					<div class="basicUsing" >To use only calendar...Click on cancel.</div>
+				</div>
+			</div>
+			<!-- view 3 level 1  -->
+			<div class="popUp"  id="changeYearView" >
+				<div class="formCtnr" >
+					<div class="title">Calendar Planning Agenda</div>
+					<br/>
+					<div class="safeModeCtnr">
+						<div class="subTitle">Password safe-mode is on. To change:</div>
+						
+						<button id="safeMode">enable its backup and close window.</button>
+						<br/>
+					</div>
+					<div class="hline"></div>
+					<br/>
+					<div class="yearCtnr">
+						<span class="subTitle">Change year</span><br/><br/>
+						<div class="currYear">Current Year</div><br/>
+						<div class="changeYearDiv" >
+							<span class="year">Year</span> :<input type="text" name="year" value=""><br/>
+							<button id="changeYearCancel"   >cancel</button>
+							<button id="changeYearValid"    >enter</button>												
+						</div>	
+					</div>
+					<br/>
+				</div>
+			</div>	
+			<!-- view 4 level 2  -->
+			<div class="popUp"  id="alertView" >
+				<div class="formCtnr" >
+					<div class="title">Calendar Post-it Planning Agenda</div>
+					<br/>
+					<span class="subTitle">Warning !</span><br/>
+					<div class="alertDiv" >
+						<textarea name="message" ></textarea>
+						<button id="alertValid">Close window</button>		
+						<br/><br/>
+					</div>					
+				</div>
+			</div>	
+			<!-- view 5 level 2  -->
+			<div class="popUp"  id="confirmView" >
+				<div class="formCtnr" >
+					<div class="title">Agenda Post-it Planning</div>
+					<br/>
+					<span class="subTitle">Warning !</span><br/>
+					<div class="confirmDiv" >
+						<textarea name="message" ></textarea>
+						<button id="confirmCancel">Record</button>		
+						<button id="confirmValid">Confirm</button>		
+						<br/><br/>
+					</div>					
+				</div>
+			</div>	
+			<!-- view 6 level 2  -->
+			<div class="popUp"  id="promptView" >
+				<div class="formCtnr" >
+					<div class="title">Agenda Post-it Planning</div>
+					<br/>
+					<span class="subTitle">Your calendar is created</span><br/>
+					<div class="promptDiv" >
+						<textarea name="message" ></textarea>
+						<div class="inputDiv"><span class="promptInput">Email</span> : <input name="userMail" type="text" value=""></div>
+						<button id="promptValid">Enter</button>		
+						<br/><br/>
+					</div>					
+				</div>
+			</div>	
+			<!-- view 7 level 2  -->
+			<div class="popUp" id="waitView" >
+				<div class="anim">					
+					<div id="waitMovie"><img id="toto" class="waitImg" src="asset/wait.png" alt="waiting movie" /></div>
+					<img id="waitLogOut" src="asset/wait2.png" alt="none" />
+				</div>
+				<div class="text">Loading page...</div>				
+			</div>	
+		</div>		
+		<!-- test Haxe <div id="haxe:trace" ></div>  --> 
+		<!--  main haxe -->	
+		<script type="text/javascript" src="js/main.js" ></script> 
+	</body>
+	
+</html>

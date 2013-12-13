@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />  
+		<title>FL Calendar Html5</title>
+		<meta name="author" content="Delettre jean-michel" />		
+		<!-- vars to haxe -->
+		
+	</head>
+	<body >
+		<h1>cookie cleared</h1>
+		<script>
+			 var today = new Date(), expires = new Date();
+			 expires.setTime(today.getTime() -10);
+			document.cookie = "calendarId" + "=" + encodeURIComponent("") + ";expires=" + expires.toGMTString();
+			document.cookie = "calendarPwd" + "=" + encodeURIComponent("") + ";expires=" + expires.toGMTString();
+
+		</script>	
+	</body>
+</html>
