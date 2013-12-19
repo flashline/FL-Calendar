@@ -1,12 +1,13 @@
 ﻿<?xml version = "1.0" encoding="UTF-8" ?> 
-<root>	
+<root id="en">	
 		<title label="Calendar/Post-it" />
 		<valided label="Checked" />
-		<advertisingForComputer label="Same URL on mobile !" />
+		<advertisingForComputer label="Same URL on MOBILES !" />
 		<advertisingForMobile label="Same URL on PC/Mac !" />		
 		<noCurrent label="Simple calendar " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" : " />
+		<Igithub label="Download & source on Mac/PC" />
 		<month>
 			<abbrev>
 				<item label="Dec." />
@@ -117,11 +118,15 @@
 			<sendUserMail label="...sending email." />
 		</server>
 		<message>
-			<logOutConfirm label="Some modified posts are open and not saved !
+			<unloadAlert label="Some texts are NOT SAVED :
+DO NOT CONFIRM page output then CLOSE or ENTER modified posts." />
+			<saveTextConfirm label="Some modified posts are open and not saved !
 			
-To save them click on 'Save post'.
+To SAVE them click on 'Save post'.
 
-To confirm log out click on 'Confirm'." />			
+" />
+			<logOutConfirm label="To confirm log out without saving, click on 'Confirm'" />
+			<changeYearConfirm label="To confirm new year without saving, click on 'Confirm'" />
 			<userMailPrompt label="To receive news about updates or new creations,
 and only for this purpose,
 fill the field below, otherwise leave blank." />
@@ -139,7 +144,10 @@ fill the field below, otherwise leave blank." />
 				<changeYear label="server error : Impossible to change date !" />
 				<sendLogin label="SignUp error on server !" />
 				<openConnection label="Login error. Try later !" />
-				<connectionIsClose label="session is closed !" />
+				<connectionIsClose label="session is closed ! 
+				
+You have to log in again
+then click on ''settings'' button." />
 				<noValidConnection label="Current session became not valid ! If the error persists after sign in again: Close/restart your browser." />
 				<write label="Write error on server !" />
 				<fatalRead label="Fatal read error !  

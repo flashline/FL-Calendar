@@ -14,7 +14,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="C:\Program Files\haxe\Haxe\lib\flnet\3,0,1" />
+    <class path="C:\www\__HAXE\classes\flnet\" />
   </classpaths>
   <!-- Build options -->
   <build>

@@ -9,3 +9,4 @@ bin/php/login.htm.inc.php
 *.save.php
 *.save.hx
 *.bat
+*.jar

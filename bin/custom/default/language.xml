@@ -1,5 +1,5 @@
 ﻿<?xml version = "1.0" encoding="UTF-8" ?> 
-<root>	
+<root id="fr">	
 		<title label="Calendrier/Post-it" />
 		<valided label="Validé" />
 		<advertisingForComputer label="Fonctionne à la même adresse sur MOBILES !" />
@@ -7,6 +7,7 @@
 		<noCurrent label="Simple calendrier " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" de " />
+		<Igithub label="Téléchargement & source sur Mac/PC" />
 		<month>
 			<abbrev>
 				<item label="Déc." />
@@ -116,11 +117,15 @@
 			<sendUserMail label="...envoi de votre email" />
 		</server>
 		<message>
-			<logOutConfirm label="Des textes modifiés n'ont pas été enregistrés  !
+			<unloadAlert label="Des textes modifiés ne sont PAS SAUVEGARDES :
+NE PAS CONFIRMER  la sortie de page puis FERMER ou VALIDER les post-it modifiés." />
+			<saveTextConfirm label="Des textes modifiés n'ont pas été enregistrés  !
 			
-Pour les sauvegarder cliquer sur le bouton 'Enregistrer'.
+Pour les SAUVEGARDER cliquer sur le bouton 'Enregistrer'.
 
-Pour confirmer la déconnexion cliquer sur 'Confirmer'" />
+" />
+			<logOutConfirm label="Pour confirmer la déconnexion sans sauvegarde, cliquer sur 'Confirmer'" />
+			<changeYearConfirm label="Pour confirmer le changement d'année sans sauvegarde, cliquer sur 'Confirmer'" />			
 			<userMailPrompt label="Pour recevoir des news sur les mises à jour ou sur de nouvelles créations,
 et uniquement dans ce but,
 remplir le champ ci-dessous, sinon laisser le vide. " />

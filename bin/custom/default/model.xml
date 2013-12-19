@@ -7,19 +7,19 @@
 	<layout middleWidth="801" narrowWidth="481" />
 	<server dataSaveDelay="300" /><!-- 300s=5mn -->
 	<year value="2013"  />
-	<month minIndexForFirstScrollToTop="3" overColor="#dd9900" > 
+	<month minIndexForFirstScrollToTop="3" overColor="#dd9900" backgroundColor="#eeeeee" > 
 		<list>
 			<item maxDay="31"  color="#6395c7" /> <!-- 0 dec-->
 			<item maxDay="31"  color="#609379"  /> <!-- 1 jan-->
 			<item maxDay="28"  color="#ff9900" overColor="#0099dd" /> 
-			<item maxDay="31"  color="#660033"  /> <!-- 3 mar -->
+			<item maxDay="31"  color="#aa0055"  /> <!-- 3 mar -->
 			<item maxDay="30"  color="#cc0000"  /> <!-- 4 apr -->
 			<item maxDay="31"  color="#99ccff"  /> <!-- 5 may -->
 			<item maxDay="30"  color="#99ff99"  /> <!-- 6 jun -->
 			<item maxDay="31"  color="#6395c7"  /> <!-- 7 jul -->
 			<item maxDay="31"  color="#609379"  /> <!-- 8 aug -->
 			<item maxDay="30"  color="#cc0000"  /> <!-- 9 sep -->
-			<item maxDay="31"  color="#660033"  /> <!-- 10 oct -->
+			<item maxDay="31"  color="#aa0066"  /> <!-- 10 oct -->
 			<item maxDay="30"  color="#ff9900" overColor="#0099dd"  /> 
 			<item maxDay="31"  color="#99ccff"  /> <!-- 12 dec -->
 			<item maxDay="31"  color="#99ff99"  /> <!-- 13 jan -->

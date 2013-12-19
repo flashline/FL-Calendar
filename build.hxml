@@ -1,6 +1,5 @@
 -cp src
 -cp ../classes/flnet/
--cp ../classes/feffects
 -js bin/js/main.js
 -main Main
 --js-modern

@@ -218,7 +218,7 @@
 			$out="answ=error&msg=pseudoFolderMissing";
 			destroySession();
 		} else {
-			$out="answ=connectionIsOpen".readPseudoFile()."&pseudo=".getPseudo()."&pwd=".getPwd();	
+			$out="answ=connectionIsOpen".readPseudoFile()."&pseudo=".getPseudo();//."&pwd=".getPwd();	
 			//
 			$out=addReadMonthAndDay($out);
 		}		

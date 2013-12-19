@@ -1,5 +1,27 @@
 /**
  * Copyright (c) jm Delettre.
+ * 
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 /**
 * app calendar package
@@ -10,11 +32,11 @@ package calendar;
 */
 import js.Browser;
 import js.html.ButtonElement;
+import js.html.DivElement;
 import js.html.Document;
 import js.html.DOMWindow;
 import js.html.InputElement;
 import net.flash_line.util.Object;
-
 import js.Lib;
 import net.flash_line.util.Common;
 import js.html.Element; import net.flash_line.display.ElementExtender ; using net.flash_line.display.ElementExtender;
@@ -26,44 +48,117 @@ class View extends Common {
 	var doc:Document;
 	var language:Language;
 	var monthContainerProto:Element;
-	public var lang(get,null):Object;	
-	public var connection(get,null):Element;	
-	public var safeMode(get,null):Element;	
-	public var changeYear(get,null):Element;	
-	public var current(get,null):Element;	
-	public var window(get, null):DOMWindow;
-	
-	public var signInCancel(get,null):Element;	
-	public var signInValid(get,null):Element;	
-	public var signUpValid(get,null):Element;	
-	public var signUpCancel(get,null):Element;	
-	public var changeYearCancel(get,null):Element;	
-	public var changeYearValid(get,null):Element;	
-	public var signInDiv(get,null):Element;	
-	public var signUpDiv(get,null):Element;	
-	public var changeYearDiv(get,null):Element;	
-	public var signUpNameInput(get,null):InputElement;	
-	public var signInNameInput(get,null):InputElement;	
-	public var signInPwdInput(get,null):InputElement;	
-	public var signUpPwdInput(get,null):InputElement;	
-	public var signUpConfirmInput(get,null):InputElement;	
-	public var changeYearInput(get, null):InputElement;	
-	public var changeYearCurrent(get,null):Element;	
-	public var isChangeYearViewOpen(get,null):Bool;	
-	//public var xxx(get,null):Element;	
-	
-	
-		
 	/**
-	* constructor
-	*/
+	 * current language texts
+	 */
+	public var lang(get, null):Object;	
+	/**
+	 * login/logoff button
+	 */
+	public var connection(get, null):Element;	
+	/**
+	 * safemode on/of button in settings box
+	 */
+	public var safeMode(get, null):Element;	
+	/**
+	 * open settings-box button
+	 */
+	public var changeYear(get, null):Element;	
+	/**
+	 * Element where scheduler name+year are displayed
+	 */
+	public var current(get,null):Element;	
+	public var window(get, null):DOMWindow;	
+	/**
+	 * signin cancel button
+	 */
+	public var signInCancel(get,null):Element;	
+	/**
+	 * signin valid button
+	 */
+	public var signInValid(get,null):Element;	
+	/**
+	 * signup valid button
+	 */
+	public var signUpValid(get,null):Element;	
+	/**
+	 * signup cancel button
+	 */
+	public var signUpCancel(get,null):Element;	
+	/**
+	 * settings-box cancel button
+	 */
+	public var changeYearCancel(get,null):Element;	
+	/**
+	 * settings-box valid button
+	 */
+	public var changeYearValid(get,null):Element;	
+	/**
+	 * signin elements parentNode
+	 */
+	public var signInDiv(get,null):Element;	
+	/**
+	 * signup elements parentNode
+	 */
+	public var signUpDiv(get,null):Element;	
+	/**
+	 * settings-box elements parentNode
+	 */
+	public var changeYearDiv(get,null):Element;	
+	/**
+	 * signup name field
+	 */
+	public var signUpNameInput(get,null):InputElement;	
+	/**
+	 * signin name field
+	 */
+	public var signInNameInput(get,null):InputElement;	
+	/**
+	 * signin password field
+	 */
+	public var signInPwdInput(get,null):InputElement;	
+	/**
+	 * signup password field
+	 */
+	public var signUpPwdInput(get,null):InputElement;	
+	/**
+	 * signin confirm password field
+	 */
+	public var signUpConfirmInput(get,null):InputElement;	
+	/**
+	 * year field in settings-box
+	 */
+	public var changeYearInput(get, null):InputElement;	
+	/**
+	 * current year display in settings-box
+	 */
+	public var changeYearCurrent(get, null):Element;	
+	/**
+	 * true if settings-box is open 
+	 */
+	public var isChangeYearViewOpen(get,null):Bool;	
+	/**
+	 * true if settings-box is open 
+	 */
+	public var isLoginViewOpen(get,null):Bool;	
+	//public var xxx(get,null):Element;	
+	//
+	//
+	//
+	/**
+	 * constructor 
+	 * @param	m
+	 * @param	lg
+	 */
 	public function new (m:Model,lg:Language) {
 		model = m;
 		doc = js.Browser.document;
 		language = lg;
 		rootHtmlElement = elem("calendar");
     }
-	
+	/**
+	 * init display
+	 */
     public function displayInit () {
 		//main skin - level 0
 		var el:Element; var str = "";
@@ -112,31 +207,17 @@ class View extends Common {
 		//
 		
     }
-	/*
-	public function createMonthAndDay () {
-		var el:Element = elemBy("monthContainerProto",elem("calendar"));
-		for (month in model.monthChildren) {
-			var monthContainer:Element = el.clone(true) ;
-			elem("monthOuter").appendChild(monthContainer);
-			//monthContainer.className = "monthContainer";
-			monthContainer.setAttribute("class", "monthContainer");
-			//monthContainer.style.display = "inline-block";			
-			monthContainer.id = "m" + month.index;
-			month.displayInit(monthContainer);
-		}			
-		doLayoutResponsive();
-	}
-	*/
-	public function removeMonthAndDay () {
-		elem("monthOuter").removeChildren();
-	}
+	/**
+	 * @param month 
+	 * @return new created month container
+	 */
 	public function createOneMonth (month:Month) :Element{
 		if (monthContainerProto==null) monthContainerProto = elemBy("monthContainerProto",elem("calendar"));
 		var monthContainer:Element = monthContainerProto.clone(true) ;
 		elem("monthOuter").appendChild(monthContainer);
 		monthContainer.setAttribute("class", "monthContainer");
 		monthContainer.id = "m" + month.index;
-		month.initSkin (monthContainer);
+		month.displayInit (monthContainer);
 		return monthContainer;
 	}
 	public function createBissexDay () {
@@ -168,7 +249,9 @@ class View extends Common {
 				if (model.currMonthIndex == month.index) {
 					month.open();
 					if (!model.wasOneTimeUsed) {
-						if ((w < middleWidth) || isMobile) {
+						//if ((isSafari && isPhone) || (isIphoneIpad && isPhone) ) model.wasOneTimeUsed = true; // native browser on android smartphones && iPhone
+						if (isSafari && isPhone && (!isIphoneIpad) ) model.wasOneTimeUsed = true; // native browser on android smartphones 
+						if ((w < middleWidth) || isMobile) {							
 							var minIndexForFirstScrollToTop = intVal(model.tree.month.minIndexForFirstScrollToTop, 2) ;
 							if(month.index>minIndexForFirstScrollToTop) {
 								model.monthChildren[month.index-minIndexForFirstScrollToTop+1].scrollToTop();
@@ -204,8 +287,10 @@ class View extends Common {
 		el.innerHTML = str2;
 		el.style.backgroundColor = str3;		
 	}
-	public function showConnectView(?id:String,?pwd:String) {
-		elem("loginView").style.visibility = "visible";
+	public function showConnectView(?id:String, ?pwd:String) {		
+		var el = elem("loginView");
+		el.style.visibility = "visible";	
+		if (isPhone && isFirefox) makePopUpRelativeForFireFoxPhone(el);
 		if (id != null) signInNameInput.value = id;
 		if (pwd != null) signInPwdInput.value = pwd;
 		signUpNameInput.value = "";
@@ -215,32 +300,40 @@ class View extends Common {
 	public function hideConnectView() {
 		elem("loginView").style.visibility = "hidden";
 	}
+	/**
+	 * show settings box
+	 */
 	public function showChangeYearView() {
 		changeSafeModeLabel ();
-		elem("changeYearView").style.visibility = "visible";
+		var el = elem("changeYearView");
+		el.style.visibility = "visible";		
+		if (isPhone && isFirefox) makePopUpRelativeForFireFoxPhone(el);
+		
 	}
+	function makePopUpRelativeForFireFoxPhone(el:Element) {
+		Browser.window.scrollTo(0,0);
+		el.style.position = "absolute";
+		el.style.top = "0px";		
+		trace("i::be height=" + el.clientHeight);
+		trace("i::scrollheight=" + Browser.document.documentElement.scrollHeight);
+		el.style.height= Std.string(Browser.document.documentElement.scrollHeight)+"px";
+		trace("i::af height=" + el.clientHeight);
+	}
+	/**
+	 * hide settings box
+	 */	
     public function hideChangeYearView() {
 		elem("changeYearView").style.visibility = "hidden";
-	}
-	public function displayFullNameInDay () {
-		var month:Month;
-		for (month in model.monthChildren) {			
-			for (day in month.dayChildren) {
-				day.showFullNameOnTop();	
-			}
-		}
-	}
-	public function restoreDisplayInDay() {
-		var month:Month;
-		for (month in model.monthChildren) {			
-			for (day in month.dayChildren) {
-				day.restoreTextOnTop();	
-			}
-		}
-	}
+	}	
+	/**
+	 * display scheduleName and current year.
+	 */
 	public function displayUserInfo() {
 		current.innerHTML = lang.currentUserInfo1.label+'<span class="blue" >'+Std.string(model.currYear)+'</span>'+lang.currentUserInfo2.label + model.currUserId;
 	}
+	/**
+	 * display calendar current year.
+	 */
 	public function displayInfoWhenNoUser () {		
 		current.innerHTML = lang.noCurrent.label+strVal(model.currYear,"");	
 	}
@@ -273,9 +366,7 @@ class View extends Common {
     function get_changeYearInput() :InputElement { return changeYearDiv.childByName("year") ; }
 	function get_changeYearCurrent() :Element {return elem("changeYearView").elemBy("currYear") ; }
     function get_isChangeYearViewOpen() :Bool { return strVal(elem("changeYearView").style.visibility,"hidden") != "hidden" ; }
-    //function get_xxx() :Element {return elem("xxx"); }
-    //function get_xxx() :Element {return elem("xxx"); }
-    //function get_xxx() :Element {return elem("xxx"); }
+    function get_isLoginViewOpen() :Bool { return strVal(elem("loginView").style.visibility,"hidden") != "hidden" ; }
     //function get_xxx() :Element {return elem("xxx"); }
     
 }

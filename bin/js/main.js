@@ -152,17 +152,29 @@ net.flash_line.util.Common = function() { }
 net.flash_line.util.Common.__name__ = true;
 net.flash_line.util.Common.__super__ = net.flash_line.util.ApiCommon;
 net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.prototype,{
-	get_isWindowsPhone: function() {
-		return new EReg("windows phone|iemobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
-	}
-	,get_isWebKit: function() {
+	get_isWebKit: function() {
 		return new EReg("webkit|chrome|safari".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
 	}
-	,get_isMobile: function() {
-		return new EReg("iPhone|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|opera mobi|windows phone|iemobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+	,get_isFirefox: function() {
+		return new EReg("firefox".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
 	}
-	,Html5IsValid: function(v) {
-		return false;
+	,get_isSafari: function() {
+		return new EReg("safari".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase()) && !new EReg("chrome".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+	}
+	,get_isWindowsPhone: function() {
+		return new EReg("windows phone|iemobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+	}
+	,get_isIphoneIpad: function() {
+		return new EReg("iPhone|iPad".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+	}
+	,get_isMobile: function() {
+		return new EReg("iPhone|ipad|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|opera mobi|windows phone|iemobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+	}
+	,get_isTablet: function() {
+		return js.Browser.window.screen.availHeight > 800 && this.get_isMobile();
+	}
+	,get_isPhone: function() {
+		return js.Browser.window.screen.availHeight <= 800 && this.get_isMobile();
 	}
 	,pageUrlPath: function() {
 		var str = js.Browser.window.location.href;
@@ -177,22 +189,21 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 		if(str == "") str = "index";
 		return str;
 	}
-	,mailIsValid: function(v) {
-		var r = new EReg("[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z][A-Z][A-Z]?","i");
-		return r.match(v);
+	,addHex: function(v1,v2) {
+		return this.decToHex(this.hexToDec(v1) + this.hexToDec(v2));
 	}
-	,toHexa: function(v) {
-		return getColor.toHexa(v);
+	,decToHex: function(n) {
+		return n.toString(16);
 	}
-	,toRgb: function(v) {
-		return getColor.toRgb(v);
+	,hexToDec: function(v) {
+		return Number('0x'+v) ;;
 	}
 	,elemBy: function(v,parent) {
 		var el;
 		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
 		if(parent == null) parent = this.rootHtmlElement;
 		el = js.Boot.__cast(parent.getElementsByClassName(v)[0] , Element);
-		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 62, className : "net.flash_line.util.Common", methodName : "elemBy"});
+		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 67, className : "net.flash_line.util.Common", methodName : "elemBy"});
 		return el;
 	}
 	,elem: function(v,parent) {
@@ -200,12 +211,12 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
 		if(parent == null) parent = this.rootHtmlElement;
 		el = js.Browser.document.getElementById(v);
-		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 48, className : "net.flash_line.util.Common", methodName : "elem"});
-		if(!parent.contains(el)) haxe.Log.trace("f::Element's id: " + v + " is not only in parent : tag=" + parent.tagName + "/class=" + parent.className + "/id=" + parent.id,{ fileName : "Common.hx", lineNumber : 51, className : "net.flash_line.util.Common", methodName : "elem"});
+		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 53, className : "net.flash_line.util.Common", methodName : "elem"});
+		if(!parent.contains(el)) haxe.Log.trace("f::Element's id: " + v + " is not only in parent : tag=" + parent.tagName + "/class=" + parent.className + "/id=" + parent.id,{ fileName : "Common.hx", lineNumber : 56, className : "net.flash_line.util.Common", methodName : "elem"});
 		return el;
 	}
 	,__class__: net.flash_line.util.Common
-	,__properties__: {get_isWindowsPhone:"get_isWindowsPhone",get_isMobile:"get_isMobile",get_isWebKit:"get_isWebKit"}
+	,__properties__: {get_isWindowsPhone:"get_isWindowsPhone",get_isMobile:"get_isMobile",get_isWebKit:"get_isWebKit",get_isFirefox:"get_isFirefox",get_isSafari:"get_isSafari",get_isIphoneIpad:"get_isIphoneIpad",get_isPhone:"get_isPhone",get_isTablet:"get_isTablet"}
 });
 var Calendar = function(su,ms,ls,bu,auto,w) {
 	if(auto == null) auto = true;
@@ -384,6 +395,8 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		var ea = new calendar.ErrorAlert(el,js.Boot.__cast(txEl , HTMLTextAreaElement),js.Boot.__cast(btEl , HTMLButtonElement),subTitleEl);
 	}
 	,onLoad: function(e) {
+		this.lang = e.text;
+		if(this.get_isIphoneIpad()) net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"github").innerHTML = this.lang.Igithub.label;
 		this.createErrorAlert(e.text);
 		this.c.set_promptBox(this.createPromptBox(e.text));
 		this.c.set_confirmBox(this.createConfirmBox(e.text));
@@ -395,7 +408,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.2.25";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.42";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -691,6 +704,10 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		if(b == null) b = true;
 		return b;
 	}
+	,confirmWithOutSave: function(b) {
+		if(b == null) b = true;
+		return b;
+	}
 	,get_lang: function() {
 		return this.model.get_lang();
 	}
@@ -799,14 +816,27 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,onErrorCallBackValidChangeYear: function() {
 		net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.view.get_changeYearValid(),[this.view.get_changeYearCancel(),this.view.get_safeMode()]);
 	}
+	,confirmChangeYear: function(changeYearWithoutSave,conf) {
+		this.view.hideChangeYearView();
+		net.flash_line.display.ElementExtender.clearEnterKeyToClick(conf.cancelElem);
+		if(!changeYearWithoutSave) this.startNewDelay(this.isWithOutDelay(true));
+		this.askToChangeYear(this.model.save.currYear);
+		this.model.save.currYear = "";
+	}
 	,validChangeYearClick: function(e) {
 		e.preventDefault();
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(this.view.get_changeYearValid());
 		var str = this.model.isValidYearInput(this.view.get_changeYearInput().value);
 		if(str != "") this.alert(str,$bind(this,this.onErrorCallBackValidChangeYear)); else {
 			var newYear = this.view.get_changeYearInput().value;
-			if(Std.parseInt(newYear) != this.model.get_currYear()) this.askToChangeYear(newYear);
-			this.view.hideChangeYearView();
+			if(Std.parseInt(newYear) != this.model.get_currYear()) {
+				this.model.save.currYear = newYear;
+				var conf = this.model.confirmBox;
+				if(this.areThereNotSavedOpenTexts()) {
+					conf.open(this.get_lang().message.saveTextConfirm.label + this.get_lang().message.changeYearConfirm.label,$bind(this,this.confirmChangeYear));
+					net.flash_line.display.ElementExtender.joinEnterKeyToClick(conf.cancelElem,[conf.validElem]);
+				} else this.confirmChangeYear(this.confirmWithOutSave(true),conf);
+			} else this.view.hideChangeYearView();
 		}
 		return false;
 	}
@@ -843,9 +873,9 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		if(!(this.get_isWindowsPhone() && this.view.get_isChangeYearViewOpen())) {
 			var conf = this.model.confirmBox;
 			if(this.areThereNotSavedOpenTexts()) {
-				conf.open(this.get_lang().message.logOutConfirm.label,$bind(this,this.confirmLogOut));
+				conf.open(this.get_lang().message.saveTextConfirm.label + this.get_lang().message.logOutConfirm.label,$bind(this,this.confirmLogOut));
 				net.flash_line.display.ElementExtender.joinEnterKeyToClick(conf.cancelElem,[conf.validElem]);
-			} else this.confirmLogOut(true,conf);
+			} else this.confirmLogOut(this.confirmWithOutSave(true),conf);
 		}
 		return false;
 	}
@@ -866,7 +896,6 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,validLoginSignUpClick: function(e) {
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(this.view.get_signInValid());
 		e.preventDefault();
-		e.returnValue = false;
 		var str = this.model.isValidSignUpInput(this.view.get_signUpNameInput().value,this.view.get_signUpPwdInput().value,this.view.get_signUpConfirmInput().value);
 		if(str != "") this.alert(str,$bind(this,this.onErrorCallBackValidLoginSignUp)); else {
 			this.askLoginCreation(this.view.get_signUpNameInput().value,this.view.get_signUpPwdInput().value);
@@ -880,7 +909,6 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,validLoginSignInClick: function(e) {
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(this.view.get_signInValid());
 		e.preventDefault();
-		e.returnValue = false;
 		var str = this.model.isValidSignInInput(this.view.get_signInNameInput().value,this.view.get_signInPwdInput().value);
 		if(str != "") this.alert(str,$bind(this,this.onErrorCallBackValidLoginSignIn)); else {
 			this.askOpenConnection(this.view.get_signInNameInput().value,this.view.get_signInPwdInput().value);
@@ -891,7 +919,6 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,cancelLoginClick: function(e) {
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(this.view.get_signInValid());
 		e.preventDefault();
-		e.returnValue = false;
 		net.flash_line.display.ElementExtender.hide(this.view.get_changeYear());
 		if(!this.model.get_isMonthAndDayCreated()) this.initializeMonthAndDay(this.connected(false));
 		this.model.simpleCalendarUsing = true;
@@ -933,6 +960,77 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				this.model.serverWriteMonthEvent.bind($bind(this,this.onAnswerToWriteOneMonthText));
 			}
 		}
+	}
+	,removeBissexDayEvent: function() {
+		if(this.model.get_isMonthAndDayCreated()) {
+			var day = this.model.getMonth(2).getDay(29);
+			if(day != null) {
+				if(net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click",$bind(this,this.dayClick))) this.removeOneDayEvent(day);
+			}
+		}
+	}
+	,removeOneDayEvent: function(day) {
+		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"click",$bind(this,this.dayClick));
+		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"mouseover",$bind(this,this.dayOver));
+		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"mouseout",$bind(this,this.dayOut));
+		net.flash_line.display.ElementExtender.removeLst(day.get_clearButton(),"click",$bind(this,this.clearClick));
+		net.flash_line.display.ElementExtender.removeLst(day.get_cancelButton(),"click",$bind(this,this.cancelClick));
+		net.flash_line.display.ElementExtender.removeLst(day.get_validButton(),"click",$bind(this,this.validClick));
+	}
+	,removeOneMonthTextEvent: function(month) {
+		net.flash_line.display.ElementExtender.removeLst(month.get_clearButton(),"click",$bind(this,this.monthTextClearClick));
+		net.flash_line.display.ElementExtender.removeLst(month.get_cancelButton(),"click",$bind(this,this.monthTextCancelClick));
+		net.flash_line.display.ElementExtender.removeLst(month.get_validButton(),"click",$bind(this,this.monthTextValidClick));
+		net.flash_line.display.ElementExtender.removeLst(month.openTextElem,"click",$bind(this,this.openMonthTextClick));
+		net.flash_line.display.ElementExtender.hide(month.openTextElem);
+		month.closeTextArea();
+	}
+	,createBissexDayEvent: function() {
+		if(this.model.get_isMonthAndDayCreated()) {
+			var day = this.model.getMonth(2).getDay(29);
+			if(day != null) {
+				if(!net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click",$bind(this,this.dayClick))) this.createOneDayEvent(day);
+			}
+		}
+	}
+	,createOneDayEvent: function(day,connected) {
+		if(connected == null) connected = true;
+		if(connected) {
+			if(!net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click")) {
+				net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"click",$bind(this,this.dayClick),null,day);
+				net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"mouseover",$bind(this,this.dayOver),null,day);
+				net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"mouseout",$bind(this,this.dayOut),null,day);
+				net.flash_line.display.ElementExtender.addLst(day.get_clearButton(),"click",$bind(this,this.clearClick),null,day);
+				net.flash_line.display.ElementExtender.addLst(day.get_cancelButton(),"click",$bind(this,this.cancelClick),null,day);
+				net.flash_line.display.ElementExtender.addLst(day.get_validButton(),"click",$bind(this,this.validClick),null,day);
+			}
+		} else day.showFullNameOnTop();
+	}
+	,createOneMonthEvent: function(month,connected,dayOnly) {
+		if(dayOnly == null) dayOnly = false;
+		if(connected == null) connected = true;
+		if(!dayOnly) {
+			if(!net.flash_line.display.ElementExtender.hasLst(month.reactiveElem,"click")) net.flash_line.display.ElementExtender.addLst(month.reactiveElem,"click",$bind(this,this.monthClick),null,month);
+		}
+		if(connected) {
+			if(!net.flash_line.display.ElementExtender.hasLst(month.openTextElem,"click")) {
+				net.flash_line.display.ElementExtender.addLst(month.openTextElem,"click",$bind(this,this.openMonthTextClick),null,month);
+				net.flash_line.display.ElementExtender.addLst(month.get_clearButton(),"click",$bind(this,this.monthTextClearClick),null,month);
+				net.flash_line.display.ElementExtender.addLst(month.get_cancelButton(),"click",$bind(this,this.monthTextCancelClick),null,month);
+				net.flash_line.display.ElementExtender.addLst(month.get_validButton(),"click",$bind(this,this.monthTextValidClick),null,month);
+			}
+			net.flash_line.display.ElementExtender.show(month.openTextElem);
+		} else net.flash_line.display.ElementExtender.hide(month.openTextElem);
+	}
+	,createChangeYearViewEvent: function() {
+		net.flash_line.display.ElementExtender.addLst(this.view.get_changeYearCancel(),"click",$bind(this,this.cancelChangeYearClick));
+		net.flash_line.display.ElementExtender.addLst(this.view.get_changeYearValid(),"click",$bind(this,this.validChangeYearClick));
+	}
+	,createLoginViewEvent: function() {
+		net.flash_line.display.ElementExtender.addLst(this.view.get_signInCancel(),"click",$bind(this,this.cancelLoginClick));
+		net.flash_line.display.ElementExtender.addLst(this.view.get_signUpCancel(),"click",$bind(this,this.cancelLoginClick));
+		net.flash_line.display.ElementExtender.addLst(this.view.get_signInValid(),"click",$bind(this,this.validLoginSignInClick));
+		net.flash_line.display.ElementExtender.addLst(this.view.get_signUpValid(),"click",$bind(this,this.validLoginSignUpClick));
 	}
 	,startNewDelay: function(noDelay) {
 		if(noDelay == null) noDelay = false;
@@ -988,77 +1086,6 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		}
 		return b;
 	}
-	,removeBissexDayEvent: function() {
-		if(this.model.get_isMonthAndDayCreated()) {
-			var day = this.model.getMonth(2).getDay(29);
-			if(day != null) {
-				if(net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click",$bind(this,this.dayClick))) this.removeOneDayEvent(day);
-			}
-		}
-	}
-	,removeOneDayEvent: function(day,forLogOut) {
-		if(forLogOut == null) forLogOut = false;
-		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"click",$bind(this,this.dayClick));
-		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"mouseover",$bind(this,this.dayOver));
-		net.flash_line.display.ElementExtender.removeLst(day.reactiveElem,"mouseout",$bind(this,this.dayOut));
-		net.flash_line.display.ElementExtender.removeLst(day.get_clearButton(),"click",$bind(this,this.clearClick));
-		net.flash_line.display.ElementExtender.removeLst(day.get_cancelButton(),"click",$bind(this,this.cancelClick));
-		net.flash_line.display.ElementExtender.removeLst(day.get_validButton(),"click",$bind(this,this.validClick));
-	}
-	,removeOneMonthTextEvent: function(month) {
-		net.flash_line.display.ElementExtender.removeLst(month.get_clearButton(),"click",$bind(this,this.monthTextClearClick));
-		net.flash_line.display.ElementExtender.removeLst(month.get_cancelButton(),"click",$bind(this,this.monthTextCancelClick));
-		net.flash_line.display.ElementExtender.removeLst(month.get_validButton(),"click",$bind(this,this.monthTextValidClick));
-		net.flash_line.display.ElementExtender.removeLst(month.openTextElem,"click",$bind(this,this.openMonthTextClick));
-		net.flash_line.display.ElementExtender.hide(month.openTextElem);
-		month.closeTextArea();
-	}
-	,createBissexDayEvent: function() {
-		if(this.model.get_isMonthAndDayCreated()) {
-			var day = this.model.getMonth(2).getDay(29);
-			if(day != null) {
-				if(!net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click",$bind(this,this.dayClick))) this.createOneDayEvent(day);
-			}
-		}
-	}
-	,createOneDayEvent: function(day,connected) {
-		if(connected == null) connected = true;
-		if(connected) {
-			if(net.flash_line.display.ElementExtender.hasLst(day.reactiveElem,"click")) haxe.Log.trace("day has listener !",{ fileName : "Controler.hx", lineNumber : 467, className : "calendar.Controler", methodName : "createOneDayEvent"});
-			net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"click",$bind(this,this.dayClick),null,day);
-			net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"mouseover",$bind(this,this.dayOver),null,day);
-			net.flash_line.display.ElementExtender.addLst(day.reactiveElem,"mouseout",$bind(this,this.dayOut),null,day);
-			net.flash_line.display.ElementExtender.addLst(day.get_clearButton(),"click",$bind(this,this.clearClick),null,day);
-			net.flash_line.display.ElementExtender.addLst(day.get_cancelButton(),"click",$bind(this,this.cancelClick),null,day);
-			net.flash_line.display.ElementExtender.addLst(day.get_validButton(),"click",$bind(this,this.validClick),null,day);
-		} else day.showFullNameOnTop();
-	}
-	,createOneMonthEvent: function(month,connected,dayOnly) {
-		if(dayOnly == null) dayOnly = false;
-		if(connected == null) connected = true;
-		if(!dayOnly) {
-			if(net.flash_line.display.ElementExtender.hasLst(month.reactiveElem,"click")) haxe.Log.trace("month has listener !",{ fileName : "Controler.hx", lineNumber : 452, className : "calendar.Controler", methodName : "createOneMonthEvent"});
-			net.flash_line.display.ElementExtender.addLst(month.reactiveElem,"click",$bind(this,this.monthClick),null,month);
-			net.flash_line.display.ElementExtender.addLst(month.get_clearButton(),"click",$bind(this,this.monthTextClearClick),null,month);
-			net.flash_line.display.ElementExtender.addLst(month.get_cancelButton(),"click",$bind(this,this.monthTextCancelClick),null,month);
-			net.flash_line.display.ElementExtender.addLst(month.get_validButton(),"click",$bind(this,this.monthTextValidClick),null,month);
-		}
-		if(connected) {
-			if(net.flash_line.display.ElementExtender.hasLst(month.openTextElem,"click")) haxe.Log.trace("month TEXT has listener !",{ fileName : "Controler.hx", lineNumber : 459, className : "calendar.Controler", methodName : "createOneMonthEvent"});
-			net.flash_line.display.ElementExtender.addLst(month.openTextElem,"click",$bind(this,this.openMonthTextClick),null,month);
-			net.flash_line.display.ElementExtender.show(month.openTextElem);
-		} else net.flash_line.display.ElementExtender.hide(month.openTextElem);
-	}
-	,createChangeYearViewEvent: function() {
-		net.flash_line.display.ElementExtender.addLst(this.view.get_changeYearCancel(),"click",$bind(this,this.cancelChangeYearClick));
-		net.flash_line.display.ElementExtender.addLst(this.view.get_changeYearValid(),"click",$bind(this,this.validChangeYearClick));
-	}
-	,createLoginViewEvent: function() {
-		net.flash_line.display.ElementExtender.addLst(this.view.get_signInCancel(),"click",$bind(this,this.cancelLoginClick));
-		net.flash_line.display.ElementExtender.addLst(this.view.get_signUpCancel(),"click",$bind(this,this.cancelLoginClick));
-		net.flash_line.display.ElementExtender.addLst(this.view.get_signInValid(),"click",$bind(this,this.validLoginSignInClick));
-		net.flash_line.display.ElementExtender.addLst(this.view.get_signUpValid(),"click",$bind(this,this.validLoginSignUpClick));
-	}
 	,disableMonthTextAndDay: function() {
 		var month;
 		if(net.flash_line.display.ElementExtender.hasLst(this.model.monthChildren[0].reactiveElem,"click",$bind(this,this.monthClick))) {
@@ -1089,12 +1116,15 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 			var month1 = _g1[_g];
 			++_g;
 			this.createOneMonthEvent(month1,connected,dayOnly);
+			month1.displayUpdate();
 			if(readData != null) this.model.storeOneMonthText(readData,month1);
 			var _g2 = 0, _g3 = month1.dayChildren;
 			while(_g2 < _g3.length) {
 				var day = _g3[_g2];
 				++_g2;
 				this.createOneDayEvent(day,connected);
+				day.clear();
+				day.displayUpdate();
 				if(readData != null) this.model.storeOneDayText(readData,day);
 			}
 		}
@@ -1122,7 +1152,6 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		}
 	}
 	,onAnswerToWriteOneMonthText: function(e) {
-		haxe.Log.trace("answ",{ fileName : "Controler.hx", lineNumber : 367, className : "calendar.Controler", methodName : "onAnswerToWriteOneMonthText"});
 		this.model.wait.stop();
 		var answ = e.result.answ;
 		var msg = e.result.msg;
@@ -1133,13 +1162,11 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				this.doConnection();
 			} else this.alert(this.get_lang().error.server.fatalWrite.label);
 		} else if(answ == "writeMonthOk") {
-			haxe.Log.trace("on  answ : month=" + Std.string(e.result.month),{ fileName : "Controler.hx", lineNumber : 380, className : "calendar.Controler", methodName : "onAnswerToWriteOneMonthText"});
 			this.model.save.months = [];
 			this.model.save.currUserId = "";
 		} else this.alert(this.get_lang().error.server.unknownError.label);
 	}
 	,askToWriteOneMonthText: function(month) {
-		haxe.Log.trace("ask month=" + month.get_key() + "  /  " + month.get_name(),{ fileName : "Controler.hx", lineNumber : 359, className : "calendar.Controler", methodName : "askToWriteOneMonthText"});
 		this.model.wait.start(this.get_lang().server.writeOneMonthText.label);
 		this.model.serverWriteMonthEvent.bind($bind(this,this.onAnswerToWriteOneMonthText));
 		this.model.save.currUserId = this.model.currUserId;
@@ -1197,21 +1224,20 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.model.serverEvent.bind($bind(this,this.onAnswerToChangeYear));
 		this.model.toServer({ req : "changeYear", year : newYear});
 	}
-	,doLogOut: function() {
-		this.disableMonthTextAndDay();
-		this.model.currUserId = null;
-		this.model.currUserPwd = null;
-		this.model.simpleCalendarUsing = true;
-		this.view.doLayoutResponsive();
-		this.view.displayInfoWhenNoUser();
-		this.view.changeConnectLabel(this.get_lang().button.connect.label);
-		net.flash_line.display.ElementExtender.removeLst(this.view.get_connection(),"click",$bind(this,this.deconnectClick));
-		net.flash_line.display.ElementExtender.addLst(this.view.get_connection(),"click",$bind(this,this.connectionClick));
-		net.flash_line.display.ElementExtender.hide(this.view.get_changeYear());
-	}
 	,onAnswerLogOut: function(e) {
 		this.model.wait.stop();
-		if(e.result.answ == "closeConnectionOk") this.doLogOut(); else this.alert(this.get_lang().error.server.deconnectError.label);
+		if(e.result.answ == "closeConnectionOk") {
+			this.disableMonthTextAndDay();
+			this.model.currUserId = null;
+			this.model.currUserPwd = null;
+			this.model.simpleCalendarUsing = true;
+			this.view.doLayoutResponsive();
+			this.view.displayInfoWhenNoUser();
+			this.view.changeConnectLabel(this.get_lang().button.connect.label);
+			net.flash_line.display.ElementExtender.removeLst(this.view.get_connection(),"click",$bind(this,this.deconnectClick));
+			net.flash_line.display.ElementExtender.addLst(this.view.get_connection(),"click",$bind(this,this.connectionClick));
+			net.flash_line.display.ElementExtender.hide(this.view.get_changeYear());
+		} else this.alert(this.get_lang().error.server.deconnectError.label);
 	}
 	,askLogOut: function() {
 		this.model.wait.show(this.get_lang().server.logOut.label);
@@ -1288,7 +1314,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				while(_g < _g1.length) {
 					var day = _g1[_g];
 					++_g;
-					haxe.Log.trace(day.get_key(),{ fileName : "Controler.hx", lineNumber : 146, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
+					haxe.Log.trace(day.get_key(),{ fileName : "Controler.hx", lineNumber : 176, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
 					this.askToWriteOneDayText(day);
 					d++;
 				}
@@ -1296,7 +1322,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				while(_g < _g1.length) {
 					var month = _g1[_g];
 					++_g;
-					haxe.Log.trace(month.get_key(),{ fileName : "Controler.hx", lineNumber : 150, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
+					haxe.Log.trace(month.get_key(),{ fileName : "Controler.hx", lineNumber : 180, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
 					this.askToWriteOneMonthText(month);
 					m++;
 				}
@@ -1368,9 +1394,14 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,start: function() {
 		this.askConnectInfo();
 	}
+	,pageUnload: function(e) {
+		if(this.model.currUserId != null && this.areThereNotSavedOpenTexts()) return this.get_lang().message.unloadAlert.label;
+		return;
+	}
 	,eventInit: function() {
 		net.flash_line.display.ElementExtender.addLst(this.view.rootHtmlElement,"resize",$bind(this,this.skinResize));
 		net.flash_line.display.ElementExtender.addLst(this.view.get_window(),"resize",$bind(this,this.skinResize));
+		net.flash_line.display.ElementExtender.addLst(this.view.get_window(),"beforeunload",$bind(this,this.pageUnload));
 		net.flash_line.display.ElementExtender.handCursor(this.view.get_window(),false);
 		net.flash_line.display.ElementExtender.addLst(this.view.get_connection(),"click",$bind(this,this.connectionClick));
 		net.flash_line.display.ElementExtender.addLst(this.view.get_changeYear(),"click",$bind(this,this.changeYearClick));
@@ -1419,12 +1450,12 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,get_month: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 257, className : "calendar.Day", methodName : "get_month"});
+		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 304, className : "calendar.Day", methodName : "get_month"});
 		return v;
 	}
 	,get_year: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 249, className : "calendar.Day", methodName : "get_year"});
+		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 296, className : "calendar.Day", methodName : "get_year"});
 		return v;
 	}
 	,get_date: function() {
@@ -1436,9 +1467,10 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		return this.monthParent.get_key() + str;
 	}
 	,get_abbrev: function() {
-		var str = this.lang.day.abbrev;
 		var v = this.get_date().getDay();
-		return str.substr(v,1);
+		var str = this.lang.day.abbrev.substr(v,1);
+		if(this.lang.id == "en" && v == 0) str += "u";
+		return str;
 	}
 	,get_name: function() {
 		var arr = this.lang.day.list.item;
@@ -1447,11 +1479,22 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,displayIfSunday: function() {
 		if(this.get_date().getDay() == 0) {
-			this.skinElem.style.background = "linear-gradient(to right, " + this.monthParent.get_color() + ", white)";
+			if(this.get_isSafari()) {
+				var c = HxOverrides.substr(this.monthParent.get_color(),1,null);
+				var str = "";
+				var $it0 = new net.flash_line.util.StepIterator(0,6,2);
+				while( $it0.hasNext() ) {
+					var i = $it0.next();
+					var h = this.addHex(HxOverrides.substr(c,i,2),"44");
+					str += h.length > 2?"ff":h;
+				}
+				this.skinElem.style.backgroundColor = "#" + str;
+			} else this.skinElem.style.background = "linear-gradient(to right, " + this.monthParent.get_color() + ", white)";
 			this.skinElem.style.paddingTop = "2px";
 			this.skinElem.style.paddingBottom = "2px";
 		} else {
-			this.skinElem.style.background = null;
+			this.skinElem.style.background = this.model.tree.month.backgroundColor;
+			this.skinElem.style.backgroundColor = this.model.tree.month.backgroundColor;
 			this.skinElem.style.paddingTop = "0px";
 			this.skinElem.style.paddingBottom = "0px";
 		}
@@ -1535,7 +1578,7 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"abbrev").innerHTML = str + " " + this.get_abbrev();
 		this.displayIfSunday();
 	}
-	,initSkin: function(dayContainer) {
+	,displayInit: function(dayContainer) {
 		this.skinElem = dayContainer;
 		this.reactiveElem = net.flash_line.display.ElementExtender.elemBy(this.skinElem,"dayTop");
 		var str = HxOverrides.substr(Std.string(100 + this.get_number()),1,null);
@@ -1544,9 +1587,6 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"cancel").innerHTML = this.lang.button.cancel.label;
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"valid").innerHTML = this.lang.button.valid.label;
 		this.displayIfSunday();
-	}
-	,displayInit: function(dayContainer) {
-		this.initSkin(dayContainer);
 	}
 	,__class__: calendar.Day
 	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_clearButton:"get_clearButton",get_cancelButton:"get_cancelButton",get_validButton:"get_validButton",set_textContent:"set_textContent",get_textContent:"get_textContent",get_number:"get_number",get_month:"get_month",get_year:"get_year",get_date:"get_date",get_abbrev:"get_abbrev",get_name:"get_name",get_key:"get_key",get_isOpen:"get_isOpen",get_hasBeenModified:"get_hasBeenModified"})
@@ -1689,14 +1729,17 @@ calendar.Model = function(lg,su) {
 	this.serverActived = new net.flash_line.event.EventSource();
 	this.serverWriteDayEvent = new net.flash_line.event.EventSource();
 	this.serverWriteMonthEvent = new net.flash_line.event.EventSource();
-	this.save = { days : [], months : [], currUserId : ""};
+	this.save = { days : [], months : [], currUserId : "", currYear : ""};
 	this.serverUrl = su;
 	this.wasOneTimeUsed = false;
 };
 calendar.Model.__name__ = true;
 calendar.Model.__super__ = net.flash_line.util.xml.XmlParser;
 calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
-	get_isCurrYearBissextile: function() {
+	get_isSafeMode: function() {
+		return !js.Cookie.exists("calendarUnsafe");
+	}
+	,get_isCurrYearBissextile: function() {
 		return this.isBissextile(this.get_currYear());
 	}
 	,get_isMonthAndDayCreated: function() {
@@ -1723,13 +1766,13 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		return this.intVal(v);
 	}
 	,set_currYear: function(v) {
-		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 360, className : "calendar.Model", methodName : "set_currYear"});
+		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 409, className : "calendar.Model", methodName : "set_currYear"});
 		this._currYear = v;
 		return v;
 	}
 	,onServerError: function(msg) {
 		this.serverEvent.dispatch(new net.flash_line.event.StandardEvent(this,"error",msg));
-		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 354, className : "calendar.Model", methodName : "onServerError"});
+		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 402, className : "calendar.Model", methodName : "onServerError"});
 	}
 	,onServerWriteMonthData: function(data) {
 		data = StringTools.trim(data);
@@ -1805,9 +1848,6 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		httpRequest.request(true);
 		this.serverActived.dispatch(new net.flash_line.event.StandardEvent(this));
 	}
-	,get_isSafeMode: function() {
-		return !js.Cookie.exists("calendarUnsafe");
-	}
 	,setSafeMode: function(isSafe) {
 		if(isSafe == null) isSafe = true;
 		var del = 31536000 * 1000;
@@ -1859,14 +1899,11 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		}
 	}
 	,storeOneDayText: function(o,day) {
-		day.clear();
-		day.displayUpdate();
 		if(o.get("day_" + day.get_key()) != null) day.set_textContent(this.decodeXmlReserved(o.get("day_" + day.get_key()).value)); else day.set_textContent("");
 		day.displayText();
 		if(day.get_isOpen()) day.showFullNameOnTop(); else day.restoreTextOnTop();
 	}
 	,storeOneMonthText: function(o,month) {
-		month.displayUpdate();
 		if(o.get("month_" + month.get_key()) != null) month.set_textContent(this.decodeXmlReserved(o.get("month_" + month.get_key()).value)); else month.set_textContent("");
 		month.displayText();
 	}
@@ -1875,20 +1912,20 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		while(_g < _g1.length) {
 			var month = _g1[_g];
 			++_g;
+			month.displayUpdate();
 			this.storeOneMonthText(o,month);
 			var _g2 = 0, _g3 = month.dayChildren;
 			while(_g2 < _g3.length) {
 				var day = _g3[_g2];
 				++_g2;
+				day.clear();
+				day.displayUpdate();
 				this.storeOneDayText(o,day);
 			}
 		}
 	}
-	,clearMonthAndDayText: function() {
-		this.storeMonthAndDayText(new net.flash_line.util.Object());
-	}
 	,getMonth: function(n) {
-		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 163, className : "calendar.Model", methodName : "getMonth"});
+		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 177, className : "calendar.Model", methodName : "getMonth"});
 		return this.monthChildren[n];
 	}
 	,removeBissexDay: function() {
@@ -1904,14 +1941,6 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 	,createOneMonth: function(idx) {
 		this.monthChildren.push(new calendar.Month(idx,this));
 		return net.flash_line.util.ArrayExtender.last(this.monthChildren);
-	}
-	,removeMonthAndDay: function() {
-		var v = this.monthChildren.length;
-		var _g = 0;
-		while(_g < v) {
-			var i = _g++;
-			this.monthChildren.pop();
-		}
 	}
 	,initServer: function() {
 		if(this.httpStandardRequest == null) {
@@ -2007,6 +2036,21 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 		if(this.index == 0 || this.index == 13) ret += " " + this.get_year();
 		return ret;
 	}
+	,onLoopScrollToTop: function(e) {
+		if(e.type == "end") e.target.clear(); else js.Browser.window.scrollTo(0,e.value);
+	}
+	,toString: function() {
+		var str = "\n";
+		str += "index=" + this.index + " : [" + this.get_number() + "/" + this.get_year() + "]. " + "name=" + this.get_name() + "\n";
+		str += "\n";
+		var _g = 0, _g1 = this.dayChildren;
+		while(_g < _g1.length) {
+			var i = _g1[_g];
+			++_g;
+			str += i.toString();
+		}
+		return str;
+	}
 	,storeText: function() {
 		this.set_textContent((js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.monthElem,"textarea") , HTMLTextAreaElement)).value);
 	}
@@ -2044,43 +2088,16 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 		}
 		this._isOpen = true;
 	}
-	,displayUpdate: function() {
-		this.reactiveElem.innerHTML = this.get_name();
-	}
-	,displayInit: function(monthContainer) {
-		this.skinElem = monthContainer;
-		this.monthElem = net.flash_line.display.ElementExtender.elemBy(this.skinElem,"month");
-		this.reactiveElem = net.flash_line.display.ElementExtender.elemBy(this.monthElem,"name");
-		this.reactiveElem.innerHTML = this.get_name();
-		this.openTextElem = net.flash_line.display.ElementExtender.elemBy(this.monthElem,"open");
-		this.get_clearButton().innerHTML = this.lang.button.clear.label;
-		this.get_cancelButton().innerHTML = this.lang.button.cancel.label;
-		this.get_validButton().innerHTML = this.lang.button.valid.label;
-		var el = net.flash_line.display.ElementExtender.elemBy(monthContainer,"day");
-		var _g = 0, _g1 = this.dayChildren;
-		while(_g < _g1.length) {
-			var day = _g1[_g];
-			++_g;
-			var dayElem = net.flash_line.display.ElementExtender.clone(el,true);
-			this.skinElem.appendChild(dayElem);
-			dayElem.id = this.skinElem.id + "d" + day.index;
-			day.displayInit(dayElem);
-		}
-		el.parentNode.removeChild(el);
-	}
 	,restoreScroll: function() {
 		if(!this.get_isMobile() && this.get_isWebKit()) {
 			if(this.oy != null) new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,-this.oy + js.Browser.window.pageYOffset,.5,$bind(this,this.onLoopScrollToTop));
 		}
 		this.oy = null;
 	}
-	,onLoopScrollToTop: function(e) {
-		if(e.type == "end") e.target.clear(); else js.Browser.window.scrollTo(0,e.value);
-	}
 	,scrollToTop: function() {
 		this.oy = net.flash_line.display.ElementExtender.positionInWindow(this.skinElem).get_y() | 0;
 		if(this.oy > 0) {
-			if(this.get_isMobile() || !this.get_isWebKit()) this.skinElem.scrollIntoView(true); else new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy + js.Browser.window.pageYOffset,1,$bind(this,this.onLoopScrollToTop));
+			if(this.get_isIphoneIpad()) new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy,1,$bind(this,this.onLoopScrollToTop)); else if(this.get_isFirefox()) new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy,1,$bind(this,this.onLoopScrollToTop)); else if(this.get_isWindowsPhone()) this.skinElem.scrollIntoView(true); else new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy + js.Browser.window.pageYOffset,1,$bind(this,this.onLoopScrollToTop));
 		} else this.oy = null;
 		if(this.oy != null) {
 			var sy = this.oy;
@@ -2093,18 +2110,6 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 			this.oy = sy;
 		}
 	}
-	,toString: function() {
-		var str = "\n";
-		str += "index=" + this.index + " : [" + this.get_number() + "/" + this.get_year() + "]. " + "name=" + this.get_name() + "\n";
-		str += "\n";
-		var _g = 0, _g1 = this.dayChildren;
-		while(_g < _g1.length) {
-			var i = _g1[_g];
-			++_g;
-			str += i.toString();
-		}
-		return str;
-	}
 	,getDay: function(n) {
 		if(n < 1 || n > this.dayChildren.length) return null; else return this.dayChildren[n - 1];
 	}
@@ -2113,7 +2118,7 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 		var dayElem = net.flash_line.display.ElementExtender.clone(el,true);
 		this.skinElem.appendChild(dayElem);
 		dayElem.id = this.skinElem.id + "d" + day.index;
-		day.initSkin(dayElem);
+		day.displayInit(dayElem);
 		if(day.index == this.get_maxDay() - 1) el.parentNode.removeChild(el);
 		return dayElem;
 	}
@@ -2122,7 +2127,10 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.dayChildren.push(day);
 		return day;
 	}
-	,initSkin: function(monthContainer) {
+	,displayUpdate: function() {
+		this.reactiveElem.innerHTML = this.get_name();
+	}
+	,displayInit: function(monthContainer) {
 		this.skinElem = monthContainer;
 		this.monthElem = net.flash_line.display.ElementExtender.elemBy(this.skinElem,"month");
 		this.reactiveElem = net.flash_line.display.ElementExtender.elemBy(this.monthElem,"name");
@@ -2131,13 +2139,6 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.get_clearButton().innerHTML = this.lang.button.clear.label;
 		this.get_cancelButton().innerHTML = this.lang.button.cancel.label;
 		this.get_validButton().innerHTML = this.lang.button.valid.label;
-	}
-	,createDay: function() {
-		var _g1 = 0, _g = this.get_maxDay();
-		while(_g1 < _g) {
-			var i = _g1++;
-			this.dayChildren.push(new calendar.Day(i,this.model,this));
-		}
 	}
 	,__class__: calendar.Month
 	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_clearButton:"get_clearButton",get_cancelButton:"get_cancelButton",get_validButton:"get_validButton",set_textContent:"set_textContent",get_textContent:"get_textContent",get_number:"get_number",get_year:"get_year",get_name:"get_name",get_key:"get_key",get_abbrev:"get_abbrev",get_maxDay:"get_maxDay",get_color:"get_color",get_hasBeenModified:"get_hasBeenModified",get_isOpen:"get_isOpen",get_isTextAreaOpen:"get_isTextAreaOpen",set_wasOneTimeUsed:"set_wasOneTimeUsed",get_wasOneTimeUsed:"get_wasOneTimeUsed"})
@@ -2153,7 +2154,13 @@ calendar.PromptBox = function(el,txElem,pElem,bElem) {
 calendar.PromptBox.__name__ = true;
 calendar.PromptBox.__super__ = net.flash_line.util.Common;
 calendar.PromptBox.prototype = $extend(net.flash_line.util.Common.prototype,{
-	onValid: function(e) {
+	makePopUpRelativeForFireFoxPhone: function(el) {
+		js.Browser.window.scrollTo(0,0);
+		el.style.position = "absolute";
+		el.style.top = "0px";
+		el.style.height = Std.string(js.Browser.document.documentElement.scrollHeight) + "px";
+	}
+	,onValid: function(e) {
 		e.preventDefault();
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(this.validElem);
 		this.close();
@@ -2166,6 +2173,7 @@ calendar.PromptBox.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,open: function(v,cb) {
 		this.ctnrElem.style.visibility = "visible";
+		if(this.get_isPhone() && this.get_isFirefox()) this.makePopUpRelativeForFireFoxPhone(this.ctnrElem);
 		this.textElem.innerHTML = v;
 		net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.validElem);
 		this.callBack = cb;
@@ -2190,7 +2198,10 @@ calendar.View = function(m,lg) {
 calendar.View.__name__ = true;
 calendar.View.__super__ = net.flash_line.util.Common;
 calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
-	get_isChangeYearViewOpen: function() {
+	get_isLoginViewOpen: function() {
+		return this.strVal(this.elem("loginView").style.visibility,"hidden") != "hidden";
+	}
+	,get_isChangeYearViewOpen: function() {
 		return this.strVal(this.elem("changeYearView").style.visibility,"hidden") != "hidden";
 	}
 	,get_changeYearCurrent: function() {
@@ -2265,46 +2276,31 @@ calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,displayUserInfo: function() {
 		this.get_current().innerHTML = Std.string(this.get_lang().currentUserInfo1.label) + "<span class=\"blue\" >" + Std.string(this.model.get_currYear()) + "</span>" + Std.string(this.get_lang().currentUserInfo2.label) + this.model.currUserId;
 	}
-	,restoreDisplayInDay: function() {
-		var month;
-		var _g = 0, _g1 = this.model.monthChildren;
-		while(_g < _g1.length) {
-			var month1 = _g1[_g];
-			++_g;
-			var _g2 = 0, _g3 = month1.dayChildren;
-			while(_g2 < _g3.length) {
-				var day = _g3[_g2];
-				++_g2;
-				day.restoreTextOnTop();
-			}
-		}
-	}
-	,displayFullNameInDay: function() {
-		var month;
-		var _g = 0, _g1 = this.model.monthChildren;
-		while(_g < _g1.length) {
-			var month1 = _g1[_g];
-			++_g;
-			var _g2 = 0, _g3 = month1.dayChildren;
-			while(_g2 < _g3.length) {
-				var day = _g3[_g2];
-				++_g2;
-				day.showFullNameOnTop();
-			}
-		}
-	}
 	,hideChangeYearView: function() {
 		this.elem("changeYearView").style.visibility = "hidden";
 	}
+	,makePopUpRelativeForFireFoxPhone: function(el) {
+		js.Browser.window.scrollTo(0,0);
+		el.style.position = "absolute";
+		el.style.top = "0px";
+		haxe.Log.trace("i::be height=" + el.clientHeight,{ fileName : "View.hx", lineNumber : 317, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
+		haxe.Log.trace("i::scrollheight=" + js.Browser.document.documentElement.scrollHeight,{ fileName : "View.hx", lineNumber : 318, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
+		el.style.height = Std.string(js.Browser.document.documentElement.scrollHeight) + "px";
+		haxe.Log.trace("i::af height=" + el.clientHeight,{ fileName : "View.hx", lineNumber : 320, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
+	}
 	,showChangeYearView: function() {
 		this.changeSafeModeLabel();
-		this.elem("changeYearView").style.visibility = "visible";
+		var el = this.elem("changeYearView");
+		el.style.visibility = "visible";
+		if(this.get_isPhone() && this.get_isFirefox()) this.makePopUpRelativeForFireFoxPhone(el);
 	}
 	,hideConnectView: function() {
 		this.elem("loginView").style.visibility = "hidden";
 	}
 	,showConnectView: function(id,pwd) {
-		this.elem("loginView").style.visibility = "visible";
+		var el = this.elem("loginView");
+		el.style.visibility = "visible";
+		if(this.get_isPhone() && this.get_isFirefox()) this.makePopUpRelativeForFireFoxPhone(el);
 		if(id != null) this.get_signInNameInput().value = id;
 		if(pwd != null) this.get_signInPwdInput().value = pwd;
 		this.get_signUpNameInput().value = "";
@@ -2347,6 +2343,7 @@ calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
 				if(this.model.get_currMonthIndex() == month.index) {
 					month.open();
 					if(!this.model.wasOneTimeUsed) {
+						if(this.get_isSafari() && this.get_isPhone() && !this.get_isIphoneIpad()) this.model.wasOneTimeUsed = true;
 						if(w < middleWidth || this.get_isMobile()) {
 							var minIndexForFirstScrollToTop = this.intVal(this.model.tree.month.minIndexForFirstScrollToTop,2);
 							if(month.index > minIndexForFirstScrollToTop) this.model.monthChildren[month.index - minIndexForFirstScrollToTop + 1].scrollToTop();
@@ -2375,11 +2372,8 @@ calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.elem("monthOuter").appendChild(monthContainer);
 		monthContainer.setAttribute("class","monthContainer");
 		monthContainer.id = "m" + month.index;
-		month.initSkin(monthContainer);
+		month.displayInit(monthContainer);
 		return monthContainer;
-	}
-	,removeMonthAndDay: function() {
-		net.flash_line.display.ElementExtender.removeChildren(this.elem("monthOuter"));
 	}
 	,displayInit: function() {
 		var el;
@@ -2416,7 +2410,7 @@ calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
 		net.flash_line.display.ElementExtender.child(this.get_changeYearDiv(),"changeYearValid").innerHTML = this.get_lang().button.valid.label;
 	}
 	,__class__: calendar.View
-	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_lang:"get_lang",get_connection:"get_connection",get_safeMode:"get_safeMode",get_changeYear:"get_changeYear",get_current:"get_current",get_window:"get_window",get_signInCancel:"get_signInCancel",get_signInValid:"get_signInValid",get_signUpValid:"get_signUpValid",get_signUpCancel:"get_signUpCancel",get_changeYearCancel:"get_changeYearCancel",get_changeYearValid:"get_changeYearValid",get_signInDiv:"get_signInDiv",get_signUpDiv:"get_signUpDiv",get_changeYearDiv:"get_changeYearDiv",get_signUpNameInput:"get_signUpNameInput",get_signInNameInput:"get_signInNameInput",get_signInPwdInput:"get_signInPwdInput",get_signUpPwdInput:"get_signUpPwdInput",get_signUpConfirmInput:"get_signUpConfirmInput",get_changeYearInput:"get_changeYearInput",get_changeYearCurrent:"get_changeYearCurrent",get_isChangeYearViewOpen:"get_isChangeYearViewOpen"})
+	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_lang:"get_lang",get_connection:"get_connection",get_safeMode:"get_safeMode",get_changeYear:"get_changeYear",get_current:"get_current",get_window:"get_window",get_signInCancel:"get_signInCancel",get_signInValid:"get_signInValid",get_signUpValid:"get_signUpValid",get_signUpCancel:"get_signUpCancel",get_changeYearCancel:"get_changeYearCancel",get_changeYearValid:"get_changeYearValid",get_signInDiv:"get_signInDiv",get_signUpDiv:"get_signUpDiv",get_changeYearDiv:"get_changeYearDiv",get_signUpNameInput:"get_signUpNameInput",get_signInNameInput:"get_signInNameInput",get_signInPwdInput:"get_signInPwdInput",get_signUpPwdInput:"get_signUpPwdInput",get_signUpConfirmInput:"get_signUpConfirmInput",get_changeYearInput:"get_changeYearInput",get_changeYearCurrent:"get_changeYearCurrent",get_isChangeYearViewOpen:"get_isChangeYearViewOpen",get_isLoginViewOpen:"get_isLoginViewOpen"})
 });
 calendar.WaitView = function(el,te,ae,mo,ax) {
 	this.ctnrElem = el;
@@ -3802,7 +3796,7 @@ net.flash_line.io.HttpExtender = function() { }
 net.flash_line.io.HttpExtender.__name__ = true;
 net.flash_line.io.HttpExtender.getParameter = function(h,v) {
 	var params = new net.flash_line.util.Object();
-	var _g = 0, _g1 = new EReg("[&;]","g").split(v);
+	var _g = 0, _g1 = new EReg("[&]","g").split(v);
 	while(_g < _g1.length) {
 		var p = _g1[_g];
 		++_g;
@@ -3893,6 +3887,29 @@ net.flash_line.util.Object.prototype = {
 	}
 	,__class__: net.flash_line.util.Object
 }
+net.flash_line.util.StepIterator = function(min,max,step) {
+	this.min = min;
+	this.max = max;
+	if(step == null) {
+		if(min < max) step = 1; else step = -1;
+	}
+	if(min <= max && step < 0 || min > max && step >= 0) step *= -1;
+	this.step = step;
+};
+net.flash_line.util.StepIterator.__name__ = true;
+net.flash_line.util.StepIterator.prototype = {
+	next: function() {
+		var ret = this.min;
+		this.min += this.step;
+		return ret;
+	}
+	,hasNext: function() {
+		var ret;
+		if(this.step > 0) ret = this.min < this.max; else ret = this.min > this.max;
+		return ret;
+	}
+	,__class__: net.flash_line.util.StepIterator
+}
 var $_;
 function $bind(o,m) { var f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; return f; };
 if(Array.prototype.indexOf) HxOverrides.remove = function(a,o) {
@@ -3935,7 +3952,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.2.25";
+Main.version = "1.3.42";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;

@@ -192,6 +192,7 @@ textarea:focus {
 
 
 #calendar div.header {				
+	background-color: #fe9;	
 	background: linear-gradient( to right, rgba(255,150,0,.5), white);					
 	background: -webkit-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));
 	background:    -moz-linear-gradient( left, rgba(255,150,0,.5), rgba(255,255,255,.5));

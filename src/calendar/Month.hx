@@ -1,5 +1,27 @@
 /**
  * Copyright (c) jm Delettre.
+ * 
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 /**
 * app calendar package
@@ -8,11 +30,6 @@ package calendar;
 /**
 * classes imports
 */
-//import js.Browser;
-//import js.html.Document;
-//import net.flash_line.util.Object;
-
-//import js.Lib;
 import js.Browser;
 import js.html.ImageElement;
 import js.html.TextAreaElement;
@@ -22,7 +39,7 @@ import net.flash_line.util.Common;
 import net.flash_line.util.Object;
 import js.html.Element; import net.flash_line.display.ElementExtender ; using net.flash_line.display.ElementExtender;
 /**
-* 
+* * Model & View for a month
 */
 class Month extends Common {
 	var  model:Model;
@@ -37,24 +54,24 @@ class Month extends Common {
 	public var validButton(get,null):Element;	
 	//
 	/**
-	 * text entered and valided for this month
+	 * text valided for this month
 	 */
 	public var textContent(get,set):String;var _textContent:String;
 	//
 	/**
-	 * Day() of this Month()
+	 * Days of this month
 	 */
 	public var dayChildren(default, null):Array<Day>;
 	/**
-	 * index pos in parent model array
+	 * index pos in Model array. from 0 to 13: 0==dec year-1 ; 13=jan year+1
 	 */
 	public var index(default, null):Int;	
 	/**
-	 * main Element in DOM
+	 * container Element in DOM
 	 */
 	public var skinElem(default, null):Element;	
 	/**
-	 * top container (class="month")
+	 * top container (css class="month")
 	 */
 	public var monthElem(default, null):Element;	
 	/**
@@ -71,11 +88,11 @@ class Month extends Common {
 	 */	
 	public var number(get,null):Int;	
 	/**
-	 * @return 0 to 9999
+	 * @return year of this Month 0 to 9999
 	 */
 	public var year(get, null):Int;
 	/**
-	 * @return one of "January","February",etc
+	 * @return one of "January","February",etc -in current language
 	 */
 	public var name(get, null):String; 
 	/**
@@ -91,7 +108,7 @@ class Month extends Common {
 	 */
 	public var maxDay(get, null):Int; 
 	/**
-	 * @return month's color
+	 * @return month's sunday color
 	 */
 	public var color(get, null):String; 
 	/**
@@ -107,15 +124,16 @@ class Month extends Common {
 	 */
 	public var isTextAreaOpen(get, null):Bool; var _isTextAreaOpen:Bool;
 	/**
-	 * @return true if users at least one time open or close 
+	 * @return true if user at least one time open or close 
 	 */
 	public var wasOneTimeUsed(get, set):Bool; var _wasOneTimeUsed:Bool;
-	
-	
 	//
 	//
 	/**
 	* constructor
+	* 
+	* @param	idx index pos in Model array -from 0 to 13
+	* @param	m	Model
 	*/
 	public function new (idx:Int,m:Model) {
 		index = idx;
@@ -127,14 +145,9 @@ class Month extends Common {
 		_wasOneTimeUsed = false ;
     }
 	/**
-	 * Create days of the month and push into this.dayChildren[]
+	 * @param	monthContainer
 	 */
-    public function createDay () {
-		for (i in 0...maxDay) {
-			dayChildren.push(new Day(i, model, this));
-		}
-    }
-	public function initSkin (monthContainer:Element) {
+	public function displayInit (monthContainer:Element) {
 		skinElem = monthContainer;
 		monthElem = skinElem.elemBy("month") ;
 		reactiveElem = monthElem.elemBy("name");		
@@ -144,6 +157,12 @@ class Month extends Common {
 		cancelButton.innerHTML = lang.button.cancel.label ;
 		validButton.innerHTML = lang.button.valid.label ;		
     }
+	/**
+	 * Display month name with correct year -used for dec and jan
+	 */	 
+	public function displayUpdate () {				
+		reactiveElem.innerHTML = name;	
+    }		
     public function createOneDay (idx:Int):Day {
 		var day:Day=new Day(idx, model, this);
 		dayChildren.push(day);			
@@ -154,7 +173,7 @@ class Month extends Common {
 		var dayElem:Element = el.clone(true) ;
 		skinElem.appendChild(dayElem);
 		dayElem.id = skinElem.id + "d"+day.index;
-		day.initSkin(dayElem);
+		day.displayInit(dayElem);
 		if (day.index==maxDay-1) el.parentNode.removeChild(el);	
 		return dayElem;
 	}
@@ -162,24 +181,33 @@ class Month extends Common {
 		if (n < 1 || n > dayChildren.length) return null;
 		else return dayChildren[n - 1];		
     }
-    public function toString () {
-		var str = "\n";
-		str += "index=" + index + " : [" + number + "/" + year + "]. " + "name=" + name + "\n";
-		str += "\n";
-		for (i in dayChildren) {
-			str += i.toString();
-		}
-		return str;
-    }
-	
+   
 	public function scrollToTop () {
 		oy = Std.int(skinElem.positionInWindow().y);
 		if (oy > 0) {
-			if (isMobile || !isWebKit) skinElem.scrollIntoView(true); 
+			/* DONT REMOVE COMMENTS
+			 if (isMobile || !isWebKit) {				
+				if (isSafari ) {
+					if (isIphoneIpad) new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
+					// only for android native browser
+					else new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 
+				} 
+				else if (isWindowsPhone) skinElem.scrollIntoView(true); 				
+				// ffox or no safari+no win mobile
+				else new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ) ; //
+			}
 			else {
+				//pc/mac chrome, safari 
 				new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 				
-			}			
-		}
+			}	
+			*/
+			//
+			if 		(isIphoneIpad)  				new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
+			else if (isFirefox) 					new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
+			else if (isWindowsPhone) 				skinElem.scrollIntoView(true); 
+			else 									new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 
+			//
+		}		
 		else oy = null;		
 		if (oy != null) {
 			var sy = oy;
@@ -188,48 +216,13 @@ class Month extends Common {
 			}
 			oy = sy;
 		}
-		
-    }
-	function onLoopScrollToTop (e:StandardEvent) {
-		if (e.type == "end") {
-			e.target.clear () ;
-		} else {
-			Browser.window.scrollTo(0,e.value);
-		}
-	}
+    }	
 	public function restoreScroll () {
 		if (!isMobile && isWebKit) {
 			if (oy != null) new BTween (Browser.window.pageYOffset ,-oy+Browser.window.pageYOffset,.5, onLoopScrollToTop );// Browser.window.scrollTo(0, -oy+Browser.window.scrollY); 
 		}
 		oy = null;
     }
-	public function displayInit (monthContainer:Element) {
-		skinElem = monthContainer;
-		monthElem = skinElem.elemBy("month") ;
-		reactiveElem = monthElem.elemBy("name");		
-		reactiveElem.innerHTML = name;		
-		openTextElem = monthElem.elemBy("open");		
-		//openTextCtnrElem = monthElem.elemBy("openCtnr");
-		//
-		clearButton.innerHTML = lang.button.clear.label ;
-		cancelButton.innerHTML = lang.button.cancel.label ;
-		validButton.innerHTML = lang.button.valid.label ;	
-		//
-		var el:Element = monthContainer.elemBy("day"); 
-		for (day in dayChildren) {
-			var dayElem:Element = el.clone(true) ;
-			skinElem.appendChild(dayElem);
-			dayElem.id = skinElem.id + "d"+day.index;
-			day.displayInit(dayElem);
-		}
-		el.parentNode.removeChild(el);		
-    }	
-	
-	
-	public function displayUpdate () {				
-		reactiveElem.innerHTML = name;	
-    }	
-	
 	public function open () {
 		for (day in dayChildren) {
 			day.show();
@@ -250,21 +243,45 @@ class Month extends Common {
 		monthElem.elemBy("textContainer").style.display = "none";
 		_isTextAreaOpen = false;
     }
+	/**
+	 * clear screen
+	 */
 	public function clearText () {
 		setMonthTextPicto("");
 		cast(monthElem.elemByTag("textarea"), TextAreaElement).value = "";
     }	
+	/**
+	 * screenbuffer to screen
+	 */
 	public function displayText() {
 		setMonthTextPicto();
 		cast(monthElem.elemByTag("textarea"), TextAreaElement).value =  textContent;
     }
+	/**
+	 * screen to screenbuffer
+	 */
 	public function storeText() {
 		textContent=cast(monthElem.elemByTag("textarea"),TextAreaElement).value;	
     }
-	
+	public function toString () {
+		var str = "\n";
+		str += "index=" + index + " : [" + number + "/" + year + "]. " + "name=" + name + "\n";
+		str += "\n";
+		for (i in dayChildren) {
+			str += i.toString();
+		}
+		return str;
+    }	
     /**
     *@private
     */
+	function onLoopScrollToTop (e:StandardEvent) {
+		if (e.type == "end") {
+			e.target.clear () ;
+		} else {
+			Browser.window.scrollTo(0,e.value);
+		}
+	}
 	//get/set
 	function get_name() :String {
 		var arr = model.lang.month.list.item;

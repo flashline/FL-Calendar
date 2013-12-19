@@ -1,5 +1,27 @@
 ﻿/**
  * Copyright (c) jm Delettre.
+ * 
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 /**
 * app calendar package
@@ -42,8 +64,10 @@ class Controler extends Common {
      * Init basic events...
      */
 	public function eventInit () {
+		//trace("i::" + Browser.navigator.userAgent.toLowerCase());
 		view.rootHtmlElement.addLst("resize", skinResize);
 		view.window.addLst("resize", skinResize);
+		view.window.addLst("beforeunload", pageUnload);
 		view.window.handCursor(false);
 		view.connection.addLst(StandardEvent.CLICK,connectionClick); 
 		view.changeYear.addLst(StandardEvent.CLICK, changeYearClick); 
@@ -51,6 +75,12 @@ class Controler extends Common {
 		model.serverActived.bind(onServerActived);
 		createLoginViewEvent ();
 		createChangeYearViewEvent ();
+	}
+	function  pageUnload (e:Event)  {
+		if ((model.currUserId != null) && ( areThereNotSavedOpenTexts () ) ) {
+			return lang.message.unloadAlert.label ; 		
+		}
+		return ;
 	}
 	/**
 	 * ... end start.
@@ -94,7 +124,7 @@ class Controler extends Common {
 			if (e.result.error != null) {
 				alert(lang.error.server.fatalRead.label);
 			}
-			else {
+			else {				
 				initializeMonthAndDay(connected(true),dayOnly(false),e.result);
 				view.doLayoutResponsive();
 			}	
@@ -265,25 +295,21 @@ class Controler extends Common {
 	function onAnswerLogOut (e:StandardEvent) {		
 		model.wait.stop();			
 		if (e.result.answ == "closeConnectionOk")  {	
-			doLogOut ();
+			this.disableMonthTextAndDay();
+			model.currUserId = null;
+			model.currUserPwd = null;
+			model.simpleCalendarUsing = true;
+			//
+			view.doLayoutResponsive() ;		
+			view.displayInfoWhenNoUser();
+			view.changeConnectLabel(lang.button.connect.label);
+			view.connection.removeLst(StandardEvent.CLICK,deconnectClick); 
+			view.connection.addLst(StandardEvent.CLICK,connectionClick); 
+			//
+			view.changeYear.hide();
 		} else {
 			alert(lang.error.server.deconnectError.label);	
 		}
-	}
-	function doLogOut () {			
-		this.disableMonthTextAndDay();
-		model.currUserId = null;
-		model.currUserPwd = null;
-		model.simpleCalendarUsing = true;
-		//
-		view.doLayoutResponsive() ;		
-		view.displayInfoWhenNoUser();
-		view.changeConnectLabel(lang.button.connect.label);
-		view.connection.removeLst(StandardEvent.CLICK,deconnectClick); 
-		view.connection.addLst(StandardEvent.CLICK,connectionClick); 
-		//
-		view.changeYear.hide();
-		
 	}
 	function askToChangeYear (newYear:String) {
 		model.wait.start(lang.server.changeYear.label);
@@ -321,7 +347,9 @@ class Controler extends Common {
 			if (e.result.error != null) {
 				alert(lang.error.server.fatalRead.label);
 			}
-			else model.storeMonthAndDayText(e.result);	
+			else {				
+				model.storeMonthAndDayText(e.result);	
+			}
 			//
 		} else {
 			alert(lang.error.server.unknownError.label);	
@@ -356,15 +384,13 @@ class Controler extends Common {
 	}
 	// month write
 	function askToWriteOneMonthText(month:Month) {
-		trace("ask month="+month.key+"  /  "+month.name);
 		model.wait.start(lang.server.writeOneMonthText.label);		
 		model.serverWriteMonthEvent.bind(onAnswerToWriteOneMonthText);
 		model.save.currUserId = model.currUserId;		
 		model.toServer( {req:"writeMonth",month:month.key,txt:month.textContent},"writeMonth");
 	}
 	function onAnswerToWriteOneMonthText(e:StandardEvent) {
-		//don't remove comment : model.serverWriteMonthEvent.unbind();		
-		trace("answ");
+		//don't remove this comment : model.serverWriteMonthEvent.unbind();		
 		model.wait.stop();
 		var answ = e.result.answ; var msg = e.result.msg;
 		if (answ == "error") { 
@@ -377,7 +403,7 @@ class Controler extends Common {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
 		} else if (answ == "writeMonthOk")  {	
-			trace("on  answ : month=" + e.result.month) ;
+			//trace("on  answ : month=" + e.result.month) ;
 			model.save.months=[];
 			model.save.currUserId = "";
 		} else {
@@ -389,7 +415,7 @@ class Controler extends Common {
 	// main loop-modules
 	//
 	//
-	function initializeMonthAndDay (?connected:Bool=true,?dayOnly:Bool=false,?readData:Object=null) {
+	function initializeMonthAndDay (?connected:Bool = true, ?dayOnly:Bool = false, ?readData:Object = null) {
 		var v = model.tree.month.list.item.length;
 		for (monthIdx in 0...v) {
 			var month:Month 			= 	model.createOneMonth(monthIdx);
@@ -405,13 +431,15 @@ class Controler extends Common {
 			}
 		}
 	}
-	function updateMonthAndDay (?connected:Bool=true,?dayOnly:Bool=false,readData:Object=null) {
+	function updateMonthAndDay (?connected:Bool=true,?dayOnly:Bool=false,?readData:Object=null) {
 		var month:Month;
 		for (month in model.monthChildren) {
 			createOneMonthEvent(month, connected, dayOnly);
+			month.displayUpdate();
 			if (readData != null) model.storeOneMonthText (readData, month);
 			for (day in month.dayChildren) {
 				createOneDayEvent(day, connected);	
+				day.clear(); day.displayUpdate () ;	
 				if (readData != null) model.storeOneDayText (readData, day);
 			}
 		}						
@@ -432,83 +460,6 @@ class Controler extends Common {
 			}
 		}  
 	}	
-	//
-	//
-	// events add/remove 
-	//
-	//
-	function createLoginViewEvent () {
-		view.signInCancel.addLst(StandardEvent.CLICK,cancelLoginClick);
-		view.signUpCancel.addLst(StandardEvent.CLICK,cancelLoginClick);
-		view.signInValid.addLst(StandardEvent.CLICK,validLoginSignInClick);
-		view.signUpValid.addLst(StandardEvent.CLICK,validLoginSignUpClick);
-	}
-	function createChangeYearViewEvent () {
-		view.changeYearCancel.addLst(StandardEvent.CLICK,cancelChangeYearClick);
-		view.changeYearValid.addLst(StandardEvent.CLICK,validChangeYearClick);
-	}
-	function createOneMonthEvent (month:Month, ?connected:Bool = true, ?dayOnly:Bool = false) {
-		if (!dayOnly) {
-			if (month.reactiveElem.hasLst(StandardEvent.CLICK) ) trace("month has listener !");		
-			month.reactiveElem.addLst(StandardEvent.CLICK, monthClick, month);			
-			month.clearButton.addLst(StandardEvent.CLICK, monthTextClearClick, month);
-			month.cancelButton.addLst(StandardEvent.CLICK, monthTextCancelClick, month);
-			month.validButton.addLst(StandardEvent.CLICK, monthTextValidClick, month);	
-		}
-		if (connected) {
-			if (month.openTextElem.hasLst(StandardEvent.CLICK) ) trace("month TEXT has listener !");		
-			month.openTextElem.addLst(StandardEvent.CLICK, openMonthTextClick, month);	
-			month.openTextElem.show();
-		}
-		else month.openTextElem.hide();
-	}
-	function createOneDayEvent(day:Day,?connected:Bool=true) {
-		if (connected) {
-			if (day.reactiveElem.hasLst(StandardEvent.CLICK) ) trace("day has listener !");
-			day.reactiveElem.addLst(StandardEvent.CLICK, dayClick, day);
-			day.reactiveElem.addLst(StandardEvent.MOUSE_OVER, dayOver, day); 
-			day.reactiveElem.addLst(StandardEvent.MOUSE_OUT, dayOut, day);
-			day.clearButton.addLst(StandardEvent.CLICK, clearClick, day);
-			day.cancelButton.addLst(StandardEvent.CLICK, cancelClick, day);
-			day.validButton.addLst(StandardEvent.CLICK, validClick, day);
-		} 
-		else  {
-			//day.close();
-			day.showFullNameOnTop();
-		}
-	}
-	function createBissexDayEvent () {		
-		if (model.isMonthAndDayCreated) {
-			var day:Day = model.getMonth(2).getDay(29);
-			if (day!=null) {
-				if (!day.reactiveElem.hasLst(StandardEvent.CLICK, dayClick)) createOneDayEvent(day);				
-			}
-		}
-	}
-	function removeOneMonthTextEvent (month:Month) {	
-		month.clearButton.removeLst(StandardEvent.CLICK, monthTextClearClick);
-		month.cancelButton.removeLst(StandardEvent.CLICK, monthTextCancelClick);
-		month.validButton.removeLst(StandardEvent.CLICK, monthTextValidClick);			
-		month.openTextElem.removeLst(StandardEvent.CLICK, openMonthTextClick); 
-		month.openTextElem.hide(); 
-		month.closeTextArea();
-	}
-	function removeOneDayEvent(day:Day,?forLogOut:Bool=false) {
-		day.reactiveElem.removeLst(StandardEvent.CLICK, dayClick);
-		day.reactiveElem.removeLst(StandardEvent.MOUSE_OVER, dayOver); 
-		day.reactiveElem.removeLst(StandardEvent.MOUSE_OUT, dayOut);					
-		day.clearButton.removeLst(StandardEvent.CLICK, clearClick);
-		day.cancelButton.removeLst(StandardEvent.CLICK, cancelClick);
-		day.validButton.removeLst(StandardEvent.CLICK, validClick);							
-	}
-	function removeBissexDayEvent () {		
-		if (model.isMonthAndDayCreated) {
-			var day:Day = model.getMonth(2).getDay(29);
-			if (day!=null) {
-				if (day.reactiveElem.hasLst(StandardEvent.CLICK, dayClick)) removeOneDayEvent(day);				
-			}
-		}
-	}
 	//
 	//
 	// divers functions
@@ -559,6 +510,86 @@ class Controler extends Common {
 	}
 	//
 	//
+	// events add/remove 
+	//
+	//
+	function createLoginViewEvent () {
+		view.signInCancel.addLst(StandardEvent.CLICK,cancelLoginClick);
+		view.signUpCancel.addLst(StandardEvent.CLICK,cancelLoginClick);
+		view.signInValid.addLst(StandardEvent.CLICK,validLoginSignInClick);
+		view.signUpValid.addLst(StandardEvent.CLICK,validLoginSignUpClick);
+	}
+	function createChangeYearViewEvent () {
+		view.changeYearCancel.addLst(StandardEvent.CLICK,cancelChangeYearClick);
+		view.changeYearValid.addLst(StandardEvent.CLICK,validChangeYearClick);
+	}
+	function createOneMonthEvent (month:Month, ?connected:Bool = true, ?dayOnly:Bool = false) {
+		if (!dayOnly) {
+			if (!month.reactiveElem.hasLst(StandardEvent.CLICK) ) {
+				month.reactiveElem.addLst(StandardEvent.CLICK, monthClick, month);		
+			} 
+		}
+		if (connected) {
+			if (!month.openTextElem.hasLst(StandardEvent.CLICK) ) {		
+				month.openTextElem.addLst(StandardEvent.CLICK, openMonthTextClick, month);					
+				month.clearButton.addLst(StandardEvent.CLICK, monthTextClearClick, month);
+				month.cancelButton.addLst(StandardEvent.CLICK, monthTextCancelClick, month);
+				month.validButton.addLst(StandardEvent.CLICK, monthTextValidClick, month);	
+			} 
+			month.openTextElem.show();
+		}
+		else month.openTextElem.hide();
+	}
+	function createOneDayEvent(day:Day,?connected:Bool=true) {
+		if (connected) {
+			if (!day.reactiveElem.hasLst(StandardEvent.CLICK) ) {
+				day.reactiveElem.addLst(StandardEvent.CLICK, dayClick, day);
+				day.reactiveElem.addLst(StandardEvent.MOUSE_OVER, dayOver, day); 
+				day.reactiveElem.addLst(StandardEvent.MOUSE_OUT, dayOut, day);
+				day.clearButton.addLst(StandardEvent.CLICK, clearClick, day);
+				day.cancelButton.addLst(StandardEvent.CLICK, cancelClick, day);
+				day.validButton.addLst(StandardEvent.CLICK, validClick, day);
+			} 
+		} 
+		else  {
+			//day.close();
+			day.showFullNameOnTop();
+		}
+	}
+	function createBissexDayEvent () {		
+		if (model.isMonthAndDayCreated) {
+			var day:Day = model.getMonth(2).getDay(29);
+			if (day!=null) {
+				if (!day.reactiveElem.hasLst(StandardEvent.CLICK, dayClick)) createOneDayEvent(day);				
+			}
+		}
+	}
+	function removeOneMonthTextEvent (month:Month) {	
+		month.clearButton.removeLst(StandardEvent.CLICK, monthTextClearClick);
+		month.cancelButton.removeLst(StandardEvent.CLICK, monthTextCancelClick);
+		month.validButton.removeLst(StandardEvent.CLICK, monthTextValidClick);			
+		month.openTextElem.removeLst(StandardEvent.CLICK, openMonthTextClick); 
+		month.openTextElem.hide(); 
+		month.closeTextArea();
+	}
+	function removeOneDayEvent(day:Day) {
+		day.reactiveElem.removeLst(StandardEvent.CLICK, dayClick);
+		day.reactiveElem.removeLst(StandardEvent.MOUSE_OVER, dayOver); 
+		day.reactiveElem.removeLst(StandardEvent.MOUSE_OUT, dayOut);					
+		day.clearButton.removeLst(StandardEvent.CLICK, clearClick);
+		day.cancelButton.removeLst(StandardEvent.CLICK, cancelClick);
+		day.validButton.removeLst(StandardEvent.CLICK, validClick);							
+	}
+	function removeBissexDayEvent () {		
+		if (model.isMonthAndDayCreated) {
+			var day:Day = model.getMonth(2).getDay(29);
+			if (day!=null) {
+				if (day.reactiveElem.hasLst(StandardEvent.CLICK, dayClick)) removeOneDayEvent(day);				
+			}
+		}
+	}	
+	//
+	//
 	// listeners
 	//
 	//
@@ -601,8 +632,7 @@ class Controler extends Common {
 	}
 	function cancelLoginClick (e:Event):Bool { 
 		view.signInValid.clearEnterKeyToClick();
-		e.preventDefault();
-		e.returnValue = false;	
+		e.preventDefault();	
 		view.changeYear.hide();		
 		if (!model.isMonthAndDayCreated) {
 			initializeMonthAndDay(connected(false));
@@ -614,8 +644,7 @@ class Controler extends Common {
 	}	
 	function validLoginSignInClick (e:Event):Bool {
 		view.signInValid.clearEnterKeyToClick();
-		e.preventDefault();
-		e.returnValue = false;			
+		e.preventDefault();		
 		var str = model.isValidSignInInput(view.signInNameInput.value, view.signInPwdInput.value) ;		
 		if (str!= "") {
 			alert(str,onErrorCallBackValidLoginSignIn);
@@ -631,8 +660,7 @@ class Controler extends Common {
 
 	function validLoginSignUpClick (e:Event):Bool {
 		view.signInValid.clearEnterKeyToClick();
-		e.preventDefault();
-		e.returnValue = false;		
+		e.preventDefault();		
 		var str = model.isValidSignUpInput(view.signUpNameInput.value, view.signUpPwdInput.value, view.signUpConfirmInput.value) ;		
 		if (str != "") {
 			alert(str,onErrorCallBackValidLoginSignUp);
@@ -657,24 +685,26 @@ class Controler extends Common {
 		else view.signInValid.joinEnterKeyToClick([view.signInCancel,view.signUpValid,view.signUpCancel]);
 	}
 	function deconnectClick (e:Event):Bool {
-		// here below : because bug windows !!!
+		// line below because WindowsPhone's bug!!!
 		if (!(isWindowsPhone && view.isChangeYearViewOpen)) {			
 			var conf = model.confirmBox;
 			if (areThereNotSavedOpenTexts() ) {
-				conf.open(lang.message.logOutConfirm.label, confirmLogOut) ;
+				conf.open(lang.message.saveTextConfirm.label+lang.message.logOutConfirm.label, confirmLogOut) ;
 				conf.cancelElem.joinEnterKeyToClick([conf.validElem]); 		
-			} else confirmLogOut (true,conf) ;
+			} else confirmLogOut (confirmWithOutSave(true),conf) ;
 		}
 		return false;
 	}	
 	function confirmLogOut (logOutWithoutSave:Bool,conf:ConfirmBox) {
 		conf.cancelElem.clearEnterKeyToClick();
 		if (logOutWithoutSave) { 
-			model.wait.changeImage(model.tree.wait.logOut.src);
+			model.wait.changeImage(model.tree.wait.logOut.src);		
 			askLogOut () ;
-		} else  startNewDelay (isWithOutDelay(true));
+		} else  {			
+			startNewDelay (isWithOutDelay(true));
+		}
+		
 	}
-	//
 	function safeModeClick (e:Event):Bool {
 		if (model.isSafeMode) {
 			model.setSafeMode(false);
@@ -687,7 +717,7 @@ class Controler extends Common {
 	}
 	function changeYearClick (e:Event):Bool {
 		doChangeYear ();
-		return false;		
+		return false;	
 	}
     function doChangeYear () {
 		if (strVal(view.changeYearInput.getText(), "") == "") view.changeYearInput.setText(strVal(model.currYear, "")); 
@@ -709,12 +739,26 @@ class Controler extends Common {
 			alert(str,onErrorCallBackValidChangeYear);
 		} else {
 			var newYear = view.changeYearInput.value;
-			if (Std.parseInt(newYear)!=model.currYear) {
-				askToChangeYear(newYear);
-			}
-			view.hideChangeYearView();
+			if (Std.parseInt(newYear) != model.currYear) {
+				// year change is valided
+				model.save.currYear = newYear;
+				var conf = model.confirmBox;
+				if (areThereNotSavedOpenTexts() ) {					
+					conf.open(lang.message.saveTextConfirm.label+lang.message.changeYearConfirm.label, confirmChangeYear) ;
+					conf.cancelElem.joinEnterKeyToClick([conf.validElem]); 
+				} 
+				else confirmChangeYear (confirmWithOutSave(true),conf) ;
+				
+			} else view.hideChangeYearView();
 		}
 		return false;
+	}
+	function confirmChangeYear (changeYearWithoutSave:Bool, conf:ConfirmBox) {
+		view.hideChangeYearView();
+		conf.cancelElem.clearEnterKeyToClick();
+		if (!changeYearWithoutSave) startNewDelay (isWithOutDelay(true));
+		askToChangeYear(model.save.currYear);	
+		model.save.currYear = "";
 	}
 	function onErrorCallBackValidChangeYear () {
 		view.changeYearValid.joinEnterKeyToClick([view.changeYearCancel,view.safeMode]); 
@@ -839,7 +883,8 @@ class Controler extends Common {
 	// Boolean functions for better understanding.
 	//
 	//
-	public function connected(?b:Bool=true):Bool { return b; }
-	public function dayOnly(?b:Bool=true):Bool { return b; }
-	public function isWithOutDelay(?b:Bool=true):Bool { return b; }
+	function confirmWithOutSave(?b:Bool=true):Bool { return b; }
+	function connected(?b:Bool=true):Bool { return b; }
+	function dayOnly(?b:Bool=true):Bool { return b; }
+	function isWithOutDelay(?b:Bool=true):Bool { return b; }
 }

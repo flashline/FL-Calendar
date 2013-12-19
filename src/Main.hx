@@ -56,7 +56,8 @@ import js.html.Element; import net.flash_line.display.ElementExtender ; using ne
 class Main extends Common {
 	var c:Calendar;
 	var wait:WaitView;
-	static inline var version:String="1.2.25";
+	var lang:Object;
+	static inline var version:String="1.3.42";
 	/**
 	 * constructor
 	 */
@@ -75,9 +76,13 @@ class Main extends Common {
 		c.loadInit.bind(onLoad);	
 		//
 		elem("calendar").child("release").elemBy("releaseText").innerHTML = "<b>FL-Calendar</b> " + version;
-		if (isMobile) elem("calendar").child("release").elemBy("embed").delete();
+		if (isMobile) elem("calendar").child("release").elemBy("embed").delete();	
 	}	
-	function onLoad (e:StandardEvent) {			
+	function onLoad (e:StandardEvent) {	
+		lang = e.text;
+		if (isIphoneIpad) {			
+			elem("calendar").child("release").elemBy("github").innerHTML = lang.Igithub.label ;			
+		}
 		createErrorAlert (e.text);		
 		c.promptBox = createPromptBox(e.text);
 		c.confirmBox = createConfirmBox(e.text);

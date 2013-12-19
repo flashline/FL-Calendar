@@ -1,5 +1,27 @@
 /**
  * Copyright (c) jm Delettre.
+ * 
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 /**
 * app calendar package
@@ -8,11 +30,6 @@ package calendar;
 /**
 * classes imports
 */
-//import js.Browser;
-//import js.html.Document;
-//import net.flash_line.util.Object;
-
-//import js.Lib;
 import js.Browser;
 import js.html.InputElement;
 import js.html.TextAreaElement;
@@ -21,8 +38,9 @@ import net.flash_line.event.StandardEvent;
 import net.flash_line.util.Common;
 import js.html.Element; import net.flash_line.display.ElementExtender ; using net.flash_line.display.ElementExtender;
 import net.flash_line.util.Object;
+import net.flash_line.util.StepIterator;
 /**
-* 
+* Model & View for a day
 */
 class Day extends Common {
 	var lang:Object;
@@ -35,7 +53,7 @@ class Day extends Common {
 	 */
 	public var oy:Int;
 	/**
-	 * index pos in parent model array
+	 * index pos in parent model array -first day of month has index==0
 	 */
 	public var index(default, null):Int;	
 	//
@@ -43,15 +61,15 @@ class Day extends Common {
 	public var cancelButton(get,null):Element;	
 	public var validButton(get,null):Element;	
 	/**
-	 * text entered and valided for this day
+	 * text valided for this day
 	 */
 	public var textContent(get,set):String;var _textContent:String;
 	/**
-	 * Element in DOM
+	 * Element main container
 	 */
 	public var skinElem(default, null):Element;	
 	/**
-	 * Element in DOM
+	 * Element outer monthParent container
 	 */
 	public var monthElem(default, null):Element;	
 	/**
@@ -63,16 +81,15 @@ class Day extends Common {
 	 */
 	public var number(get, null):Int;
 	/**
-	 * @return 1 to 12
+	 * @return month parent number (0 to 12)
 	 */	
 	public var month(get,null):Int; 
 	/**
-	 * @return 0 to 9999
+	 * @return 0 to 9999 year of this Day
 	 */
 	public var year(get, null):Int; 
-	//var _year:Int;
 	/**
-	* @return Date() of this (year,month,number)
+	* @return Date(year,month,number) of this Day 
 	**/
 	public var date(get, null):Date; var _date:Date;
 	/**
@@ -80,7 +97,7 @@ class Day extends Common {
 	 */
 	public var abbrev(get, null):String; 
 	/**
-	 * @return one of "Sunday","Monday",etc
+	 * @return one of "Sunday","Monday",etc in current language
 	 */
 	public var name(get, null):String; 
 	/**
@@ -97,19 +114,19 @@ class Day extends Common {
 	public var hasBeenModified(get, null):Bool; 
 	//
 	/**
-	* constructor
-	*/
+	 * constructor
+	 * @param	idx index pos in Month parent array -first day of month has index==0
+	 * @param	m	Model
+	 * @param	mp	Month parent
+	 */
 	public function new (idx:Int,m:Model,mp:Month) {
 		index = idx;
 		monthParent = mp;
 		model = m;
 		lang = model.lang;
 		_isOpen = false;
-    }
+    }	
 	public function displayInit (dayContainer:Element) {
-		initSkin (dayContainer);
-    }
-	public function initSkin (dayContainer:Element) {
 		skinElem = dayContainer;
 		reactiveElem = skinElem.elemBy("dayTop");
 		var str=Std.string(100 + number).substr(1);
@@ -120,17 +137,21 @@ class Day extends Common {
 		// sunday => bg color
 		 displayIfSunday ();
     }
+	/**
+	 * used when day's date changes
+	 */
 	public function displayUpdate () {
 		var str=Std.string(100 + number).substr(1);
 		skinElem.elemBy("abbrev").innerHTML = str + " " + abbrev;	
 		displayIfSunday ();
     }
+	/**
+	 * used when year is changing
+	 */
 	public function clear () {
 		_date = null;		
 	}	
-	//
-	public function scrollToTop () {
-		//trace(skinElem.getBoundInfo());		
+	public function scrollToTop () {		
 		oy = Std.int(skinElem.positionInWindow().y);
 		if (oy > 0) {
 			if (isMobile || !isWebKit) skinElem.scrollIntoView(true); 
@@ -167,21 +188,39 @@ class Day extends Common {
 		skinElem.elemBy("textContainer").style.display = "none";	
 		_isOpen = false;
     }
+	/**
+	 * clear screen
+	 */
 	public function clearText () {
 		 cast(skinElem.elemByTag("textarea"),TextAreaElement).value="";		
     }
+	/**
+	 * screenbuffer to screen
+	 */	
 	public function displayText () {
 		 cast(skinElem.elemByTag("textarea"), TextAreaElement).value = textContent;		
     }
+	/**
+	 * screen to screenbuffer
+	 */	
 	public function storeText () {
 		 textContent=cast(skinElem.elemByTag("textarea"),TextAreaElement).value;		
     }
+	/**
+	 * when day is open or user is logoff : fullname day is displayed
+	 */
 	public function showFullNameOnTop() {
 		skinElem.elemBy("textBegin").innerHTML = name + " " + number + " " + monthParent.abbrev;	
 	}
+	/**
+	 * when day is close and user is logged in : begin of text is displayed
+	 */
 	public function restoreTextOnTop() {
 		skinElem.elemBy("textBegin").innerHTML = cast(skinElem.elemByTag("textarea"),TextAreaElement).value;			
 	}
+	/**
+	 * @param	state "out" or "over"
+	 */
 	public function setColor (state:String) { 
 		var c = "#000000"; var p:Object = model.tree;
 		if (state == "over") {
@@ -191,15 +230,14 @@ class Day extends Common {
 		reactiveElem.elemBy("abbrev").setColor(c);
 		reactiveElem.elemBy("textBegin").setColor(c);		
 	}
-	//
+	/**
+	 * method to debug
+	 */	
     public function toString () {
 		var str = "\n";
 		str += "index=" + index + " :" + number + "/" + month + "/" + year + ". " + abbrev + "/" + name+"\n";
 		return str;
     }
-	
-	
-	
     /**
     *@private
     */
@@ -211,12 +249,21 @@ class Day extends Common {
 		}
 	}
 	function displayIfSunday () {
-		if (date.getDay() == 0) {
-			skinElem.style.background = "linear-gradient(to right, " + monthParent.color + ", white)";
+		if (date.getDay() == 0) {				
+			if (isSafari) {		
+				var c = monthParent.color.substr(1); var str = "";
+				for (i in new StepIterator(0, 6, 2)) {					
+					var h = addHex(c.substr(i, 2), "44");
+					str+= (h.length > 2)? "ff" : h ;					
+				}
+				skinElem.style.backgroundColor =  "#"+str; 
+			}
+			else skinElem.style.background = "linear-gradient(to right, " + monthParent.color + ", white)";
 			skinElem.style.paddingTop = "2px";
-			skinElem.style.paddingBottom = "2px";			
+			skinElem.style.paddingBottom = "2px";
 		} else {
-			skinElem.style.background = null;
+			skinElem.style.background = model.tree.month.backgroundColor;
+			skinElem.style.backgroundColor = model.tree.month.backgroundColor;
 			skinElem.style.paddingTop = "0px";
 			skinElem.style.paddingBottom = "0px";	
 		}		
@@ -227,9 +274,10 @@ class Day extends Common {
 		return arr[v].label;
 	}
 	function get_abbrev() :String {
-		var str = lang.day.abbrev;
 		var v = date.getDay();		
-		return str.substr(v, 1);
+		var str = lang.day.abbrev.substr(v, 1);
+		if (lang.id == "en" && v == 0) str += "u";
+		return str;
 	}
 	function get_key() :String {	
 		var str = Std.string(100 + number).substr(1, 3);
@@ -244,7 +292,6 @@ class Day extends Common {
 	function get_year() :Int {
 		var v:Int = null;
 		if (monthParent != null) v = monthParent.year;
-		//else if (_year != null) v = _year;
 		else { 
 			trace("f::" + lang.error.fatal.monthMissing.label);
 		}
