@@ -207,8 +207,8 @@ class Model extends XmlParser {
 	 * @param	o	data read
 	 * @param	month instance
 	 */
-	public function storeOneMonthText (o:Object,month:Month) {
-		if (o.get("month_" + month.key) != null) {		
+	public function storeOneMonthText (o:Object, month:Month) {		
+		if (o.get("month_" + month.key) != null) {	
 			month.textContent = decodeXmlReserved(o.get("month_" + month.key).value);			
 		} else {
 			month.textContent = "";

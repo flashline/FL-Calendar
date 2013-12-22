@@ -39,20 +39,23 @@ net.flash_line.util.ApiCommon.prototype = {
 		return new Date(n,1,29,0,0,0).getDay() != new Date(n,2,1,0,0,0).getDay();
 	}
 	,decodeXmlReserved: function(str) {
-		var i = str.indexOf("~#e");
-		while(i > -1) {
-			str = HxOverrides.substr(str,0,i) + "&" + HxOverrides.substr(str,i + 3,null);
-			i = str.indexOf("~#e");
-		}
-		i = str.indexOf("~#{");
-		while(i > -1) {
-			str = HxOverrides.substr(str,0,i) + "<" + HxOverrides.substr(str,i + 3,null);
+		str = this.strVal(str,"");
+		if(str != "") {
+			var i = str.indexOf("~#e");
+			while(i > -1) {
+				str = HxOverrides.substr(str,0,i) + "&" + HxOverrides.substr(str,i + 3,null);
+				i = str.indexOf("~#e");
+			}
 			i = str.indexOf("~#{");
-		}
-		i = str.indexOf("~#}");
-		while(i > -1) {
-			str = HxOverrides.substr(str,0,i) + ">" + HxOverrides.substr(str,i + 3,null);
+			while(i > -1) {
+				str = HxOverrides.substr(str,0,i) + "<" + HxOverrides.substr(str,i + 3,null);
+				i = str.indexOf("~#{");
+			}
 			i = str.indexOf("~#}");
+			while(i > -1) {
+				str = HxOverrides.substr(str,0,i) + ">" + HxOverrides.substr(str,i + 3,null);
+				i = str.indexOf("~#}");
+			}
 		}
 		return str;
 	}
@@ -412,7 +415,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.45";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.46";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -3959,7 +3962,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.3.45";
+Main.version = "1.3.46";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;
