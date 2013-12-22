@@ -57,7 +57,7 @@ class Main extends Common {
 	var c:Calendar;
 	var wait:WaitView;
 	var lang:Object;
-	static inline var version:String="1.3.42";
+	static inline var version:String="1.3.45";
 	/**
 	 * constructor
 	 */

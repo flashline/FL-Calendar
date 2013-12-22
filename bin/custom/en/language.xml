@@ -7,7 +7,7 @@
 		<noCurrent label="Simple calendar " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" : " />
-		<Igithub label="Download & source on Mac/PC" />
+		<Igithub label="Download and source on Mac/PC" />
 		<month>
 			<abbrev>
 				<item label="Dec." />
@@ -47,7 +47,7 @@
 				<item label="Sunday" />
 				<item label="Monday" />
 				<item label="Thuesday" />
-				<item label="Wenesday" />
+				<item label="Wednesday" />
 				<item label="Thursday" />
 				<item label="Friday" />
 				<item label="Saturday" />

@@ -101,6 +101,10 @@ class Day extends Common {
 	 */
 	public var name(get, null):String; 
 	/**
+	 * @return dayName monthName dayNumber or dayName dayNumber monthName depending language.
+	 */
+	public var fullName(get, null):String; 
+	/**
 	 * @return day's yyyymmdd
 	 */
 	public var key(get, null):String; 	
@@ -154,8 +158,16 @@ class Day extends Common {
 	public function scrollToTop () {		
 		oy = Std.int(skinElem.positionInWindow().y);
 		if (oy > 0) {
+			/*
 			if (isMobile || !isWebKit) skinElem.scrollIntoView(true); 
-			else new BTween (Browser.window.scrollY, oy+Browser.window.scrollY,1, onLoopScrollToTop ); 
+			else new BTween (Browser.window.scrollY, oy + Browser.window.scrollY, 1, onLoopScrollToTop ); 
+			*/
+			//
+			if 		(isIphoneIpad)  				new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
+			else if (isFirefox) 					new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
+			else if (isWindowsPhone) 				skinElem.scrollIntoView(true); 
+			else 									new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 
+			//
 		}
 		else oy = null;		
 		if (oy != null) {
@@ -167,9 +179,10 @@ class Day extends Common {
 		}		
     }	
 	public function restoreScroll () {
-		if (!isMobile && isWebKit) { 
+		/*if (!isMobile && isWebKit) { 
 			if (oy != null) new BTween (Browser.window.scrollY ,-oy+Browser.window.scrollY,.5, onLoopScrollToTop );// Browser.window.scrollTo(0, -oy + Browser.window.scrollY); //+Browser.window.scrollY
-		}
+		}*/
+		
 		oy = null;
     }
 	public function  show () {
@@ -210,7 +223,7 @@ class Day extends Common {
 	 * when day is open or user is logoff : fullname day is displayed
 	 */
 	public function showFullNameOnTop() {
-		skinElem.elemBy("textBegin").innerHTML = name + " " + number + " " + monthParent.abbrev;	
+		skinElem.elemBy("textBegin").innerHTML = fullName;	
 	}
 	/**
 	 * when day is close and user is logged in : begin of text is displayed
@@ -235,7 +248,8 @@ class Day extends Common {
 	 */	
     public function toString () {
 		var str = "\n";
-		str += "index=" + index + " :" + number + "/" + month + "/" + year + ". " + abbrev + "/" + name+"\n";
+		if (model.languageIs("en")) str += "index=" + index + " :" + month + "/" + number + "/" + year + ". " + abbrev + "/" + name + "\n";
+		else str += "index=" + index + " :" + number + "/" + month + "/" + year + ". " + abbrev + "/" + name + "\n";		
 		return str;
     }
     /**
@@ -273,10 +287,15 @@ class Day extends Common {
 		var v = date.getDay();		
 		return arr[v].label;
 	}
+	function get_fullName() :String {		
+		var v = name + " " + number + " " + monthParent.abbrev;		
+		if (model.languageIs("en") )  v = name + " "  + monthParent.abbrev + " " + number ;			
+		return v;
+	}
 	function get_abbrev() :String {
 		var v = date.getDay();		
 		var str = lang.day.abbrev.substr(v, 1);
-		if (lang.id == "en" && v == 0) str += "u";
+		if (model.languageIs("en") && v == 0 ) str += "u";
 		return str;
 	}
 	function get_key() :String {	

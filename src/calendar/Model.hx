@@ -146,6 +146,12 @@ class Model extends XmlParser {
 		wasOneTimeUsed = false;
     }
 	 /**
+	 * @return true if current language == v
+	 */
+    public function languageIs (?v:String="en") {
+		return lang.id == v ;	
+	} 
+	 /**
 	 * Create request
 	 */
     public function initServer () {
@@ -155,6 +161,9 @@ class Model extends XmlParser {
 			httpWriteMonthRequest = new Http(serverUrl);
 		}		
 	}    
+	/**
+	 Create Month()
+	 **/
 	public function createOneMonth (idx:Int) : Month {		
 		monthChildren.push(new Month(idx, this));
 		return monthChildren.last();

@@ -7,7 +7,7 @@
 		<noCurrent label="Simple calendrier " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" de " />
-		<Igithub label="Téléchargement & source sur Mac/PC" />
+		<Igithub label="Téléchargement et source sur Mac/PC" />
 		<month>
 			<abbrev>
 				<item label="Déc." />

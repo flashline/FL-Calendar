@@ -314,10 +314,7 @@ class View extends Common {
 		Browser.window.scrollTo(0,0);
 		el.style.position = "absolute";
 		el.style.top = "0px";		
-		trace("i::be height=" + el.clientHeight);
-		trace("i::scrollheight=" + Browser.document.documentElement.scrollHeight);
 		el.style.height= Std.string(Browser.document.documentElement.scrollHeight)+"px";
-		trace("i::af height=" + el.clientHeight);
 	}
 	/**
 	 * hide settings box

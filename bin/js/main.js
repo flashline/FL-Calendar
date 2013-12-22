@@ -189,6 +189,10 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 		if(str == "") str = "index";
 		return str;
 	}
+	,mailIsValid: function(v) {
+		var r = new EReg("[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z][A-Z][A-Z]?","i");
+		return r.match(v);
+	}
 	,addHex: function(v1,v2) {
 		return this.decToHex(this.hexToDec(v1) + this.hexToDec(v2));
 	}
@@ -408,7 +412,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.42";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.45";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -1450,12 +1454,12 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,get_month: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 304, className : "calendar.Day", methodName : "get_month"});
+		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 323, className : "calendar.Day", methodName : "get_month"});
 		return v;
 	}
 	,get_year: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 296, className : "calendar.Day", methodName : "get_year"});
+		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 315, className : "calendar.Day", methodName : "get_year"});
 		return v;
 	}
 	,get_date: function() {
@@ -1469,8 +1473,13 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,get_abbrev: function() {
 		var v = this.get_date().getDay();
 		var str = this.lang.day.abbrev.substr(v,1);
-		if(this.lang.id == "en" && v == 0) str += "u";
+		if(this.model.languageIs("en") && v == 0) str += "u";
 		return str;
+	}
+	,get_fullName: function() {
+		var v = this.get_name() + " " + this.get_number() + " " + this.monthParent.get_abbrev();
+		if(this.model.languageIs("en")) v = this.get_name() + " " + this.monthParent.get_abbrev() + " " + this.get_number();
+		return v;
 	}
 	,get_name: function() {
 		var arr = this.lang.day.list.item;
@@ -1504,7 +1513,7 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,toString: function() {
 		var str = "\n";
-		str += "index=" + this.index + " :" + this.get_number() + "/" + this.get_month() + "/" + this.get_year() + ". " + this.get_abbrev() + "/" + this.get_name() + "\n";
+		if(this.model.languageIs("en")) str += "index=" + this.index + " :" + this.get_month() + "/" + this.get_number() + "/" + this.get_year() + ". " + this.get_abbrev() + "/" + this.get_name() + "\n"; else str += "index=" + this.index + " :" + this.get_number() + "/" + this.get_month() + "/" + this.get_year() + ". " + this.get_abbrev() + "/" + this.get_name() + "\n";
 		return str;
 	}
 	,setColor: function(state) {
@@ -1521,7 +1530,7 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"textBegin").innerHTML = (js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.skinElem,"textarea") , HTMLTextAreaElement)).value;
 	}
 	,showFullNameOnTop: function() {
-		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"textBegin").innerHTML = this.get_name() + " " + this.get_number() + " " + this.monthParent.get_abbrev();
+		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"textBegin").innerHTML = this.get_fullName();
 	}
 	,storeText: function() {
 		this.set_textContent((js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.skinElem,"textarea") , HTMLTextAreaElement)).value);
@@ -1549,15 +1558,12 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.skinElem.style.display = "block";
 	}
 	,restoreScroll: function() {
-		if(!this.get_isMobile() && this.get_isWebKit()) {
-			if(this.oy != null) new net.flash_line._api.motion.BTween(js.Browser.window.scrollY,-this.oy + js.Browser.window.scrollY,.5,$bind(this,this.onLoopScrollToTop));
-		}
 		this.oy = null;
 	}
 	,scrollToTop: function() {
 		this.oy = net.flash_line.display.ElementExtender.positionInWindow(this.skinElem).get_y() | 0;
 		if(this.oy > 0) {
-			if(this.get_isMobile() || !this.get_isWebKit()) this.skinElem.scrollIntoView(true); else new net.flash_line._api.motion.BTween(js.Browser.window.scrollY,this.oy + js.Browser.window.scrollY,1,$bind(this,this.onLoopScrollToTop));
+			if(this.get_isIphoneIpad()) new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy,1,$bind(this,this.onLoopScrollToTop)); else if(this.get_isFirefox()) new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy,1,$bind(this,this.onLoopScrollToTop)); else if(this.get_isWindowsPhone()) this.skinElem.scrollIntoView(true); else new net.flash_line._api.motion.BTween(js.Browser.window.pageYOffset,this.oy + js.Browser.window.pageYOffset,1,$bind(this,this.onLoopScrollToTop));
 		} else this.oy = null;
 		if(this.oy != null) {
 			var sy = this.oy;
@@ -1589,7 +1595,7 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.displayIfSunday();
 	}
 	,__class__: calendar.Day
-	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_clearButton:"get_clearButton",get_cancelButton:"get_cancelButton",get_validButton:"get_validButton",set_textContent:"set_textContent",get_textContent:"get_textContent",get_number:"get_number",get_month:"get_month",get_year:"get_year",get_date:"get_date",get_abbrev:"get_abbrev",get_name:"get_name",get_key:"get_key",get_isOpen:"get_isOpen",get_hasBeenModified:"get_hasBeenModified"})
+	,__properties__: $extend(net.flash_line.util.Common.prototype.__properties__,{get_clearButton:"get_clearButton",get_cancelButton:"get_cancelButton",get_validButton:"get_validButton",set_textContent:"set_textContent",get_textContent:"get_textContent",get_number:"get_number",get_month:"get_month",get_year:"get_year",get_date:"get_date",get_abbrev:"get_abbrev",get_name:"get_name",get_fullName:"get_fullName",get_key:"get_key",get_isOpen:"get_isOpen",get_hasBeenModified:"get_hasBeenModified"})
 });
 calendar.ErrorAlert = function(el,txElem,bElem,stEl) {
 	this.ctnrElem = el;
@@ -1766,13 +1772,13 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		return this.intVal(v);
 	}
 	,set_currYear: function(v) {
-		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 409, className : "calendar.Model", methodName : "set_currYear"});
+		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 418, className : "calendar.Model", methodName : "set_currYear"});
 		this._currYear = v;
 		return v;
 	}
 	,onServerError: function(msg) {
 		this.serverEvent.dispatch(new net.flash_line.event.StandardEvent(this,"error",msg));
-		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 402, className : "calendar.Model", methodName : "onServerError"});
+		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 411, className : "calendar.Model", methodName : "onServerError"});
 	}
 	,onServerWriteMonthData: function(data) {
 		data = StringTools.trim(data);
@@ -1925,7 +1931,7 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		}
 	}
 	,getMonth: function(n) {
-		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 177, className : "calendar.Model", methodName : "getMonth"});
+		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 186, className : "calendar.Model", methodName : "getMonth"});
 		return this.monthChildren[n];
 	}
 	,removeBissexDay: function() {
@@ -1948,6 +1954,10 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 			this.httpWriteDayRequest = new haxe.Http(this.serverUrl);
 			this.httpWriteMonthRequest = new haxe.Http(this.serverUrl);
 		}
+	}
+	,languageIs: function(v) {
+		if(v == null) v = "en";
+		return this.get_lang().id == v;
 	}
 	,__class__: calendar.Model
 	,__properties__: {get_isLogInAfterTimeOut:"get_isLogInAfterTimeOut",get_isMonthAndDayCreated:"get_isMonthAndDayCreated",get_isCurrYearBissextile:"get_isCurrYearBissextile",get_isSafeMode:"get_isSafeMode",set_currYear:"set_currYear",get_currYear:"get_currYear",get_currMonthIndex:"get_currMonthIndex",get_lang:"get_lang"}
@@ -2283,10 +2293,7 @@ calendar.View.prototype = $extend(net.flash_line.util.Common.prototype,{
 		js.Browser.window.scrollTo(0,0);
 		el.style.position = "absolute";
 		el.style.top = "0px";
-		haxe.Log.trace("i::be height=" + el.clientHeight,{ fileName : "View.hx", lineNumber : 317, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
-		haxe.Log.trace("i::scrollheight=" + js.Browser.document.documentElement.scrollHeight,{ fileName : "View.hx", lineNumber : 318, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
 		el.style.height = Std.string(js.Browser.document.documentElement.scrollHeight) + "px";
-		haxe.Log.trace("i::af height=" + el.clientHeight,{ fileName : "View.hx", lineNumber : 320, className : "calendar.View", methodName : "makePopUpRelativeForFireFoxPhone"});
 	}
 	,showChangeYearView: function() {
 		this.changeSafeModeLabel();
@@ -3952,7 +3959,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.3.42";
+Main.version = "1.3.45";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;
