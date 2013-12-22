@@ -1,7 +1,8 @@
 ﻿#FL-Calendar
 
-is a free online Web-App working on phones, tablets, PC, Mac :  
+...is a free online Web-App working on phones, tablets, PC, Mac. 
 
+##Run:  
 - [english](http://www.flash-line.net/org/app/web/html5/calendar/en.html)
 - [français](http://www.flash-line.net/org/app/web/html5/calendar)
 
@@ -51,15 +52,16 @@ Facultative modifications :
 - parameters in **bin/custom/default/model.xml**  
 - Paths in **bin/js/baseUrl.js**  
 
-Source:  
+##Development:  
 
-- Developped in [Haxe language](http://haxe.org/). --[Haxe-Foundation](http://haxe-foundation.org/) / [Haxe silexlabs community](http://www.silexlabs.org/)
+- Source is in [Haxe](http://haxe.org/). -[Haxe-Foundation](http://haxe-foundation.org/) / [Haxe silexlabs community](http://www.silexlabs.org/)- 
 
-##Dependency :   
+- Dependency :   
+
  [FLnet api](https://github.com/flashline/FLnet-haxe)  to be installed :  
-- in src/  
-- or as haxe lib  
-- or everywhere, adding  -cp everywhere/ in build.xml.
+ - in src/  
+ - or as haxe lib  
+ - or everywhere, adding  -cp everywhere/ in build.xml.
 
 ##let me know
 ...if you find bugs. I will correct them as soon as possible (tell me where error occures: Mobile, PC or Mac and the browser's name)  
