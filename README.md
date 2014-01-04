@@ -33,7 +33,7 @@ Tested on :
 - IOS Safari - Ipad
 - Android: native & Firefox browsers - Htc smartphone and Acer tablet.  
 - Firefox-OS - simulator.
-- standalone app from Firefox-Maketpkace - Android mobiles and Windows PC.  
+- standalone app from Firefox-Marketplace - Android mobiles and Windows PC.  
 
 It is the HTML5 version of a Flash web-app : [www.flash-line.org/app/web/calendar/](http://www.flash-line.org/app/web/calendar/)  
 Flash version only works on desktop computers.   
