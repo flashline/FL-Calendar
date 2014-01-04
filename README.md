@@ -28,11 +28,14 @@ This app is designed to run on a valid HTML5 browser.
 
 Tested on :  
 
-- recent versions of Chrome , Firefox and Safari browsers  
-- IE mobile v10  
-- Android: native & Firefox browsers, Htc smartphone and Acer tablet.  
+- recent versions of Chrome, Firefox and Safari browsers 
+- IE mobile v10 - Smartphone Htc 8S
+- IOS Safari - Ipad
+- Android: native & Firefox browsers - Htc smartphone and Acer tablet.  
+- Firefox-OS - simulator.
+- standalone app from Firefox-Maketpkace - Android mobiles and Windows PC.  
 
-It is the HTML5 version of a Flash web-app : http://www.flash-line.org/app/web/calendar/  
+It is the HTML5 version of a Flash web-app : [www.flash-line.org/app/web/calendar/](http://www.flash-line.org/app/web/calendar/)  
 Flash version only works on desktop computers.   
 You can use currently both versions because they target the same database.   
 
@@ -43,7 +46,7 @@ I use this calendar myself and backup all data.
 But if you want to do it yourself, it is better to download and install the application on your web server.
 
 ##Installation 
-- Download zip and install into local or remote web-server.
+- Download zip and install the content of **bin/** into local or remote web-server.
 - Sql database isn't necessary,  
 - PHP required.  
 

@@ -2,8 +2,8 @@
 <root id="fr">	
 		<title label="Calendrier/Post-it" />
 		<valided label="Validé" />
-		<advertisingForComputer label="Fonctionne à la même adresse sur MOBILES !" />
-		<advertisingForMobile label="Fonctionne à la même adresse sur PC/MAC !" />		
+		<advertisingForComputer label="Fonctionne aussi sur MOBILES !" />
+		<advertisingForMobile label="Fonctionne aussi sur PC/MAC !" />		
 		<noCurrent label="Simple calendrier " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" de " />
@@ -64,8 +64,8 @@
 			<goOn label="Continuer" />	
 			<cancel label="Abandonner" />
 			<clear label="Effacer" />	
-			<safeModeOff label="activer sa sauvegarde et fermer la fenêtre" />	
-			<safeModeOn label="dé-activer sa sauvegarde et fermer la fenêtre"  />				
+			<safeModeOff label="Activer la sauvegarde du mot de passe." />	
+			<safeModeOn label="Déactiver la sauvegarde du mot de passe."  />				
 		</button>
 		<blocnote>			
 			<title label="Notes du " />
@@ -88,8 +88,8 @@
 			<title label="Agenda/Post-it: Paramètres" />
 			<subTitle label="Changer l'année en cours" />
 			<year label="Nouvelle année" />
-			<safeSubtitleOff label="Le mot de passe est sécurisé. Pour changer:"  />
-			<safeSubtitleOn label="Le mot de passe n'est pas sécurisé. Pour changer:" />
+			<safeSubtitleOff label="Mode sécurisé (Le mot de passe n'est pas sauvegardé)"  />
+			<safeSubtitleOn label="Mode non-sécurisé (Le mot de passe est sauvegardé)" />
 		</changeYearSkin>
 		<alertSkin>	
 			<title label="Agenda/Planning: Alerte" />

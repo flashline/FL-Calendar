@@ -2,8 +2,8 @@
 <root id="en">	
 		<title label="Calendar/Post-it" />
 		<valided label="Checked" />
-		<advertisingForComputer label="Same URL on MOBILES !" />
-		<advertisingForMobile label="Same URL on PC/Mac !" />		
+		<advertisingForComputer label="Also works on MOBILES !" />
+		<advertisingForMobile label="Also works on PC/Mac !" />		
 		<noCurrent label="Simple calendar " />
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" : " />
@@ -64,8 +64,8 @@
 			<goOn label="Close window" />
 			<cancel label="Cancel" />
 			<clear label="Clear" />	
-			<safeModeOff label="enable its backup and close window" />	
-			<safeModeOn label="disable its backup and close window"  />		
+			<safeModeOff label="Enable local backup of the password." />	
+			<safeModeOn label="Disable password backup."  />		
 			
 		</button>
 		<blocnote>			
@@ -89,8 +89,8 @@
 			<title label="Agenda/Planning: Settings" />
 			<subTitle label="Change current year" />
 			<year label="New year" />
-			<safeSubtitleOff label="Password safe-mode is on. To change:"  />
-			<safeSubtitleOn label="Password safe-mode is off. To change:" />
+			<safeSubtitleOff label="Safe-mode is on (password isn't saved)"  />
+			<safeSubtitleOn label="Safe-mode is off (password is locally saved)" />
 		</changeYearSkin>
 		<alertSkin>	
 			<title label="Agenda/Planning: Alert" />
