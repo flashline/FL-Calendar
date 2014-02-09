@@ -49,6 +49,7 @@ class Controler extends Common {
 	var model:Model;
 	var view:View;
 	var delay:Delay;
+	
 	public var lang(get,null):Object;	
 	/**
 	 * constructor
@@ -57,8 +58,7 @@ class Controler extends Common {
 	 */
 	public function new (m:Model,v:View) {
 		model = m;
-		view = v;
-		
+		view = v;		
     }
     /**
      * Init basic events...
@@ -678,7 +678,7 @@ class Controler extends Common {
 		return false;
 	}
 	function doConnection (?withEnterOnSignUpValid=false) {
-		model.wait.changeImage(model.tree.wait.standard.src);	
+		model.wait.changeImage(model.baseUrl+model.tree.wait.standard.src);	
 		var o = model.readUserCookie();	
 		view.showConnectView(strVal(o.id, ""), strVal(o.pwd, ""));
 		if(withEnterOnSignUpValid) view.signUpValid.joinEnterKeyToClick([view.signInCancel,view.signInValid,view.signUpCancel]);
@@ -698,7 +698,7 @@ class Controler extends Common {
 	function confirmLogOut (logOutWithoutSave:Bool,conf:ConfirmBox) {
 		conf.cancelElem.clearEnterKeyToClick();
 		if (logOutWithoutSave) { 
-			model.wait.changeImage(model.tree.wait.logOut.src);		
+			model.wait.changeImage(model.baseUrl+model.tree.wait.logOut.src);		
 			askLogOut () ;
 		} else  {			
 			startNewDelay (isWithOutDelay(true));

@@ -236,7 +236,7 @@ var Calendar = function(su,ms,ls,bu,auto,w) {
 	this._baseUrl = bu;
 	this.loadInit = new net.flash_line.event.EventSource();
 	this.language = new calendar.Language();
-	this.model = new calendar.Model(this.language,su);
+	this.model = new calendar.Model(this.language,su,this._baseUrl);
 	this.model.wait = w;
 	this.view = new calendar.View(this.model,this.language);
 	this.controler = new calendar.Controler(this.model,this.view);
@@ -415,7 +415,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.47";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.48";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -872,7 +872,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,confirmLogOut: function(logOutWithoutSave,conf) {
 		net.flash_line.display.ElementExtender.clearEnterKeyToClick(conf.cancelElem);
 		if(logOutWithoutSave) {
-			this.model.wait.changeImage(this.model.tree.wait.logOut.src);
+			this.model.wait.changeImage(this.model.baseUrl + Std.string(this.model.tree.wait.logOut.src));
 			this.askLogOut();
 		} else this.startNewDelay(this.isWithOutDelay(true));
 	}
@@ -888,7 +888,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,doConnection: function(withEnterOnSignUpValid) {
 		if(withEnterOnSignUpValid == null) withEnterOnSignUpValid = false;
-		this.model.wait.changeImage(this.model.tree.wait.standard.src);
+		this.model.wait.changeImage(this.model.baseUrl + Std.string(this.model.tree.wait.standard.src));
 		var o = this.model.readUserCookie();
 		this.view.showConnectView(this.strVal(o.id,""),this.strVal(o.pwd,""));
 		if(withEnterOnSignUpValid) net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.view.get_signUpValid(),[this.view.get_signInCancel(),this.view.get_signInValid(),this.view.get_signUpCancel()]); else net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.view.get_signInValid(),[this.view.get_signInCancel(),this.view.get_signUpValid(),this.view.get_signUpCancel()]);
@@ -1730,7 +1730,7 @@ calendar.Language.__super__ = net.flash_line.util.xml.XmlParser;
 calendar.Language.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 	__class__: calendar.Language
 });
-calendar.Model = function(lg,su) {
+calendar.Model = function(lg,su,bu) {
 	net.flash_line.util.xml.XmlParser.call(this);
 	this.language = lg;
 	this.monthChildren = [];
@@ -1740,6 +1740,7 @@ calendar.Model = function(lg,su) {
 	this.serverWriteMonthEvent = new net.flash_line.event.EventSource();
 	this.save = { days : [], months : [], currUserId : "", currYear : ""};
 	this.serverUrl = su;
+	this.baseUrl = bu;
 	this.wasOneTimeUsed = false;
 };
 calendar.Model.__name__ = true;
@@ -1775,13 +1776,13 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		return this.intVal(v);
 	}
 	,set_currYear: function(v) {
-		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 418, className : "calendar.Model", methodName : "set_currYear"});
+		if(v < 0 || v > 9999) haxe.Log.trace("f::" + Std.string(this.get_lang().error.fatal.badYear.label),{ fileName : "Model.hx", lineNumber : 420, className : "calendar.Model", methodName : "set_currYear"});
 		this._currYear = v;
 		return v;
 	}
 	,onServerError: function(msg) {
 		this.serverEvent.dispatch(new net.flash_line.event.StandardEvent(this,"error",msg));
-		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 411, className : "calendar.Model", methodName : "onServerError"});
+		haxe.Log.trace("f::From server:\n" + msg,{ fileName : "Model.hx", lineNumber : 413, className : "calendar.Model", methodName : "onServerError"});
 	}
 	,onServerWriteMonthData: function(data) {
 		data = StringTools.trim(data);
@@ -1934,7 +1935,7 @@ calendar.Model.prototype = $extend(net.flash_line.util.xml.XmlParser.prototype,{
 		}
 	}
 	,getMonth: function(n) {
-		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 186, className : "calendar.Model", methodName : "getMonth"});
+		if(n < 0 || n > 13) haxe.Log.trace("f::Invalid month index !",{ fileName : "Model.hx", lineNumber : 188, className : "calendar.Model", methodName : "getMonth"});
 		return this.monthChildren[n];
 	}
 	,removeBissexDay: function() {
@@ -1989,7 +1990,7 @@ calendar.Month.prototype = $extend(net.flash_line.util.Common.prototype,{
 	,setMonthTextPicto: function(v) {
 		if(v == null) v = this.strVal(this._textContent,"");
 		var img = js.Boot.__cast(this.openTextElem , HTMLImageElement);
-		if(v == "") img.src = this.model.tree.monthTextPostIt.empty.src; else img.src = this.model.tree.monthTextPostIt.full.src;
+		if(v == "") img.src = this.model.baseUrl + Std.string(this.model.tree.monthTextPostIt.empty.src); else img.src = this.model.baseUrl + Std.string(this.model.tree.monthTextPostIt.full.src);
 	}
 	,set_textContent: function(v) {
 		this._textContent = this.strVal(v,"");
@@ -3375,6 +3376,52 @@ js.Cookie.remove = function(name,path,domain) {
 }
 net.flash_line._api = {}
 net.flash_line._api.math = {}
+net.flash_line._api.math.MathX = function() { }
+net.flash_line._api.math.MathX.__name__ = true;
+net.flash_line._api.math.MathX.rootNOf = function(n,N,p) {
+	if(p == null) p = 2;
+	if(N == null) N = 3;
+	var root;
+	if(p < 0) p = 0;
+	root = Math.pow(n,1 / N);
+	return Math.round(root * Math.pow(10,p)) / Math.pow(10,p);
+}
+net.flash_line._api.math.MathX.num2Crypt = function(n,vbf,vbe,vbd,vbc,vbb) {
+	var nsrc = n | 0;
+	if(vbf == null) vbf = 7;
+	if(vbe == null) vbe = 9;
+	if(vbd == null) vbd = 2;
+	if(vbc == null) vbc = 3;
+	if(vbb == null) vbb = 5;
+	var ca = vbb * vbc * vbd * vbe * vbf;
+	var cb = vbc * vbd * vbe * vbf;
+	var cc = vbd * vbe * vbf;
+	var cd = vbe * vbf;
+	var ce = vbf;
+	var a = Math.floor(nsrc / ca);
+	var mb = nsrc % ca;
+	var b = Math.floor(mb / cb);
+	var mc = mb % cb;
+	var c = Math.floor(mc / cc);
+	var md = mc % cc;
+	var d = Math.floor(md / cd);
+	var me = md % cd;
+	var e = Math.floor(me / ce);
+	var mf = me % ce;
+	var f = Math.floor(mf);
+	var ncryp = a * 100000 + b * 10000 + c * 1000 + d * 100 + e * 10 + f;
+	return ncryp;
+}
+net.flash_line._api.math.MathX.round = function(n,d) {
+	if(d == null) d = 2;
+	var p = Math.pow(10,d);
+	return Math.round(n * p) / p;
+}
+net.flash_line._api.math.MathX.floor = function(n,d) {
+	if(d == null) d = 2;
+	var p = Math.pow(10,d);
+	return Math.floor(n * p) / p;
+}
 net.flash_line._api.math.Vector = function(vx,vy,vz) {
 	this.set_x(vx);
 	this.set_y(vy);
@@ -3962,7 +4009,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.3.47";
+Main.version = "1.3.48";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;
@@ -3982,6 +4029,11 @@ haxe.xml.Parser.escapes = (function($this) {
 js.Browser.window = typeof window != "undefined" ? window : null;
 js.Browser.document = typeof window != "undefined" ? window.document : null;
 js.Browser.navigator = typeof window != "undefined" ? window.navigator : null;
+net.flash_line._api.math.MathX.CODE_F = 7;
+net.flash_line._api.math.MathX.CODE_E = 9;
+net.flash_line._api.math.MathX.CODE_D = 2;
+net.flash_line._api.math.MathX.CODE_C = 3;
+net.flash_line._api.math.MathX.CODE_B = 5;
 net.flash_line.display.ElementExtender.listeners = [];
 net.flash_line.event.StandardEvent.CLICK = "click";
 net.flash_line.event.StandardEvent.DBL_CLICK = "dblclick";

@@ -96,7 +96,7 @@ class Calendar extends Common {
 		_baseUrl = bu;
 		loadInit = new EventSource();
 		language = new Language() ;
-		model = new Model(language, su) ; model.wait = w;
+		model = new Model(language, su,_baseUrl) ; model.wait = w;
 		view = new View(model,language);
     	controler = new Controler(model,view);
     	if (auto) {

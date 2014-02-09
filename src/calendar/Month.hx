@@ -351,8 +351,8 @@ class Month extends Common {
 	function setMonthTextPicto (?v: String) {
 		if (v==null) v=strVal(_textContent, "");
 		var img:ImageElement = cast(openTextElem, ImageElement);
-		if (v == "") 	img.src = model.tree.monthTextPostIt.empty.src ;
-		else 			img.src = model.tree.monthTextPostIt.full.src ;
+		if (v == "") 	img.src = model.baseUrl+model.tree.monthTextPostIt.empty.src ;
+		else 			img.src = model.baseUrl+model.tree.monthTextPostIt.full.src ;
 	}
 	// get interactive textArea buttons
     function get_clearButton()  :Element {return monthElem.elemBy("clear"); }

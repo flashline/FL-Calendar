@@ -57,6 +57,7 @@ class Model extends XmlParser {
 	public var save:Save;
 	public var confirmBox:ConfirmBox;
 	public var promptBox:PromptBox;
+	public var baseUrl (default,null):String;
 	/**
 	 * @return true if users at least one time has clicked on month or Month text post-it or day 
 	 */
@@ -133,7 +134,7 @@ class Model extends XmlParser {
 	 * @param	lg App texts instance
 	 * @param	su server program url
 	 */
-	public function new (lg:Language,su:String) {
+	public function new (lg:Language,su:String,bu:String) {
 		super();
 		language = lg;
 		monthChildren = [];
@@ -143,6 +144,7 @@ class Model extends XmlParser {
 		serverWriteMonthEvent= new EventSource();
 		save={days:[],months:[],currUserId:"",currYear:""};
 		serverUrl = su;
+		baseUrl = bu ;
 		wasOneTimeUsed = false;
     }
 	 /**
