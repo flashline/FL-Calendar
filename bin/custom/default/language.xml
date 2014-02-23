@@ -65,7 +65,7 @@
 			<cancel label="Abandonner" />
 			<clear label="Effacer" />	
 			<safeModeOff label="Activer la sauvegarde du mot de passe." />	
-			<safeModeOn label="Déactiver la sauvegarde du mot de passe."  />				
+			<safeModeOn label="Désactiver la sauvegarde du mot de passe."  />				
 		</button>
 		<blocnote>			
 			<title label="Notes du " />

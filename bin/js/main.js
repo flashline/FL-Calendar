@@ -171,7 +171,7 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 		return new EReg("iPhone|iPad".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
 	}
 	,get_isMobile: function() {
-		return new EReg("iPhone|ipad|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|opera mobi|windows phone|iemobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
+		return new EReg("iPhone|ipad|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|opera mobi|windows phone|iemobile|mobile".toLowerCase(),"i").match(js.Browser.navigator.userAgent.toLowerCase());
 	}
 	,get_isTablet: function() {
 		return js.Browser.window.screen.availHeight > 800 && this.get_isMobile();
@@ -415,7 +415,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.48";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.50";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -3376,52 +3376,6 @@ js.Cookie.remove = function(name,path,domain) {
 }
 net.flash_line._api = {}
 net.flash_line._api.math = {}
-net.flash_line._api.math.MathX = function() { }
-net.flash_line._api.math.MathX.__name__ = true;
-net.flash_line._api.math.MathX.rootNOf = function(n,N,p) {
-	if(p == null) p = 2;
-	if(N == null) N = 3;
-	var root;
-	if(p < 0) p = 0;
-	root = Math.pow(n,1 / N);
-	return Math.round(root * Math.pow(10,p)) / Math.pow(10,p);
-}
-net.flash_line._api.math.MathX.num2Crypt = function(n,vbf,vbe,vbd,vbc,vbb) {
-	var nsrc = n | 0;
-	if(vbf == null) vbf = 7;
-	if(vbe == null) vbe = 9;
-	if(vbd == null) vbd = 2;
-	if(vbc == null) vbc = 3;
-	if(vbb == null) vbb = 5;
-	var ca = vbb * vbc * vbd * vbe * vbf;
-	var cb = vbc * vbd * vbe * vbf;
-	var cc = vbd * vbe * vbf;
-	var cd = vbe * vbf;
-	var ce = vbf;
-	var a = Math.floor(nsrc / ca);
-	var mb = nsrc % ca;
-	var b = Math.floor(mb / cb);
-	var mc = mb % cb;
-	var c = Math.floor(mc / cc);
-	var md = mc % cc;
-	var d = Math.floor(md / cd);
-	var me = md % cd;
-	var e = Math.floor(me / ce);
-	var mf = me % ce;
-	var f = Math.floor(mf);
-	var ncryp = a * 100000 + b * 10000 + c * 1000 + d * 100 + e * 10 + f;
-	return ncryp;
-}
-net.flash_line._api.math.MathX.round = function(n,d) {
-	if(d == null) d = 2;
-	var p = Math.pow(10,d);
-	return Math.round(n * p) / p;
-}
-net.flash_line._api.math.MathX.floor = function(n,d) {
-	if(d == null) d = 2;
-	var p = Math.pow(10,d);
-	return Math.floor(n * p) / p;
-}
 net.flash_line._api.math.Vector = function(vx,vy,vz) {
 	this.set_x(vx);
 	this.set_y(vy);
@@ -4009,7 +3963,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.3.48";
+Main.version = "1.3.50";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;
@@ -4029,11 +3983,6 @@ haxe.xml.Parser.escapes = (function($this) {
 js.Browser.window = typeof window != "undefined" ? window : null;
 js.Browser.document = typeof window != "undefined" ? window.document : null;
 js.Browser.navigator = typeof window != "undefined" ? window.navigator : null;
-net.flash_line._api.math.MathX.CODE_F = 7;
-net.flash_line._api.math.MathX.CODE_E = 9;
-net.flash_line._api.math.MathX.CODE_D = 2;
-net.flash_line._api.math.MathX.CODE_C = 3;
-net.flash_line._api.math.MathX.CODE_B = 5;
 net.flash_line.display.ElementExtender.listeners = [];
 net.flash_line.event.StandardEvent.CLICK = "click";
 net.flash_line.event.StandardEvent.DBL_CLICK = "dblclick";
