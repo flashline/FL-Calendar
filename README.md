@@ -9,6 +9,10 @@
 - [français](http://www.apixline.org/pm/app/web/html5/calendar)
 - [español](http://www.apixline.org/pm/app/web/html5/calendar/es.html)
 
+##install from:  
+- [Firefox-marketplace](https://marketplace.firefox.com/app/apix-calendar)
+- [Chrome-webstore](https://chrome.google.com/webstore/detail/fl-calendar-5-fr/okiiklhmbblobkaldcolohkbihfnhiel?utm_source=chrome-ntp-icon)
+
 ##Features: 
 The main idea is to display full year (from december year-1 to January year+1) on one page, to provide quick access to months and days.  
 So many months and days as desired can be opened at the same time and texts can be dragAndDroped.  
