@@ -1,10 +1,13 @@
 ﻿#FL-Calendar
 
-...is a free online Web-App working on phones, tablets, PC, Mac. 
+...is a free online Web-App working on phones, tablets, PC, Mac.  
+
+- [Change log](CHANGE_LOG.md)
 
 ##Run:  
-- [english](http://www.flash-line.net/org/app/web/html5/calendar/en.html)
-- [français](http://www.flash-line.net/org/app/web/html5/calendar)
+- [english](http://www.apixline.org/pm/app/web/html5/calendar/en.html)
+- [français](http://www.apixline.org/pm/app/web/html5/calendar)
+- [español](http://www.apixline.org/pm/app/web/html5/calendar/es.html)
 
 ##Features: 
 The main idea is to display full year (from december year-1 to January year+1) on one page, to provide quick access to months and days.  
@@ -14,14 +17,14 @@ A text can be associated with a day of the month and/or the entire month.
 
 Layout and behaviour may be different according to screen size or browser ratio.
 
-You may [embed FL-Calendar](http://www.flash-line.net/org//app/web/html5/calendar/embed.simu.html) in your own page : 
+You may [embed FL-Calendar](http://www.apixline.org/pm//app/web/html5/calendar/embed.simu.html) in your own page : 
 
 ##Licence 
 GNU-GPL
 
 ##User guide:
-- [english](http://www.flash-line.net/org/app/web/html5/calendar/doc/help.en.html)
-- [français](http://www.flash-line.net/org//app/web/html5/calendar/doc/help.fr.html)
+- [english](http://www.apixline.org/pm/app/web/html5/calendar/doc/help.en.html)
+- [français](http://www.apixline.org/pm//app/web/html5/calendar/doc/help.fr.html)
 
 ##Recommendations :
 This app is designed to run on a valid HTML5 browser. 

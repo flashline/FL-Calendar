@@ -370,8 +370,9 @@ class Controler extends Common {
 			var msg:String=e.result.msg;
 			if (msg == "connectionIsNotOpenOrValid") {
 				model.serverWriteDayEvent.unbind();	
-				saveOpenTextToBeWriting();
-				doConnection();
+				saveOpenTextToBeWriting();				
+				//here doConnection(); replaced by:
+				doAutoReconnection ();
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
@@ -398,7 +399,8 @@ class Controler extends Common {
 			var msg:String=e.result.msg;
 			if (msg == "connectionIsNotOpenOrValid") {
 				saveOpenTextToBeWriting();
-				doConnection();
+				//here doConnection(); replaced by:
+				doAutoReconnection ();
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
@@ -677,6 +679,13 @@ class Controler extends Common {
 		doConnection();
 		return false;
 	}
+	function doAutoReconnection () {
+		var o = model.readUserCookie();	
+		if (o.id != null && o.pwd != null) {
+			askOpenConnection( o.id, o.pwd);
+		}
+		else doConnection();				
+	}		
 	function doConnection (?withEnterOnSignUpValid=false) {
 		model.wait.changeImage(model.baseUrl+model.tree.wait.standard.src);	
 		var o = model.readUserCookie();	

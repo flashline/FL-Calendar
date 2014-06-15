@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************************************
-	SoftWare : Flash-Line  calendar
+	SoftWare : pixaLine  calendar
 	File : calendar.php
 	Description : all server codes of calendar project
 	Content : /
@@ -15,7 +15,7 @@
 	session_start();
 	//
 	$endStr = "";//$endStr="<br/>";//
-	$adminMail = "info@flash-line.net";
+	$adminMail = "info@pixaline.net";
 	if (count($_GET)>0) {
 		if (isset($_GET["req"])) $req=$_GET["req"];
 		if (isset($_GET["pseudo"])) $pseudo=$_GET["pseudo"];

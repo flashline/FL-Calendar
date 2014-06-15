@@ -1,0 +1,27 @@
+* {
+	font-size:1.05em;
+	font-family:Arial,sans-serif;
+}
+span {
+	display:block;				
+}
+span.frame {
+	margin-top:5px;
+	border:1px solid #fc9;
+}
+span.lnk {
+	font-size:.7em;
+	display:inline;
+	font-weight:bold;
+}
+span.releaseText {
+	font-size:.5em;
+}
+a {
+	border:1px solid #99f;
+	color:#fa5;
+	background-color:#eff;
+	display:inline-block;
+	margin-right:10px;
+	text-decoration:none;
+}

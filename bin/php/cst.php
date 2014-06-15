@@ -8,7 +8,7 @@
 	CoAuthors : 
 	Copyright / Droits d'auteur : Free-Works.Org - Flash-Line.net
 	****************************************************************************************************/
-	$PERM=0740; 
+	$PERM=0740; //$PERM=0777; //
 	//
 	$BASE=$_SERVER['DOCUMENT_ROOT'].dirname($_SERVER['PHP_SELF'])."/../";//c:/www/_AS/AS3/calendar2k9/source/php/";
 	$DATA_DIR="data/";

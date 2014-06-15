@@ -140,7 +140,7 @@ Bonne continuation avec FL Calendar ;-)" />
 			<idLengthNotValid label="Le nom doit avoir entre 3 et 10 caractères !" />
 			<yearNotValid label="Saisir une année sur 4 chiffres !" />
 			<server>
-				<userMail label="Désolé nous n'avons pu récupérer votre email. Contactez-nous sur info@flash-line.net !" />
+				<userMail label="Désolé nous n'avons pu récupérer votre email. Contactez-nous sur info@pixaline.net !" />
 				<action label="Le programme serveur principal est absent !" />
 				<changeYear label="Erreur serveur : Impossible de changer de date !" />
 				<sendLogin label="Erreur durant la création du compte sur le serveur !" />

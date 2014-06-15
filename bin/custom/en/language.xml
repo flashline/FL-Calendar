@@ -139,7 +139,7 @@ fill the field below, otherwise leave blank." />
 			<idLengthNotValid label="Name's length must be 3 to 10 characters !" />
 			<yearNotValid label="Year must have 4 digits !" />
 			<server>
-				<userMail label="Sorry we couldn't receive your email. You can contact us on info@flash-line.net !" />
+				<userMail label="Sorry we couldn't receive your email. You can contact us on info@pixaline.net !" />
 				<action label="Main server program is missing !" />
 				<changeYear label="server error : Impossible to change date !" />
 				<sendLogin label="SignUp error on server !" />

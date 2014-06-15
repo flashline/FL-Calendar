@@ -3,6 +3,7 @@ var $estr = function() { return js.Boot.__string_rec(this,''); };
 function $extend(from, fields) {
 	function inherit() {}; inherit.prototype = from; var proto = new inherit();
 	for (var name in fields) proto[name] = fields[name];
+	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
 var net = {}
@@ -205,12 +206,27 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 	,hexToDec: function(v) {
 		return Number('0x'+v) ;;
 	}
+	,qsa: function(v,parent) {
+		var nl;
+		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
+		if(parent == null) parent = this.rootHtmlElement;
+		nl = parent.querySelectorAll(v);
+		return nl;
+	}
+	,qs: function(v,parent) {
+		var el;
+		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
+		if(parent == null) parent = this.rootHtmlElement;
+		el = parent.querySelector(v);
+		if(el == null) haxe.Log.trace("f::Element's by selector: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 78, className : "net.flash_line.util.Common", methodName : "qs"});
+		return el;
+	}
 	,elemBy: function(v,parent) {
 		var el;
 		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
 		if(parent == null) parent = this.rootHtmlElement;
 		el = js.Boot.__cast(parent.getElementsByClassName(v)[0] , Element);
-		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 67, className : "net.flash_line.util.Common", methodName : "elemBy"});
+		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 68, className : "net.flash_line.util.Common", methodName : "elemBy"});
 		return el;
 	}
 	,elem: function(v,parent) {
@@ -218,8 +234,8 @@ net.flash_line.util.Common.prototype = $extend(net.flash_line.util.ApiCommon.pro
 		if(this.rootHtmlElement == null) this.rootHtmlElement = js.Browser.document.body;
 		if(parent == null) parent = this.rootHtmlElement;
 		el = js.Browser.document.getElementById(v);
-		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 53, className : "net.flash_line.util.Common", methodName : "elem"});
-		if(!parent.contains(el)) haxe.Log.trace("f::Element's id: " + v + " is not only in parent : tag=" + parent.tagName + "/class=" + parent.className + "/id=" + parent.id,{ fileName : "Common.hx", lineNumber : 56, className : "net.flash_line.util.Common", methodName : "elem"});
+		if(el == null) haxe.Log.trace("f::Element's id: " + v + " doesn't exist !",{ fileName : "Common.hx", lineNumber : 54, className : "net.flash_line.util.Common", methodName : "elem"});
+		if(!parent.contains(el)) haxe.Log.trace("f::Element's id: " + v + " is not only in parent : tag=" + parent.tagName + "/class=" + parent.className + "/id=" + parent.id,{ fileName : "Common.hx", lineNumber : 57, className : "net.flash_line.util.Common", methodName : "elem"});
 		return el;
 	}
 	,__class__: net.flash_line.util.Common
@@ -415,11 +431,13 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.3.50";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.4.1";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
 });
+var IMap = function() { }
+IMap.__name__ = true;
 var Reflect = function() { }
 Reflect.__name__ = true;
 Reflect.hasField = function(o,field) {
@@ -446,7 +464,7 @@ Reflect.fields = function(o) {
 	if(o != null) {
 		var hasOwnProperty = Object.prototype.hasOwnProperty;
 		for( var f in o ) {
-		if(f != "__id__" && hasOwnProperty.call(o,f)) a.push(f);
+		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) a.push(f);
 		}
 	}
 	return a;
@@ -459,9 +477,9 @@ Reflect.compareMethods = function(f1,f2) {
 	if(!Reflect.isFunction(f1) || !Reflect.isFunction(f2)) return false;
 	return f1.scope == f2.scope && f1.method == f2.method && f1.method != null;
 }
-Reflect.deleteField = function(o,f) {
-	if(!Reflect.hasField(o,f)) return false;
-	delete(o[f]);
+Reflect.deleteField = function(o,field) {
+	if(!Reflect.hasField(o,field)) return false;
+	delete(o[field]);
 	return true;
 }
 var Std = function() { }
@@ -893,6 +911,10 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.view.showConnectView(this.strVal(o.id,""),this.strVal(o.pwd,""));
 		if(withEnterOnSignUpValid) net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.view.get_signUpValid(),[this.view.get_signInCancel(),this.view.get_signInValid(),this.view.get_signUpCancel()]); else net.flash_line.display.ElementExtender.joinEnterKeyToClick(this.view.get_signInValid(),[this.view.get_signInCancel(),this.view.get_signUpValid(),this.view.get_signUpCancel()]);
 	}
+	,doAutoReconnection: function() {
+		var o = this.model.readUserCookie();
+		if(o.id != null && o.pwd != null) this.askOpenConnection(o.id,o.pwd); else this.doConnection();
+	}
 	,connectionClick: function(e) {
 		this.doConnection();
 		return false;
@@ -1166,7 +1188,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 			var msg1 = e.result.msg;
 			if(msg1 == "connectionIsNotOpenOrValid") {
 				this.saveOpenTextToBeWriting();
-				this.doConnection();
+				this.doAutoReconnection();
 			} else this.alert(this.get_lang().error.server.fatalWrite.label);
 		} else if(answ == "writeMonthOk") {
 			this.model.save.months = [];
@@ -1188,7 +1210,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 			if(msg1 == "connectionIsNotOpenOrValid") {
 				this.model.serverWriteDayEvent.unbind();
 				this.saveOpenTextToBeWriting();
-				this.doConnection();
+				this.doAutoReconnection();
 			} else this.alert(this.get_lang().error.server.fatalWrite.label);
 		} else if(answ == "writeDayOk") {
 			this.model.save.days = [];
@@ -2606,7 +2628,7 @@ haxe.ds.GenericStack.prototype = {
 		return l != null;
 	}
 	,add: function(item) {
-		this.head = new haxe.ds.FastCell(item,this.head);
+		this.head = new haxe.ds.GenericCell(item,this.head);
 	}
 	,__class__: haxe.ds.GenericStack
 }
@@ -2932,18 +2954,19 @@ haxe.Timer.prototype = {
 	}
 	,__class__: haxe.Timer
 }
-haxe.ds.FastCell = function(elt,next) {
+haxe.ds.GenericCell = function(elt,next) {
 	this.elt = elt;
 	this.next = next;
 };
-haxe.ds.FastCell.__name__ = true;
-haxe.ds.FastCell.prototype = {
-	__class__: haxe.ds.FastCell
+haxe.ds.GenericCell.__name__ = true;
+haxe.ds.GenericCell.prototype = {
+	__class__: haxe.ds.GenericCell
 }
 haxe.ds.StringMap = function() {
 	this.h = { };
 };
 haxe.ds.StringMap.__name__ = true;
+haxe.ds.StringMap.__interfaces__ = [IMap];
 haxe.ds.StringMap.prototype = {
 	keys: function() {
 		var a = [];
@@ -3218,6 +3241,14 @@ js.Boot.__unhtml = function(s) {
 js.Boot.__trace = function(v,i) {
 	var msg = i != null?i.fileName + ":" + i.lineNumber + ": ":"";
 	msg += js.Boot.__string_rec(v,"");
+	if(i != null && i.customParams != null) {
+		var _g = 0, _g1 = i.customParams;
+		while(_g < _g1.length) {
+			var v1 = _g1[_g];
+			++_g;
+			msg += "," + js.Boot.__string_rec(v1,"");
+		}
+	}
 	var d;
 	if(typeof(document) != "undefined" && (d = document.getElementById("haxe:trace")) != null) d.innerHTML += js.Boot.__unhtml(msg) + "<br/>"; else if(typeof(console) != "undefined" && console.log != null) console.log(msg);
 }
@@ -3302,30 +3333,30 @@ js.Boot.__interfLoop = function(cc,cl) {
 	return js.Boot.__interfLoop(cc.__super__,cl);
 }
 js.Boot.__instanceof = function(o,cl) {
-	try {
-		if(o instanceof cl) {
-			if(cl == Array) return o.__enum__ == null;
-			return true;
-		}
-		if(js.Boot.__interfLoop(o.__class__,cl)) return true;
-	} catch( e ) {
-		if(cl == null) return false;
-	}
+	if(cl == null) return false;
 	switch(cl) {
 	case Int:
-		return Math.ceil(o%2147483648.0) === o;
+		return (o|0) === o;
 	case Float:
 		return typeof(o) == "number";
 	case Bool:
-		return o === true || o === false;
+		return typeof(o) == "boolean";
 	case String:
 		return typeof(o) == "string";
 	case Dynamic:
 		return true;
 	default:
-		if(o == null) return false;
-		if(cl == Class && o.__name__ != null) return true; else null;
-		if(cl == Enum && o.__ename__ != null) return true; else null;
+		if(o != null) {
+			if(typeof(cl) == "function") {
+				if(o instanceof cl) {
+					if(cl == Array) return o.__enum__ == null;
+					return true;
+				}
+				if(js.Boot.__interfLoop(o.__class__,cl)) return true;
+			}
+		} else return false;
+		if(cl == Class && o.__name__ != null) return true;
+		if(cl == Enum && o.__ename__ != null) return true;
 		return o.__enum__ == cl;
 	}
 }
@@ -3377,20 +3408,14 @@ js.Cookie.remove = function(name,path,domain) {
 net.flash_line._api = {}
 net.flash_line._api.math = {}
 net.flash_line._api.math.Vector = function(vx,vy,vz) {
+	if(vz == null) vz = 0;
 	this.set_x(vx);
 	this.set_y(vy);
 	this.set_z(vz);
 };
 net.flash_line._api.math.Vector.__name__ = true;
 net.flash_line._api.math.Vector.prototype = {
-	toString: function() {
-		var str = "";
-		str = "[" + this.get_x() + "," + this.get_y();
-		if(this.get_z() != null) str += "," + this.get_z();
-		str += "]";
-		return str;
-	}
-	,set_z: function(v) {
+	set_z: function(v) {
 		this._z = v;
 		return v;
 	}
@@ -3764,7 +3789,7 @@ net.flash_line.event.timing.Clock.prototype = $extend(haxe.Timer.prototype,{
 	}
 	,clockRun: function() {
 		if(!this._idle) {
-			this.listener(this);
+			if(this.listener != null) this.listener(this);
 			this.top.dispatch(new net.flash_line.event.StandardEvent(this));
 		}
 	}
@@ -3921,14 +3946,14 @@ net.flash_line.util.StepIterator.prototype = {
 	}
 	,__class__: net.flash_line.util.StepIterator
 }
-var $_;
-function $bind(o,m) { var f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; return f; };
+var $_, $fid = 0;
+function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; };
 if(Array.prototype.indexOf) HxOverrides.remove = function(a,o) {
 	var i = a.indexOf(o);
 	if(i == -1) return false;
 	a.splice(i,1);
 	return true;
-}; else null;
+};
 Math.__name__ = ["Math"];
 Math.NaN = Number.NaN;
 Math.NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
@@ -3963,7 +3988,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.3.50";
+Main.version = "1.4.1";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;

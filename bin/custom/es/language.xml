@@ -136,7 +136,7 @@ Buena suerte con FL-calendario;-)" />
 			<idLengthNotValid label="El nombre debe tener de 3 hasta 10 caracteres !" />
 			<yearNotValid label="Entrar un año de 4 dígitos !" />
 			<server>
-				<userMail label="¡Lo siento! no pudimos obtener su email. Póngase en contacto con nosotros en info@flash-line.net !" />
+				<userMail label="¡Lo siento! no pudimos obtener su email. Póngase en contacto con nosotros en info@pixaline.net !" />
 				<action label="El servidor no responde !" />
 				<changeYear label="Error : imposible de cambiar el año !" />
 				<sendLogin label="Error durante el registro !" />
