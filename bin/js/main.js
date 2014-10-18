@@ -431,7 +431,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.4.1";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>FL-Calendar</b> " + "1.4.2";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -1188,7 +1188,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 			var msg1 = e.result.msg;
 			if(msg1 == "connectionIsNotOpenOrValid") {
 				this.saveOpenTextToBeWriting();
-				this.doAutoReconnection();
+				this.doConnection();
 			} else this.alert(this.get_lang().error.server.fatalWrite.label);
 		} else if(answ == "writeMonthOk") {
 			this.model.save.months = [];
@@ -1210,7 +1210,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 			if(msg1 == "connectionIsNotOpenOrValid") {
 				this.model.serverWriteDayEvent.unbind();
 				this.saveOpenTextToBeWriting();
-				this.doAutoReconnection();
+				this.doConnection();
 			} else this.alert(this.get_lang().error.server.fatalWrite.label);
 		} else if(answ == "writeDayOk") {
 			this.model.save.days = [];
@@ -1343,7 +1343,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				while(_g < _g1.length) {
 					var day = _g1[_g];
 					++_g;
-					haxe.Log.trace(day.get_key(),{ fileName : "Controler.hx", lineNumber : 176, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
+					haxe.Log.trace(day.get_key(),{ fileName : "Controler.hx", lineNumber : 178, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
 					this.askToWriteOneDayText(day);
 					d++;
 				}
@@ -1351,7 +1351,7 @@ calendar.Controler.prototype = $extend(net.flash_line.util.Common.prototype,{
 				while(_g < _g1.length) {
 					var month = _g1[_g];
 					++_g;
-					haxe.Log.trace(month.get_key(),{ fileName : "Controler.hx", lineNumber : 180, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
+					haxe.Log.trace(month.get_key(),{ fileName : "Controler.hx", lineNumber : 182, className : "calendar.Controler", methodName : "onAnswerOpenConnection"});
 					this.askToWriteOneMonthText(month);
 					m++;
 				}
@@ -3988,7 +3988,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.4.1";
+Main.version = "1.4.2";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;

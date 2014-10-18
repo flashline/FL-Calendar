@@ -57,7 +57,7 @@ class Main extends Common {
 	var c:Calendar;
 	var wait:WaitView;
 	var lang:Object;
-	static inline var version:String="1.4.1";
+	static inline var version:String="1.4.2";
 	/**
 	 * constructor
 	 */
@@ -83,7 +83,7 @@ class Main extends Common {
 		if (isIphoneIpad) {			
 			elem("calendar").child("release").elemBy("github").innerHTML = lang.Igithub.label ;			
 		}
-		createErrorAlert (e.text);		
+		createErrorAlert (e.text);	
 		c.promptBox = createPromptBox(e.text);
 		c.confirmBox = createConfirmBox(e.text);
 		c.start();

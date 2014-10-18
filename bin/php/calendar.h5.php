@@ -9,6 +9,12 @@
 	Copyright / Droits d'auteur : Free-Works.Org - Flash-Line.net
 	****************************************************************************************************/
 	error_reporting (4) ;
+	/*
+	header('Expires: '.gmdate('D, d M Y H:i:s', (time()-1)).'GMT');
+	header('Cache-Control: no-store, no-cache, must-revalidate');
+	header('Cache-Control: post-check=0, pre-check=0', FALSE);
+	header('Pragma: no-cache');
+	*/
 	ini_set('session.gc_maxlifetime', 3*60*60);
 	//
 	require "function.php";

@@ -64,7 +64,6 @@ class Controler extends Common {
      * Init basic events...
      */
 	public function eventInit () {
-		//trace("i::" + Browser.navigator.userAgent.toLowerCase());
 		view.rootHtmlElement.addLst("resize", skinResize);
 		view.window.addLst("resize", skinResize);
 		view.window.addLst("beforeunload", pageUnload);
@@ -129,6 +128,7 @@ class Controler extends Common {
 				view.doLayoutResponsive();
 			}	
 		} else if (answ == "connectionIsNotOpen")  {	
+			//trace("i::onAnswerConnectInfo>>connectionIsNotOpen");
 			model.wait.stop();
 			doConnection ();
 		} else if (answ == "error")  {
@@ -144,7 +144,8 @@ class Controler extends Common {
 		model.currUserPwd = pwd;
 		model.serverEvent.unbind();
 		model.serverEvent.bind(onAnswerOpenConnection);
-		model.toServer( {req:"openConnection",pseudo:pseudo,pwd:pwd});	
+		model.toServer( { req:"openConnection", pseudo:pseudo, pwd:pwd } );
+		
 	}
 	function onAnswerOpenConnection (e:StandardEvent) {
 		model.wait.stop();
@@ -159,7 +160,8 @@ class Controler extends Common {
 				alert(lang.error.server.unknownError.label,onErrorCallBackOpenConnection);					
 			} 			
 		} 
-		else if (answ == "openConnectionOk")  {
+		else if (answ == "openConnectionOk")  {		
+			//trace("i::onAnswerOpenConnection>>openConnectionOk");
 			var currYear = e.result.currentYear; var currUserId = e.result.pseudo;
 			if (strVal(currYear, "").length > 0) model.currYear = Std.parseInt(currYear);
 			if (strVal(currUserId, "") != "") model.currUserId = currUserId;	
@@ -368,11 +370,10 @@ class Controler extends Common {
 		var answ = e.result.answ; var msg = e.result.msg;
 		if (answ == "error") { 
 			var msg:String=e.result.msg;
-			if (msg == "connectionIsNotOpenOrValid") {
+			if (msg == "connectionIsNotOpenOrValid") {	
 				model.serverWriteDayEvent.unbind();	
-				saveOpenTextToBeWriting();				
-				//here doConnection(); replaced by:
-				doAutoReconnection ();
+				saveOpenTextToBeWriting();	
+				doConnection() ; // doAutoReconnection ();  // 
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
@@ -399,8 +400,7 @@ class Controler extends Common {
 			var msg:String=e.result.msg;
 			if (msg == "connectionIsNotOpenOrValid") {
 				saveOpenTextToBeWriting();
-				//here doConnection(); replaced by:
-				doAutoReconnection ();
+				doConnection() ; // doAutoReconnection ();  //
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
@@ -873,7 +873,7 @@ class Controler extends Common {
 		doValidClick(day);
 		return false;
 	}
-    function doValidClick (day:Day) {		
+    function doValidClick (day:Day) {	
 		if (day.hasBeenModified) {
 			model.serverWriteDayEvent.unbind();
 			day.storeText();
