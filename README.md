@@ -10,8 +10,9 @@
 - [español](http://www.apixline.org/pm/app/web/html5/calendar/es.html)
 
 ##install from:  
-- [Firefox-marketplace](https://marketplace.firefox.com/app/apix-calendar)
-- [Chrome-webstore](https://chrome.google.com/webstore/detail/fl-calendar-5-fr/okiiklhmbblobkaldcolohkbihfnhiel?utm_source=chrome-ntp-icon)
+- [Firefox-marketplace](https://marketplace.firefox.com/app/apix-calendar) -Android mobiles/PC-
+- [GooglePlay](https://play.google.com/store/apps/details?id=net.apixline.calendar&hl=fr) -PC/MAC-
+- [Chrome-webstore](https://chrome.google.com/webstore/detail/fl-calendar-5-fr/okiiklhmbblobkaldcolohkbihfnhiel?utm_source=chrome-ntp-icon) -Android mobiles-
 
 ##Features: 
 The main idea is to display full year (from december year-1 to January year+1) on one page, to provide quick access to months and days.  
