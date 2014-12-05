@@ -317,7 +317,7 @@ class Controler extends Common {
 		model.serverEvent.bind(onAnswerToChangeYear);
 		model.toServer( {req:"changeYear",year:newYear});
 	}
-	function onAnswerToChangeYear (e:StandardEvent) {	
+	function onAnswerToChangeYear (e:StandardEvent) {
 		model.wait.stop();
 		var answ = e.result.answ;
 		if (answ == "error") { 
@@ -348,7 +348,7 @@ class Controler extends Common {
 				alert(lang.error.server.fatalRead.label);
 			}
 			else {				
-				model.storeMonthAndDayText(e.result);	
+				model.storeMonthAndDayText(e.result);
 			}
 			//
 		} else {
@@ -372,8 +372,9 @@ class Controler extends Common {
 				model.serverWriteDayEvent.unbind();	
 				saveOpenTextToBeWriting();	
 				//here: doConnection(); // replaced by: doAutoReconnection ();
--				doAutoReconnection();
-			} else {
+				doAutoReconnection();
+			} 
+			else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
 		} else if (answ == "writeDayOk")  {	
@@ -388,7 +389,7 @@ class Controler extends Common {
 		model.wait.start(lang.server.writeOneMonthText.label);		
 		model.serverWriteMonthEvent.bind(onAnswerToWriteOneMonthText);
 		model.save.currUserId = model.currUserId;		
-		model.toServer( {req:"writeMonth",month:month.key,txt:month.textContent},"writeMonth");
+		model.toServer( { req:"writeMonth", month:month.key, txt:month.textContent }, "writeMonth");
 	}
 	function onAnswerToWriteOneMonthText(e:StandardEvent) {
 		//don't remove this comment : model.serverWriteMonthEvent.unbind();		
@@ -400,8 +401,9 @@ class Controler extends Common {
 			if (msg == "connectionIsNotOpenOrValid") {
 				saveOpenTextToBeWriting();
 				//here: doConnection(); // replaced by: doAutoReconnection ();
--				doAutoReconnection ();
-			} else {
+				doAutoReconnection();
+			} 
+			else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
 		} else if (answ == "writeMonthOk")  {	
@@ -678,7 +680,7 @@ class Controler extends Common {
 	function connectionClick (e:Event):Bool {	
 		doConnection();
 		return false;
-	}
+	}	
 	function doAutoReconnection () {
 		var o = model.readUserCookie();	
 		if (o.id != null && o.pwd != null) {

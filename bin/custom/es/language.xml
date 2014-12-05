@@ -2,7 +2,7 @@
 <root id="fr">	
 		<title label="Calendario/agenda" />
 		<valided label="Validado" />
-		<advertisingForComputer label="Versiones móviles en Google Play &amp; Firefox Marketplace !" />
+		<advertisingForComputer label="Versiones móviles en Google Play/Apix Calendar &amp; Firefox Marketplace/FL-Calendar" />
 		<advertisingForMobile label="También funciona en PC/MAC !" />		
 		<noCurrent label="Calendario" />
 		<currentUserInfo1 label="Agenda " />

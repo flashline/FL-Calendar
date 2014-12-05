@@ -75,7 +75,7 @@ class Main extends Common {
 		c = new Calendar(Cst.getServerUrl(),Cst.getModelSrc(),Cst.getLanguageSrc(),Cst.getBaseUrl(),isAutoStart(true),wait);
 		c.loadInit.bind(onLoad);	
 		//
-		elem("calendar").child("release").elemBy("releaseText").innerHTML = "<b>FL-Calendar</b> " + version;
+		elem("calendar").child("release").elemBy("releaseText").innerHTML = "<b>Apix Calendar</b> " + version;
 		if (isMobile) elem("calendar").child("release").elemBy("embed").delete();	
 	}	
 	function onLoad (e:StandardEvent) {	
