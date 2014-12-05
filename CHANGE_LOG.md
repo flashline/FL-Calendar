@@ -15,7 +15,7 @@ Otherwise, the login window is used like before.
 - Now on [Google Play](https://play.google.com/store/apps/details?id=net.apixline.calendar&hl=en)
  ... Thanks Apache Cordova !
  
- ##December 5 2014 - v 1.4.3 :  
-- Bug: If a text contained "%" the app was blocked !!
+##December 5 2014 - v 1.4.3 :  
+- Bug: If a text contained "%" the app was blocked !! 
   It's now fixed.
  
