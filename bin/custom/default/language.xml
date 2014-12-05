@@ -2,7 +2,7 @@
 <root id="fr">	
 		<title label="Calendrier/Post-it" />
 		<valided label="Validé" />
-		<advertisingForComputer label="Fonctionne aussi sur MOBILES !" />
+		<advertisingForComputer label="Versions MOBILES sur Google Play &amp; Firefox Marketplace" />
 		<advertisingForMobile label="Fonctionne aussi sur PC/MAC !" />		
 		<noCurrent label="Simple calendrier " />
 		<currentUserInfo1 label="Agenda " />

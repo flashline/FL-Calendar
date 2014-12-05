@@ -5,7 +5,8 @@
 	}
 	function convertMarkupChar($str){
 		$str=str_replace("<","~#{",$str) ;
-		$str=str_replace(">","~#}",$str) ;
+		$str = str_replace(">", "~#}", $str) ;
+		$str=str_replace("%","~#ç",$str) ;		
 		return $str;
 	}
 	function encodeXmlReserved($str){		

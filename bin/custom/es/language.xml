@@ -2,7 +2,7 @@
 <root id="fr">	
 		<title label="Calendario/agenda" />
 		<valided label="Validado" />
-		<advertisingForComputer label="También funciona en móvil !" />
+		<advertisingForComputer label="Versiones móviles en Google Play &amp; Firefox Marketplace !" />
 		<advertisingForMobile label="También funciona en PC/MAC !" />		
 		<noCurrent label="Calendario" />
 		<currentUserInfo1 label="Agenda " />

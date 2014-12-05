@@ -128,7 +128,6 @@ class Controler extends Common {
 				view.doLayoutResponsive();
 			}	
 		} else if (answ == "connectionIsNotOpen")  {	
-			//trace("i::onAnswerConnectInfo>>connectionIsNotOpen");
 			model.wait.stop();
 			doConnection ();
 		} else if (answ == "error")  {
@@ -161,7 +160,6 @@ class Controler extends Common {
 			} 			
 		} 
 		else if (answ == "openConnectionOk")  {		
-			//trace("i::onAnswerOpenConnection>>openConnectionOk");
 			var currYear = e.result.currentYear; var currUserId = e.result.pseudo;
 			if (strVal(currYear, "").length > 0) model.currYear = Std.parseInt(currYear);
 			if (strVal(currUserId, "") != "") model.currUserId = currUserId;	
@@ -373,7 +371,8 @@ class Controler extends Common {
 			if (msg == "connectionIsNotOpenOrValid") {	
 				model.serverWriteDayEvent.unbind();	
 				saveOpenTextToBeWriting();	
-				doConnection() ; // doAutoReconnection ();  // 
+				//here: doConnection(); // replaced by: doAutoReconnection ();
+-				doAutoReconnection();
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
@@ -400,7 +399,8 @@ class Controler extends Common {
 			var msg:String=e.result.msg;
 			if (msg == "connectionIsNotOpenOrValid") {
 				saveOpenTextToBeWriting();
-				doConnection() ; // doAutoReconnection ();  //
+				//here: doConnection(); // replaced by: doAutoReconnection ();
+-				doAutoReconnection ();
 			} else {
 				alert(lang.error.server.fatalWrite.label);					
 			} 			
