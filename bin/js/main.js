@@ -436,7 +436,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>Apix Calendar</b> " + "1.4.3";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>Apix Calendar</b> " + "1.4.4";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -1484,12 +1484,12 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,get_month: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 323, className : "calendar.Day", methodName : "get_month"});
+		if(this.monthParent != null) v = this.monthParent.get_number(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 339, className : "calendar.Day", methodName : "get_month"});
 		return v;
 	}
 	,get_year: function() {
 		var v = null;
-		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 315, className : "calendar.Day", methodName : "get_year"});
+		if(this.monthParent != null) v = this.monthParent.get_year(); else haxe.Log.trace("f::" + Std.string(this.lang.error.fatal.monthMissing.label),{ fileName : "Day.hx", lineNumber : 331, className : "calendar.Day", methodName : "get_year"});
 		return v;
 	}
 	,get_date: function() {
@@ -1546,21 +1546,31 @@ calendar.Day.prototype = $extend(net.flash_line.util.Common.prototype,{
 		if(this.model.languageIs("en")) str += "index=" + this.index + " :" + this.get_month() + "/" + this.get_number() + "/" + this.get_year() + ". " + this.get_abbrev() + "/" + this.get_name() + "\n"; else str += "index=" + this.index + " :" + this.get_number() + "/" + this.get_month() + "/" + this.get_year() + ". " + this.get_abbrev() + "/" + this.get_name() + "\n";
 		return str;
 	}
-	,setColor: function(state) {
+	,setOutColor: function() {
+		var el = net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"textBegin");
+		var v = (js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.skinElem,"textarea") , HTMLTextAreaElement)).value;
 		var c = "#000000";
+		if(new EReg(this.model.tree.month.emphasisRegExp,"i").match(v)) c = this.model.tree.month.emphasisColor;
+		net.flash_line.display.ElementExtender.setColor(net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"abbrev"),c);
+		net.flash_line.display.ElementExtender.setColor(el,c);
+	}
+	,setColor: function(state) {
+		var c;
 		var p = this.model.tree;
 		if(state == "over") {
 			c = p.month.list.item[this.monthParent.index].overColor;
 			if(c == null) c = p.month.overColor;
-		}
-		net.flash_line.display.ElementExtender.setColor(net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"abbrev"),c);
-		net.flash_line.display.ElementExtender.setColor(net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"textBegin"),c);
+			net.flash_line.display.ElementExtender.setColor(net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"abbrev"),c);
+			net.flash_line.display.ElementExtender.setColor(net.flash_line.display.ElementExtender.elemBy(this.reactiveElem,"textBegin"),c);
+		} else this.setOutColor();
 	}
 	,restoreTextOnTop: function() {
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"textBegin").innerHTML = (js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.skinElem,"textarea") , HTMLTextAreaElement)).value;
+		this.setOutColor();
 	}
 	,showFullNameOnTop: function() {
 		net.flash_line.display.ElementExtender.elemBy(this.skinElem,"textBegin").innerHTML = this.get_fullName();
+		this.setOutColor();
 	}
 	,storeText: function() {
 		this.set_textContent((js.Boot.__cast(net.flash_line.display.ElementExtender.elemByTag(this.skinElem,"textarea") , HTMLTextAreaElement)).value);
@@ -3993,7 +4003,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.4.3";
+Main.version = "1.4.4";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;

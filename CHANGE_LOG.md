@@ -18,4 +18,12 @@ Otherwise, the login window is used like before.
 ##December 5 2014 - v 1.4.3 :  
 - Bug: If a text contained "%" the app was blocked !! 
   It's now fixed.
+  
+##January 12 2015 - v 1.4.4 :  
+- If the text of a day contains a digit 0-9 folowed by "h" or "H"  
+then the beginning of text -when day is closed- is green colored.  
+if you got source:
+The color and rule may be changed by modifying :  
+  [www.apixline.org/pm/app/web/html5/calendar/custom/default/model.xml]( http://www.apixline.org/pm/app/web/html5/calendar/custom/default/model.xml)  
+Parameters are emphasisRegExp="[0-9][hH:]" and emphasisColor="#119988"
  

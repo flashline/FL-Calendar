@@ -223,25 +223,41 @@ class Day extends Common {
 	 * when day is open or user is logoff : fullname day is displayed
 	 */
 	public function showFullNameOnTop() {
-		skinElem.elemBy("textBegin").innerHTML = fullName;	
+		skinElem.elemBy("textBegin").innerHTML = fullName;
+		setOutColor();
 	}
 	/**
 	 * when day is close and user is logged in : begin of text is displayed
 	 */
-	public function restoreTextOnTop() {
-		skinElem.elemBy("textBegin").innerHTML = cast(skinElem.elemByTag("textarea"),TextAreaElement).value;			
+	public function restoreTextOnTop() {		
+		skinElem.elemBy("textBegin").innerHTML = cast(skinElem.elemByTag("textarea"), TextAreaElement).value ;
+		setOutColor();		
 	}
 	/**
 	 * @param	state "out" or "over"
 	 */
 	public function setColor (state:String) { 
-		var c = "#000000"; var p:Object = model.tree;
+		var c ; var p:Object = model.tree;
 		if (state == "over") {
 			c = p.month.list.item[monthParent.index].overColor; 
-			if (c==null) c=p.month.overColor;
+			if (c == null) c = p.month.overColor;
+			reactiveElem.elemBy("abbrev").setColor(c);
+			reactiveElem.elemBy("textBegin").setColor(c);	
 		}
+		else {
+			setOutColor ();			
+		}
+	}
+	function setOutColor () { 
+		var el = reactiveElem.elemBy("textBegin");
+		var v = cast(skinElem.elemByTag("textarea"), TextAreaElement).value;
+		var c = "#000000";
+		if ( new EReg( model.tree.month.emphasisRegExp, "i").match(v)  ) c = model.tree.month.emphasisColor ;
 		reactiveElem.elemBy("abbrev").setColor(c);
-		reactiveElem.elemBy("textBegin").setColor(c);		
+		el.setColor(c);
+		
+		
+		
 	}
 	/**
 	 * method to debug

@@ -7,7 +7,7 @@
 	<layout middleWidth="801" narrowWidth="481" />
 	<server dataSaveDelay="300" /><!-- 300s=5mn -->
 	<year value="2013"  />
-	<month minIndexForFirstScrollToTop="3" overColor="#dd9900" backgroundColor="#eeeeee" > 
+	<month minIndexForFirstScrollToTop="3" overColor="#dd9900" emphasisRegExp="[0-9][hH:]" emphasisColor="#119988" backgroundColor="#eeeeee" > 
 		<list>
 			<item maxDay="31"  color="#6395c7" /> <!-- 0 dec-->
 			<item maxDay="31"  color="#609379"  /> <!-- 1 jan-->
@@ -35,7 +35,7 @@
 		<full src="asset/postIt.full.png" />
 	</monthTextPostIt>
 	
-	<!-- -->
+	<!-- "[0-9][hH:]" -->
 	<!-- -->
 	<!-- -->
 	<!-- -->
