@@ -30,4 +30,5 @@ Parameters are emphasisRegExp="[0-9][hH:]" and emphasisColor="#119988"
 ##March 16 2015 - v 1.4.6 :  
 - Adding a refresh button for no-browser mobile version.  
 - Login/logout and settings buttons become icons instead of text. 
+- a red circle appears next to the present day.
  
