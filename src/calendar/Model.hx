@@ -100,6 +100,10 @@ class Model extends XmlParser {
 	 */
 	public var currYear(get, set):Int; var _currYear:Int;
 	/**
+	 * return decimal yyyymmdd format of Date.now();
+	 */
+	public var today(get, null):Int; 
+	/**
 	 * index month of Date.now() or null
 	 */
 	public var currMonthIndex(get, null):Int; 
@@ -446,6 +450,10 @@ class Model extends XmlParser {
 			v = null;
 		} 
 		return v;
+	} 
+	function get_today() :Int {
+		var v:Date = Date.now();		
+		return v.getFullYear()*10000+(v.getMonth()+1)*100+v.getDate();
 	} 
 	function get_isLogInAfterTimeOut() :Bool {
 		return (strVal(save.currUserId, "")!="" &&  save.currUserId== currUserId );

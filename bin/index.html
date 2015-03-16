@@ -27,10 +27,12 @@
 					<a href="http://www.pixaline.net" target="_blank">
 						<img class="logo" src="img/logo.png" alt="logo de pixaline.net"></a>
 				</span>				
-				<span class="advertising">Même URL sur PC/MAC et Mobiles !</span> <!-- -->					
+				<span class="advertising">Même URL sur PC/MAC et Mobiles !</span> <!-- -->	
 			</div>
-			<div>
-				<button id="connection" >Connection</button><button id="changeYear" >Paramètres</button>
+			<div>				
+				<button id="connection" class="picto connect" ><img src="asset/connect.png" /></button>
+				<button id="changeYear" class="picto param" ><img src="asset/param.png" /></button>
+				<button id="refresh" 	class="picto refresh" ><img src="asset/refresh.png" /></button>
 				<span class="labelCtnr"> <span class="label" id="current">Calendrier/Agenda</span></span>
 			</div>
 			<!---->
@@ -44,7 +46,7 @@
 					</div>
 				</div>
 				<div class="day" >					
-					<div class="dayTop"><span class="abbrev" >Jour</span><span  class="textBegin"></span> </div>
+					<div class="dayTop"><span class="abbrev" >Jour</span><span class="dayType">&nbsp;</span><span  class="textBegin"></span> </div>
 					<div class="textContainer">
 						<textarea></textarea>
 						<button class="clear" >Effacer</button><button class="cancel" >Abandonner</button><button class="valid">Valider</button>

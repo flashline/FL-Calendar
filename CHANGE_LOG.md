@@ -26,4 +26,8 @@ if you got source:
 The color and rule may be changed by modifying :  
   [www.apixline.org/pm/app/web/html5/calendar/custom/default/model.xml]( http://www.apixline.org/pm/app/web/html5/calendar/custom/default/model.xml)  
 Parameters are emphasisRegExp="[0-9][hH:]" and emphasisColor="#119988"
+
+##March 16 2015 - v 1.4.6 :  
+- Adding a refresh button for no-browser mobile version.  
+- Login/logout and settings buttons become icons instead of text. 
  

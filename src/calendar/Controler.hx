@@ -70,6 +70,7 @@ class Controler extends Common {
 		view.window.handCursor(false);
 		view.connection.addLst(StandardEvent.CLICK,connectionClick); 
 		view.changeYear.addLst(StandardEvent.CLICK, changeYearClick); 
+		view.refresh.addLst(StandardEvent.CLICK, refreshClick); 
 		view.safeMode.addLst(StandardEvent.CLICK, safeModeClick); 
 		model.serverActived.bind(onServerActived);
 		createLoginViewEvent ();
@@ -116,6 +117,7 @@ class Controler extends Common {
 			view.connection.addLst(StandardEvent.CLICK,deconnectClick); 
 			//
 			view.changeYear.show();
+			view.refresh.show();
 			//
 			model.simpleCalendarUsing = false;				
 			//
@@ -170,6 +172,7 @@ class Controler extends Common {
 			view.connection.addLst(StandardEvent.CLICK,deconnectClick); 
 			//
 			view.changeYear.show();
+			view.refresh.show();
 			if (model.isLogInAfterTimeOut ) {
 				var d = 0; var m = 0; 
 				for ( day in model.save.days) {
@@ -250,6 +253,7 @@ class Controler extends Common {
 			view.connection.addLst(StandardEvent.CLICK,deconnectClick); 
 			//
 			view.changeYear.show();		
+			view.refresh.show();		
 			model.simpleCalendarUsing = false;			
 			//
 			if (model.isMonthAndDayCreated) {				
@@ -307,6 +311,8 @@ class Controler extends Common {
 			view.connection.addLst(StandardEvent.CLICK,connectionClick); 
 			//
 			view.changeYear.hide();
+			view.refresh.hide();
+			
 		} else {
 			alert(lang.error.server.deconnectError.label);	
 		}
@@ -638,6 +644,7 @@ class Controler extends Common {
 		view.signInValid.clearEnterKeyToClick();
 		e.preventDefault();	
 		view.changeYear.hide();		
+		view.refresh.hide();		
 		if (!model.isMonthAndDayCreated) {
 			initializeMonthAndDay(connected(false));
 		}
@@ -726,7 +733,12 @@ class Controler extends Common {
 		view.hideChangeYearView();
 		return false;
 	}
-	function changeYearClick (e:Event):Bool {
+	//
+	function refreshClick (e:Event):Void {
+		Browser.location.reload() ; //true
+	}
+	//
+    function changeYearClick (e:Event):Bool {
 		doChangeYear ();
 		return false;	
 	}

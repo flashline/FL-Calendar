@@ -26,9 +26,8 @@ body[orient="portrait"] {
 /*#calendar #release span {
 	display: inline;
 }*/
-
 #calendar button {
-	margin-left:.5em ;/*.2em;*/
+	margin-left:.5em ;
 	margin-top:.1em;
 	margin-bottom:.3em;
 	padding-top:.3em;
@@ -39,6 +38,23 @@ body[orient="portrait"] {
 	background-color:#ffefef;
 	font-size : 1em;
 	font-weight:bold;
+}
+#calendar button.picto {
+	margin-left:.3em ;
+	margin-top:.3rem;
+	border:0px solid #999;
+	padding:0px;
+	width:2.4rem;
+	height:2.4rem;
+	border-radius: 50%;
+}
+#calendar button.refresh {	
+	background-color:#09d;}
+#calendar button.param {	
+	background-color:#09d;
+}
+#calendar button.connect {	
+	background-color:#eee;
 }
 #calendar div.month button {
 	position:relative;
@@ -158,11 +174,18 @@ div.textContainer  {
 }
 span.abbrev{
 	display:inline-block;
-	width:27%;
+	width:20%;
+}
+#calendar span.dayType {
+	display:inline-block;
+	width:1.1rem; max-width:20px;
+	height:1.1rem; max-height:20px;
+	border-radius: 50%;
+	margin-right:10px;
 }
 span.textBegin {
 	display:inline-block;
-	width:71%;
+	width:70%;
 	height:25px;
 	border:0px;
 	background-color:#f5f5f5;/**/

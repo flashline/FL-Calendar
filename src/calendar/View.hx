@@ -35,6 +35,7 @@ import js.html.ButtonElement;
 import js.html.DivElement;
 import js.html.Document;
 import js.html.DOMWindow;
+import js.html.ImageElement;
 import js.html.InputElement;
 import net.flash_line.util.Object;
 import js.Lib;
@@ -64,6 +65,10 @@ class View extends Common {
 	 * open settings-box button
 	 */
 	public var changeYear(get, null):Element;	
+	/**
+	 * refresh call button
+	 */
+	public var refresh(get, null):Element;	
 	/**
 	 * Element where scheduler name+year are displayed
 	 */
@@ -170,8 +175,6 @@ class View extends Common {
 			str = lang.advertisingForComputer.label;
 		 }
 		elemBy("header").elemBy("advertising").innerHTML = str;		
-		connection.innerHTML = lang.button.connect.label;
-		changeYear.innerHTML = lang.button.changeYear.label;
 		displayInfoWhenNoUser();
 		//
 		//here createMonthAndDay () ;
@@ -268,7 +271,8 @@ class View extends Common {
 		}
 	}
 	public function changeConnectLabel (v:String) {
-		connection.innerHTML = v;
+		connection.style.backgroundColor = (v == lang.button.connect.label)? model.tree.button.logon.backgroundColor: model.tree.button.logoff.backgroundColor;
+		
 	}
 	public function changeSafeModeLabel () {
 		var str = ""; var str2 = ""; var str3 = ""; var el;
@@ -344,6 +348,7 @@ class View extends Common {
 	function get_safeMode() :Element {return elem("safeMode"); }
     function get_connection() :Element {return elem("connection"); }
     function get_changeYear() :Element {return elem("changeYear"); }
+    function get_refresh() :Element {return elem("refresh"); }
     function get_current() :Element {return elem("current"); }
     function get_window() :DOMWindow {return Browser.window; }
     function get_signInValid() :Element {return elem("signInValid"); }

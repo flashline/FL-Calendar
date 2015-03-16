@@ -7,6 +7,7 @@
 	<layout middleWidth="801" narrowWidth="481" />
 	<server dataSaveDelay="300" /><!-- 300s=5mn -->
 	<year value="2013"  />
+	<today color="#f60" />
 	<month minIndexForFirstScrollToTop="3" overColor="#dd9900" emphasisRegExp="[0-9][hH:]" emphasisColor="#119988" backgroundColor="#eeeeee" > 
 		<list>
 			<item maxDay="31"  color="#6395c7" /> <!-- 0 dec-->
@@ -34,6 +35,10 @@
 		<empty src="asset/postIt.empty.png" />
 		<full src="asset/postIt.full.png" />
 	</monthTextPostIt>
+	<button>
+		<logon 	src="asset/connect.png" backgroundColor="#5a5" />
+		<logoff src="asset/deconnect.png" backgroundColor="#e42" />
+	</button>
 	
 	<!-- "[0-9][hH:]" -->
 	<!-- -->

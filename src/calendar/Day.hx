@@ -93,6 +93,10 @@ class Day extends Common {
 	**/
 	public var date(get, null):Date; var _date:Date;
 	/**
+	* @return decimal format yyyymmdd of this Day 
+	**/
+	public var decimalDate(get, null):Int; 
+	/**
 	 * @return one of "SMTWTFS"
 	 */
 	public var abbrev(get, null):String; 
@@ -139,7 +143,7 @@ class Day extends Common {
 		skinElem.elemBy("cancel").innerHTML = lang.button.cancel.label ;
 		skinElem.elemBy("valid").innerHTML = lang.button.valid.label ;	
 		// sunday => bg color
-		 displayIfSunday ();
+		displayIfToday(); displayIfSunday ();
     }
 	/**
 	 * used when day's date changes
@@ -147,7 +151,7 @@ class Day extends Common {
 	public function displayUpdate () {
 		var str=Std.string(100 + number).substr(1);
 		skinElem.elemBy("abbrev").innerHTML = str + " " + abbrev;	
-		displayIfSunday ();
+		displayIfToday(); displayIfSunday ();
     }
 	/**
 	 * used when year is changing
@@ -278,6 +282,9 @@ class Day extends Common {
 			Browser.window.scrollTo(0,e.value);
 		}
 	}
+	function displayIfToday () {		
+		skinElem.elemBy("dayType").style.backgroundColor=(decimalDate == model.today )?model.tree.today.color:"";
+	}
 	function displayIfSunday () {
 		if (date.getDay() == 0) {				
 			if (isSafari) {		
@@ -323,6 +330,9 @@ class Day extends Common {
 			_date = new Date(year, month-1, number, 0, 0, 0);
 		}
 		return _date;
+	}
+	function get_decimalDate() :Int {		
+		return date.getFullYear()*10000+(date.getMonth()+1)*100+date.getDate();
 	}
 	function get_year() :Int {
 		var v:Int = null;
