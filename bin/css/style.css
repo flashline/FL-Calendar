@@ -40,12 +40,19 @@ body[orient="portrait"] {
 	font-weight:bold;
 }
 #calendar button.picto {
-	margin-left:.3em ;
+	margin-left:.6em ;
 	margin-top:.3rem;
 	border:0px solid #999;
 	padding:0px;
-	width:2.6rem;
-	height:2.6rem;
+	/*width:2.6rem;
+	height:2.6rem;*/
+	width:3.6rem;
+	height:3.6rem;
+	border-radius: 50%;
+}
+#calendar button.picto img {
+	width:95%;
+	height:auto;
 	border-radius: 50%;
 }
 #calendar button.refresh {	
