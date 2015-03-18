@@ -206,10 +206,8 @@ class View extends Common {
 		el.elemBy("yearCtnr").elemBy("subTitle").innerHTML = "<b>"+lang.changeYearSkin.subTitle.label+ "</b>";
 		el.elemBy("yearCtnr").elemBy("year").innerHTML = lang.changeYearSkin.year.label;
 		changeYearDiv.child("changeYearCancel").innerHTML= lang.button.cancel.label;
-		changeYearDiv.child("changeYearValid").innerHTML = lang.button.valid.label;
-		//
-		
-    }
+		changeYearDiv.child("changeYearValid").innerHTML = lang.button.valid.label;		
+    }	
 	/**
 	 * @param month 
 	 * @return new created month container

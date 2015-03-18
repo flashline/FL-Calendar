@@ -381,6 +381,10 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		if(b == null) b = true;
 		return b;
 	}
+	,addComputerOnlyLink: function() {
+		net.flash_line.display.ElementExtender.elemBy(this.elem("release"),"embed").innerHTML = "<a href='embed.simu.html' target='_blank' >&lt;&gt;&nbsp;" + Std.string(this.lang.embedLink.label) + "</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+		net.flash_line.display.ElementExtender.elemBy(this.elem("release"),"apixorg").innerHTML = "<a href='http://www.apixline.org' target='_blank'>Apix-line Open-Source</a>";
+	}
 	,createWaitView: function() {
 		var el = net.flash_line.display.ElementExtender.child(this.elem("calendar"),"waitView");
 		var txEl = net.flash_line.display.ElementExtender.elemBy(el,"text");
@@ -424,7 +428,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 	}
 	,onLoad: function(e) {
 		this.lang = e.text;
-		if(this.get_isIphoneIpad()) net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"github").innerHTML = this.lang.Igithub.label;
+		if(this.get_isIphoneIpad()) net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"github").innerHTML = this.lang.Igithub.label; else if(!this.get_isMobile()) this.addComputerOnlyLink();
 		this.createErrorAlert(e.text);
 		this.c.set_promptBox(this.createPromptBox(e.text));
 		this.c.set_confirmBox(this.createConfirmBox(e.text));
@@ -436,7 +440,7 @@ Main.prototype = $extend(net.flash_line.util.Common.prototype,{
 		this.wait.start("...initialisation.");
 		this.c = new Calendar(cst.getServerUrl(),cst.getModelSrc(),cst.getLanguageSrc(),cst.getBaseUrl(),this.isAutoStart(true),this.wait);
 		this.c.loadInit.bind($bind(this,this.onLoad));
-		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>Apix Calendar</b> " + "1.4.6";
+		net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"releaseText").innerHTML = "<b>Apix Calendar</b> " + "1.4.7";
 		if(this.get_isMobile()) net.flash_line.display.ElementExtender["delete"](net.flash_line.display.ElementExtender.elemBy(net.flash_line.display.ElementExtender.child(this.elem("calendar"),"release"),"embed"));
 	}
 	,__class__: Main
@@ -4025,7 +4029,7 @@ Xml.Document = "document";
 net.flash_line.util.ApiCommon.STD_ERROR_MSG = "fl.net error. See last message above.";
 net.flash_line.util.ApiCommon.RED_IN_PAGE_ERROR_MSG = "fl.net error. See red message in page.";
 net.flash_line.util.ApiCommon.IN_PAGE_ERROR_MSG = "fl.net error. See message in page.";
-Main.version = "1.4.6";
+Main.version = "1.4.7";
 feffects.Tween._aTweens = new haxe.ds.GenericStack();
 feffects.Tween._aPaused = new haxe.ds.GenericStack();
 feffects.Tween.INTERVAL = 10;

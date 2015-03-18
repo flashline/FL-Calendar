@@ -8,6 +8,7 @@
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" : " />
 		<Igithub label="Download and source on Mac/PC" />
+		<embedLink label="Embed" />
 		<month>
 			<abbrev>
 				<item label="Dec." />

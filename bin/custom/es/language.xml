@@ -8,6 +8,7 @@
 		<currentUserInfo1 label="Agenda " />
 		<currentUserInfo2 label=" de " />
 		<Igithub label="Descarga/codigo en Mac/PC" />
+		<embedLink label="Incrustar" />
 		<month>
 			<abbrev>
 				<item label="Dic." />

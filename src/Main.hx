@@ -57,7 +57,7 @@ class Main extends Common {
 	var c:Calendar;
 	var wait:WaitView;
 	var lang:Object;
-	static inline var version:String="1.4.6";
+	static inline var version:String="1.4.7";
 	/**
 	 * constructor
 	 */
@@ -80,9 +80,8 @@ class Main extends Common {
 	}	
 	function onLoad (e:StandardEvent) {	
 		lang = e.text;
-		if (isIphoneIpad) {			
-			elem("calendar").child("release").elemBy("github").innerHTML = lang.Igithub.label ;			
-		}
+		if (isIphoneIpad) elem("calendar").child("release").elemBy("github").innerHTML = lang.Igithub.label ;	
+		else if (!isMobile) addComputerOnlyLink () ;
 		createErrorAlert (e.text);	
 		c.promptBox = createPromptBox(e.text);
 		c.confirmBox = createConfirmBox(e.text);
@@ -134,6 +133,10 @@ class Main extends Common {
 		var animBox = el.elemBy("anim");
 		var movie = animBox.child("waitMovie");
 		return new WaitView(el, txEl, animBox,movie); //,"50% 0%" 
+	}
+	function addComputerOnlyLink () {
+		elem("release").elemBy("embed").innerHTML = "<a href='embed.simu.html' target='_blank' >&lt;&gt;&nbsp;"+lang.embedLink.label+"</a>&nbsp;&nbsp;&nbsp;&nbsp;" ;
+		elem("release").elemBy("apixorg").innerHTML = "<a href='http://www.apixline.org' target='_blank'>Apix-line Open-Source</a>";				
 	}
 	//
 	// Boolean functions .
