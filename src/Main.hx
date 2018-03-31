@@ -57,7 +57,7 @@ class Main extends Common {
 	var c:Calendar;
 	var wait:WaitView;
 	var lang:Object;
-	static inline var version:String="1.4.10";
+	static inline var version:String="1.4.17";
 	/**
 	 * constructor
 	 */
@@ -111,7 +111,7 @@ class Main extends Common {
 		btCaEl.innerHTML = lang.button.record.label;
 		//		
 		var cb = new ConfirmBox(el, cast(txEl,TextAreaElement), cast(btEl,ButtonElement), cast(btCaEl,ButtonElement));
-		return cb;
+		return cb;		
 	}
 	function createPromptBox (lang:Object) :PromptBox{	
 		var el = elem("calendar").child("promptView");

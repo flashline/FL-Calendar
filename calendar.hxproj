@@ -1,28 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project>
+<project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie disabled="False" />
+    <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\js\main.js" />
     <movie fps="0" />
     <movie width="0" />
     <movie height="0" />
-    <movie version="11" />
+    <movie version="0" />
+    <movie minorVersion="0" />
+    <movie platform="JavaScript" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="C:\www\__HAXE\classes\flnet\" />
+    <class path="D:\www\__HAXE\classes\flnet\" />
   </classpaths>
   <!-- Build options -->
   <build>
     <option directives="" />
     <option flashStrict="False" />
+    <option noInlineOnDebug="False" />
     <option mainClass="Main" />
-    <option override="False" />
-    <option verbose="False" />
+    <option enabledebug="False" />
     <option additional="--js-modern" />
   </build>
   <!-- haxelib libraries -->
@@ -36,6 +38,7 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="C:\Program Files\haxe\Haxe\std" />
+    <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -45,5 +48,8 @@
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="ExternalPlayer" />
+    <option testMovieCommand="" />
   </options>
+  <!-- Plugin storage -->
+  <storage />
 </project>

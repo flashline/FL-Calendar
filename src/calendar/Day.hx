@@ -49,9 +49,14 @@ class Day extends Common {
 	//
 	//
 	/**
-	 * original y position in window. used to restore Ypos after close.
+	 * y position in window used in scrollToTop.
 	 */
 	public var oy:Int;
+	/**
+	 * original y position in window. used to restore Ypos after close.
+	 */
+	public var ry:Int;
+	//
 	/**
 	 * index pos in parent model array -first day of month has index==0
 	 */
@@ -161,33 +166,28 @@ class Day extends Common {
 	}	
 	public function scrollToTop () {		
 		oy = Std.int(skinElem.positionInWindow().y);
+		ry = Browser.window.pageYOffset;	
 		if (oy > 0) {
 			/*
 			if (isMobile || !isWebKit) skinElem.scrollIntoView(true); 
 			else new BTween (Browser.window.scrollY, oy + Browser.window.scrollY, 1, onLoopScrollToTop ); 
 			*/
 			//
-			if 		(isIphoneIpad)  				new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
-			else if (isFirefox) 					new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
-			else if (isWindowsPhone) 				skinElem.scrollIntoView(true); 
-			else 									new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 
+			if (isMobile) 			new BTween (Browser.window.scrollY, oy + Browser.window.scrollY, 1, onLoopScrollToTop ); 
+			else 					new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
 			//
 		}
-		else oy = null;		
-		if (oy != null) {
-			var sy = oy;
-			for (d in monthParent.dayChildren) {
-				d.oy = null;
-			}
-			oy = sy;
-		}		
+		else ry = null ;
+		//
+		if (ry != null) {
+			var sy = ry;
+			for (d in monthParent.dayChildren) d.ry = null;
+			ry = sy;
+		}				
     }	
-	public function restoreScroll () {
-		/*if (!isMobile && isWebKit) { 
-			if (oy != null) new BTween (Browser.window.scrollY ,-oy+Browser.window.scrollY,.5, onLoopScrollToTop );// Browser.window.scrollTo(0, -oy + Browser.window.scrollY); //+Browser.window.scrollY
-		}*/
-		
-		oy = null;
+	public function restoreScroll () {			
+		if (ry != null) new BTween (Browser.window.pageYOffset , ry, .5, onLoopScrollToTop );		
+		for (d in monthParent.dayChildren) d.ry = null;
     }
 	public function  show () {
 		skinElem.style.display = "block";	

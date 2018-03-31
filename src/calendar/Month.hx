@@ -45,9 +45,13 @@ class Month extends Common {
 	var  model:Model;
 	var  lang:Object;
 	/**
-	 * original y position in window. used to restore Ypos after close.
+	 * y position in window used in scrollToTop.
 	 */
 	public var oy:Int;
+	/**
+	 * original y position in window. used to restore Ypos after close.
+	 */
+	public var ry:Int;
 	//
 	public var clearButton(get,null):Element;	
 	public var cancelButton(get,null):Element;	
@@ -184,6 +188,7 @@ class Month extends Common {
    
 	public function scrollToTop () {
 		oy = Std.int(skinElem.positionInWindow().y);
+		ry = Browser.window.pageYOffset;			
 		if (oy > 0) {
 			/* DONT REMOVE COMMENTS
 			 if (isMobile || !isWebKit) {				
@@ -202,27 +207,22 @@ class Month extends Common {
 			}	
 			*/
 			//
-			if 		(isIphoneIpad)  				new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
-			else if (isFirefox) 					new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
-			else if (isWindowsPhone) 				skinElem.scrollIntoView(true); 
-			else 									new BTween (Browser.window.pageYOffset, oy + Browser.window.pageYOffset, 1, onLoopScrollToTop ); 
+			if (isMobile) 					new BTween (Browser.window.scrollY, oy + Browser.window.scrollY, 1, onLoopScrollToTop ); 
+			else 							new BTween (Browser.window.pageYOffset, oy , 1, onLoopScrollToTop ); 
 			//
 		}		
-		else oy = null;		
-		if (oy != null) {
-			var sy = oy;
-			for (m in model.monthChildren) {
-				m.oy = null;
-			}
-			oy = sy;
+		else ry = null ;
+		//
+		if (ry != null) {
+			var sy = ry;
+			for (m in model.monthChildren) m.ry = null;		
+			ry = sy;
 		}
     }	
 	public function restoreScroll () {
-		if (!isMobile && isWebKit) {
-			if (oy != null) new BTween (Browser.window.pageYOffset ,-oy+Browser.window.pageYOffset,.5, onLoopScrollToTop );// Browser.window.scrollTo(0, -oy+Browser.window.scrollY); 
-		}
-		oy = null;
-    }
+		if (ry != null) new BTween (Browser.window.pageYOffset ,ry,1, onLoopScrollToTop );	
+		for (m in model.monthChildren) m.ry = null;		
+	}
 	public function open () {
 		for (day in dayChildren) {
 			day.show();
