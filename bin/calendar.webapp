@@ -1,0 +1,40 @@
+﻿{
+  "name": "FL-Calendar",
+  "launch_path": "/pm/app/web/html5/calendar/en.html",
+  "description": "Calendar,diary,schedule. Quick access to the notes of an entire year on phone, tablet, PC/Mac screens of any size.",
+  "icons": {
+	"60": "/pm/app/web/html5/calendar/img/icon.60.png",
+    "90": "/pm/app/web/html5/calendar/img/icon.90.png",
+	"120": "/pm/app/web/html5/calendar/img/icon.120.png",
+    "128": "/pm/app/web/html5/calendar/img/icon.128.png",
+    "256": "/pm/app/web/html5/calendar/img/icon.256.png"      
+  },
+  "developer": {
+    "name": "Delettre Jean-michel",
+    "url": "https://www.pixaline.net/"
+  },
+  "locales": {
+		"fr": {
+		  "launch_path": "/pm/app/web/html5/calendar/",  
+		  "description": "Calendrier-Agenda-Planning. Accès aux notes d'une année entière sur téléphone, tablette, Pc/Mac et écran de toute taille.",
+		  "developer": {
+			"url": "https://www.pixaline.net/"
+		  }
+		},
+		"en": {
+		  "launch_path": "/pm/app/web/html5/calendar/en.html",  
+		  "description": "Calendar,diary,schedule. Quick access to the notes of an entire year on phone, tablet, PC/Mac screens of any size.",
+		  "developer": {
+			"url": "https://apixline.org/pm/en/"
+		  }
+		},
+		"es": {
+		  "launch_path": "/pm/app/web/html5/calendar/es.html",  
+		  "description": "Calendario-Agenda-Planificación. Acceso rápido a las notas de un año entero, en el teléfonos, tabletas, PC/Mac y pantallas de cualquier tamaño.",
+		  "developer": {
+			"url": "https://apixline.org/pm/"
+		  }
+		}
+	},
+  "default_locale": "en"
+}

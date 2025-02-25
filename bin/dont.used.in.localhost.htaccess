@@ -1,0 +1,25 @@
+# default charset
+# AddDefaultCharset UTF-8
+# Activation du module de réécriture d'URL :
+RewriteEngine on
+# Le serveur doit suivre les liens symboliques :
+Options +FollowSymlinks
+
+<IfModule mod_headers.c>
+	Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+#--------------------------------------------------
+# Url rewriting rules 
+#--------------------------------------------------
+# pages link
+#--------------------------------------------------
+# Règles de réécriture d'URL :
+#--------------------------------------------------
+######RewriteCond %{HTTP_HOST} !^www.pixaline.net$
+######RewriteRule ^(.*)   https://www.pixaline.net/$1  [QSA,L,R=301]
+
+RewriteRule ^([0-z|-]+)\.html$ $1.php [L]
+
+AddType application/x-web-app-manifest+json .webapp
+AddHandler x-web-app-manifest+json .webapp

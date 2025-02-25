@@ -10,6 +10,4 @@ bin/php/login.htm.inc.php
 *.save.hx
 *.bat
 *.jar
-*.webapp
 bin/web-app-manifest.json
-*.htaccess
